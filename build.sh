@@ -12,10 +12,13 @@ import shutil
 # Rebuild the International hero image from text chunks committed to GitHub.
 chunks = Path('assets/.city-hero')
 if chunks.is_dir():
-    parts = sorted(chunks.glob('part*'))
+    new_parts = [chunks / f'new0{i}' for i in range(4)]
+    if all(p.exists() for p in new_parts):
+        parts = new_parts
+    else:
+        parts = sorted(chunks.glob('part*'))
     encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
     raw = base64.b64decode(encoded, validate=True)
-    # Validate the file structure instead of pinning a stale checksum.
     if len(raw) < 12 or raw[:4] != b'RIFF' or raw[8:12] != b'WEBP':
         raise SystemExit('International hero image is not a valid WebP container')
     out = Path('dist/assets/international-city-hero.webp')
