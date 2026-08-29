@@ -6,6 +6,17 @@ cp index.html international.html digital-ai.html education-hr.html README.txt di
 if [ -d assets ]; then cp -R assets dist/assets; fi
 python3 - <<'PY'
 from pathlib import Path
+import base64
+import shutil
+
+# Rebuild the International hero image from text chunks committed to GitHub.
+chunks = Path('assets/.city-hero')
+if chunks.is_dir():
+    encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in sorted(chunks.glob('part*')))
+    out = Path('dist/assets/international-city-hero.webp')
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_bytes(base64.b64decode(encoded))
+    shutil.rmtree(Path('dist/assets/.city-hero'), ignore_errors=True)
 
 p = Path('dist/index.html')
 s = p.read_text(encoding='utf-8')
