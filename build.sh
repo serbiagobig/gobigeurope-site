@@ -18,6 +18,10 @@ if chunks.is_dir():
     else:
         parts = sorted(chunks.glob('part*'))
     encoded = ''.join(p.read_text(encoding='utf-8').strip() for p in parts)
+    # Padding belongs only at the very end of a Base64 stream. Normalize it so
+    # chunk boundaries cannot introduce stray '=' characters.
+    encoded = encoded.replace('=', '')
+    encoded += '=' * (-len(encoded) % 4)
     raw = base64.b64decode(encoded, validate=True)
     if len(raw) < 12 or raw[:4] != b'RIFF' or raw[8:12] != b'WEBP':
         raise SystemExit('International hero image is not a valid WebP container')
