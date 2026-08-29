@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Образование и HR — GO BIG</title>
+<style>
+:root{--green:#087542;--navy:#0a2558;}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;color:#172033;background:#f4f5f3}
+a{color:inherit;text-decoration:none} .wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+header{height:88px;display:flex;align-items:center;background:#fff;border-top:3px solid var(--green);border-bottom:1px solid #e2e6e8}
+.head{display:flex;align-items:center;justify-content:space-between} .brand{display:flex;align-items:center;gap:12px}
+.mark{width:38px;height:48px;background:var(--green)} .brand strong{font:700 27px Georgia,serif;color:var(--green)}
+.back{min-height:44px;display:inline-flex;align-items:center;color:var(--green);font-weight:700}
+.hero{min-height:calc(100svh - 88px);display:grid;grid-template-columns:1.05fr .95fr;background:#fff}
+.copy{padding:clamp(48px,8vw,110px);display:flex;flex-direction:column;justify-content:center}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--green)}
+h1{font:700 clamp(45px,6vw,78px)/1 Georgia,serif;color:var(--navy);margin:20px 0 24px;letter-spacing:-.04em}
+.lead{font-size:20px;line-height:1.6;color:#4d596b;max-width:680px} .note{margin-top:34px;padding-top:24px;border-top:1px solid #dfe4e7;line-height:1.6;color:#6c7582}
+.image{min-height:520px;position:relative;overflow:hidden;background:#16202b} .image img{width:100%;height:100%;object-fit:cover;filter:grayscale(.55) saturate(.58) brightness(.72)}
+.image:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,20,34,.24),rgba(7,20,34,.06))}
+@media(max-width:800px){.hero{grid-template-columns:1fr}.copy{padding:52px 24px}.image{min-height:390px;order:-1}h1{font-size:44px}}
+
+/* v5 palette refinement */
+:root{
+  --green:#0b6b45;
+  --navy:#0b2c63;
+  --red:#c64b48; /* reserve accent only */
+  --soft:#f4f5f7;
+  --line:#dde3ea;
+}
+.btn{
+  min-height:54px;
+  padding:0 26px;
+  font-size:15px;
+  letter-spacing:.01em;
+  transition:background .22s ease,color .22s ease,border-color .22s ease,transform .22s ease,box-shadow .22s ease;
+}
+.btn:hover{transform:translateY(-1px)}
+.primary{
+  background:var(--green);
+  color:#fff;
+  box-shadow:0 10px 24px rgba(11,107,69,.18);
+}
+.primary:hover{
+  background:#095c3b;
+  box-shadow:0 14px 28px rgba(11,107,69,.22);
+}
+.outline:hover{
+  background:rgba(255,255,255,.14);
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap');
+:root{
+  --green:#0B6B45!important;
+  --navy:#0B2C63!important;
+  --font-heading:"Source Serif 4",Georgia,serif;
+  --font-body:"Manrope",Arial,sans-serif;
+}
+body{font-family:var(--font-body)!important}
+h1,.brand strong{font-family:var(--font-heading)!important}
+
+
+/* v8 direction module + footer refinement */
+.direction-media{
+  background:#151a20;
+}
+.direction-media img{
+  filter:grayscale(.56) saturate(.50) contrast(.96) brightness(.76);
+}
+.direction-media:hover img{
+  filter:grayscale(.48) saturate(.58) contrast(.98) brightness(.79);
+}
+.direction-media-overlay{
+  background:
+    linear-gradient(0deg,rgba(8,17,28,.64) 0%,rgba(8,17,28,.48) 100%),
+    linear-gradient(90deg,rgba(8,17,28,.34) 0%,rgba(8,17,28,.26) 46%,rgba(8,17,28,.22) 100%);
+}
+.direction-media-copy{
+  left:50%;
+  top:50%;
+  bottom:auto;
+  transform:translate(-50%,-50%);
+  width:min(960px,calc(100% - 72px));
+  text-align:center;
+}
+.direction-media-copy span{
+  color:rgba(255,255,255,.80) !important;
+  margin-bottom:18px;
+}
+.direction-media-copy h3{
+  color:#FFFFFF !important;
+  text-shadow:0 3px 18px rgba(0,0,0,.18);
+  font-size:clamp(54px,6.4vw,90px);
+  line-height:.95;
+  letter-spacing:-.04em;
+  max-width:12.5ch;
+  margin:0 auto;
+}
+.direction-media-copy p{
+  color:rgba(255,255,255,.92) !important;
+  text-shadow:0 1px 10px rgba(0,0,0,.14);
+  max-width:860px;
+  margin:22px auto 0;
+  font-size:clamp(19px,1.7vw,23px);
+}
+footer{
+  background:#2C3138 !important;
+  color:#FFFFFF;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+footer .foot{
+  gap:18px;
+}
+footer .foot > span{
+  color:rgba(255,255,255,.74);
+}
+footer .brand strong,
+footer .brand small{
+  color:#FFFFFF !important;
+}
+
+@media(max-width:850px){
+  .direction-media{
+    height:440px;
+  }
+  .direction-media-copy{
+    width:calc(100% - 32px);
+  }
+  .direction-media-copy h3{
+    font-size:clamp(38px,10.8vw,56px);
+    max-width:10.5ch;
+  }
+  .direction-media p{
+    font-size:17px;
+  }
+}
+
+</style>
+</head>
+<body>
+<header><div class="wrap head"><a class="brand" href="index.html"><span class="mark"></span><strong>GO BIG</strong></a><a class="back" href="index.html">← На главную</a></div></header>
+<main class="hero">
+<section class="copy"><span class="eyebrow">Направление GO BIG</span><h1>Образование и HR</h1><p class="lead">Развиваем компетенции людей и команд, создаём инновационные программы обучения и внедряем современные HR-технологии.</p><p class="note">Структура страницы уже подготовлена. Сюда добавим услуги, форматы сотрудничества, проекты, факты, результаты и форму обращения.</p></section>
+<div class="image"><img src="assets/education-hr.jpg" alt=""></div>
+</main>
+</body>
+</html>
