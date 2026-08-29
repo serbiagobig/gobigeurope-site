@@ -5,28 +5,27 @@
 }
 .hero-media{
   inset:0 !important;
-  background-image:url('/assets/international-city-hero.webp') !important;
+  background-image:url('/assets/international-office.webp') !important;
   background-repeat:no-repeat !important;
   background-size:cover !important;
-  background-position:center 55% !important;
+  background-position:center 48% !important;
   transform:none !important;
-  filter:saturate(.88) contrast(1.03) !important;
+  filter:saturate(.70) contrast(1.03) brightness(.82) !important;
 }
 .hero-overlay{
   background:
     linear-gradient(90deg,
-      rgba(7,18,30,.90) 0%,
-      rgba(7,18,30,.80) 30%,
-      rgba(7,18,30,.55) 50%,
-      rgba(7,18,30,.22) 72%,
-      rgba(7,18,30,.06) 100%) !important;
+      rgba(7,18,30,.94) 0%,
+      rgba(7,18,30,.86) 31%,
+      rgba(7,18,30,.62) 52%,
+      rgba(7,18,30,.28) 74%,
+      rgba(7,18,30,.10) 100%) !important;
 }
 .hero::after{
   height:52px !important;
-  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.10)) !important;
+  background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.08)) !important;
 }
 
-/* The original page does not use .hero-copy. Target the real hero elements directly. */
 .hero .wrap,
 .hero .container,
 .hero > div:not(.hero-media):not(.hero-overlay){
@@ -55,7 +54,7 @@
 
 @media(max-width:1050px){
   .hero{min-height:570px !important;}
-  .hero-media{background-position:58% center !important;}
+  .hero-media{background-position:56% center !important;}
   .hero h1{
     font-size:clamp(36px,4.2vw,48px) !important;
     max-width:12ch !important;
@@ -68,14 +67,14 @@
   .hero{min-height:620px !important;}
   .hero-media{
     background-size:cover !important;
-    background-position:62% center !important;
+    background-position:58% center !important;
   }
   .hero-overlay{
     background:linear-gradient(180deg,
-      rgba(7,18,30,.94) 0%,
-      rgba(7,18,30,.84) 48%,
-      rgba(7,18,30,.50) 74%,
-      rgba(7,18,30,.20) 100%) !important;
+      rgba(7,18,30,.95) 0%,
+      rgba(7,18,30,.88) 48%,
+      rgba(7,18,30,.58) 74%,
+      rgba(7,18,30,.24) 100%) !important;
   }
   .hero h1{
     font-size:clamp(34px,8.4vw,44px) !important;
