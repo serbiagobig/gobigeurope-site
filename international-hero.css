@@ -5,7 +5,7 @@
 }
 .hero-media{
   inset:0 !important;
-  background-image:url('/assets/international-office.webp') !important;
+  background-image:url('assets/international-office.webp') !important;
   background-repeat:no-repeat !important;
   background-size:cover !important;
   background-position:center 48% !important;
