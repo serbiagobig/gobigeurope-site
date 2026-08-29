@@ -20,17 +20,32 @@ if chunks.is_dir():
 
 p = Path('dist/index.html')
 s = p.read_text(encoding='utf-8')
-link = '<link rel="stylesheet" href="/home-premium.css"/>'
-if link not in s:
+link = '<link rel="stylesheet" href="home-premium.css"/>'
+if 'home-premium.css' not in s:
     s = s.replace('</head>', link + '\n</head>', 1)
 p.write_text(s, encoding='utf-8')
 
 p = Path('dist/international.html')
 s = p.read_text(encoding='utf-8')
-link = '<link rel="stylesheet" href="/international-hero.css"/>'
-if link not in s:
+link = '<link rel="stylesheet" href="international-hero.css"/>'
+if 'international-hero.css' not in s:
     s = s.replace('</head>', link + '\n</head>', 1)
 p.write_text(s, encoding='utf-8')
+
+# GitHub project Pages are served below /gobigeurope-site/ before a custom domain is attached.
+# Convert root-relative local links/assets to relative ones so both locations work.
+for p in Path('dist').glob('*.html'):
+    s = p.read_text(encoding='utf-8')
+    s = s.replace('href="/assets/', 'href="assets/')
+    s = s.replace('src="/assets/', 'src="assets/')
+    s = s.replace("url('/assets/", "url('assets/")
+    for name in ['index.html','international.html','digital-ai.html','education-hr.html']:
+        s = s.replace(f'href="/{name}"', f'href="{name}"')
+    p.write_text(s, encoding='utf-8')
 PY
 cp home-premium.css dist/home-premium.css
 cp international-hero.css dist/international-hero.css
+# Fix the International background path for project Pages.
+sed -i "s#url('/assets/#url('assets/#g" dist/international-hero.css
+# Prevent Jekyll processing of static files.
+touch dist/.nojekyll
