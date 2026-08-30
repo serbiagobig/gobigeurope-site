@@ -128,6 +128,228 @@
   box-shadow:0 14px 34px rgba(0,0,0,.18),inset 0 0 24px rgba(58,151,102,.04) !important;
 }
 
+/* GO BIG inquiry form */
+.application{
+  padding:86px 0 92px !important;
+  background:#f4f5f2;
+}
+.application-shell{
+  display:grid;
+  grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
+  gap:34px;
+  align-items:start;
+}
+.application-intro{
+  position:sticky;
+  top:122px;
+  padding:8px 24px 0 0;
+}
+.application-kicker{
+  margin-bottom:18px;
+  color:var(--green);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.application-intro h2{
+  max-width:9.5ch;
+  font-size:clamp(40px,4vw,56px);
+  line-height:1.01;
+}
+.application-intro p{
+  margin-top:22px;
+  max-width:480px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+}
+.application-note{
+  margin-top:26px;
+  padding:18px 20px;
+  border-left:3px solid var(--green);
+  background:#fff;
+  color:#4d5967;
+  font-size:13px;
+  line-height:1.6;
+}
+.inquiry-card{
+  border:1px solid rgba(11,44,99,.09);
+  border-radius:28px;
+  background:#fff;
+  box-shadow:0 22px 56px rgba(17,29,47,.08);
+  overflow:hidden;
+}
+.inquiry-top{
+  padding:24px 28px 18px;
+  border-bottom:1px solid #e5e9ed;
+}
+.inquiry-progress-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  color:#526070;
+  font-size:12px;
+  font-weight:700;
+}
+.inquiry-progress-track{
+  height:5px;
+  margin-top:14px;
+  overflow:hidden;
+  border-radius:999px;
+  background:#e7ebe8;
+}
+.inquiry-progress-fill{
+  width:20%;
+  height:100%;
+  border-radius:999px;
+  background:var(--green);
+  transition:width .25s ease;
+}
+.inquiry-form{padding:0;}
+.form-step{
+  display:none;
+  padding:28px;
+}
+.form-step.active{display:block;}
+.form-step h3{
+  margin-bottom:6px;
+  color:var(--navy);
+  font-size:30px;
+}
+.step-help{
+  margin-bottom:24px;
+  color:#74808d;
+  font-size:13px;
+  line-height:1.6;
+}
+.field-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+}
+.field{min-width:0;}
+.field.full{grid-column:1/-1;}
+.field label,
+.choice-title{
+  display:block;
+  margin-bottom:8px;
+  color:#263447;
+  font-size:13px;
+  font-weight:700;
+}
+.req{color:var(--green);}
+.field input,
+.field select,
+.field textarea{
+  width:100%;
+  min-height:48px;
+  padding:12px 14px;
+  border:1px solid #d6dde3;
+  border-radius:12px;
+  background:#fff;
+  color:#1f2a3d;
+  font:500 14px/1.45 var(--font-body);
+  outline:none;
+  transition:border-color .18s ease,box-shadow .18s ease;
+}
+.field textarea{min-height:112px;resize:vertical;}
+.field input:focus,
+.field select:focus,
+.field textarea:focus{
+  border-color:rgba(11,107,69,.72);
+  box-shadow:0 0 0 3px rgba(11,107,69,.09);
+}
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.choice-grid.three{grid-template-columns:repeat(3,minmax(0,1fr));}
+.choice{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  min-height:46px;
+  padding:11px 12px;
+  border:1px solid #dce2e6;
+  border-radius:12px;
+  background:#fbfcfc;
+  color:#374456;
+  font-size:13px;
+  line-height:1.4;
+  cursor:pointer;
+}
+.choice input{margin-top:2px;accent-color:var(--green);}
+.radio-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+.radio-row .choice{min-height:42px;align-items:center;}
+.form-error{
+  display:none;
+  margin:0 28px 18px;
+  padding:12px 14px;
+  border-radius:12px;
+  background:#fff3f1;
+  color:#9b3429;
+  font-size:13px;
+  line-height:1.5;
+}
+.form-error.show{display:block;}
+.form-actions{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px 28px 26px;
+  border-top:1px solid #e9ecef;
+}
+.form-actions-right{display:flex;gap:10px;margin-left:auto;}
+.form-btn{
+  min-height:48px;
+  padding:0 22px;
+  border:0;
+  border-radius:999px;
+  font:800 13px/1 var(--font-body);
+  cursor:pointer;
+}
+.form-btn.secondary{
+  border:1px solid #d7dee4;
+  background:#fff;
+  color:var(--navy);
+}
+.form-btn.primary{
+  background:var(--green);
+  color:#fff;
+}
+.form-btn[hidden]{display:none;}
+.consent{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:18px;
+  color:#566271;
+  font-size:12px;
+  line-height:1.55;
+}
+.consent input{margin-top:3px;accent-color:var(--green);}
+.form-success{
+  display:none;
+  padding:36px 28px 38px;
+  text-align:center;
+}
+.form-success.show{display:block;}
+.form-success b{
+  display:block;
+  margin-bottom:10px;
+  color:var(--navy);
+  font:600 34px/1.05 var(--font-heading);
+}
+.form-success p{color:var(--muted);line-height:1.65;}
+
 @media(max-width:1050px){
   .hero{min-height:570px !important;background-position:58% center !important;}
   .hero h1{font-size:clamp(45px,5.25vw,60px) !important;max-width:12ch !important;}
@@ -135,6 +357,9 @@
   .project-card,
   .project-card:last-child{min-height:410px !important;}
   .project-type,.project-no{font-size:12px !important;}
+  .application-shell{grid-template-columns:1fr;gap:24px;}
+  .application-intro{position:relative;top:auto;padding:0;}
+  .application-intro h2{max-width:12ch;}
 }
 @media(max-width:760px){
   .hero{
@@ -158,6 +383,16 @@
   .project-card:last-child{min-height:420px !important;}
   .project-type,.project-no{font-size:12px !important;}
   .project-copy h3{font-size:29px !important;}
+  .application{padding:64px 0 70px !important;}
+  .application-intro h2{font-size:40px;}
+  .inquiry-card{border-radius:22px;}
+  .form-step{padding:22px 18px;}
+  .inquiry-top{padding:20px 18px 16px;}
+  .field-grid,.choice-grid,.choice-grid.three{grid-template-columns:1fr;}
+  .form-actions{padding:16px 18px 22px;flex-wrap:wrap;}
+  .form-actions-right{width:100%;}
+  .form-actions-right .form-btn{flex:1;}
+  .form-error{margin:0 18px 16px;}
 }
 @media(max-width:460px){
   .project-card,
@@ -166,4 +401,6 @@
   .project-copy{left:20px !important;right:20px !important;bottom:18px !important;}
   .project-copy h3{font-size:27px !important;}
   .projects-all{width:100%;justify-content:center;}
+  .application-intro h2{font-size:36px;}
+  .form-step h3{font-size:27px;}
 }
