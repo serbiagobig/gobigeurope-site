@@ -365,7 +365,7 @@ footer .foot>small{
   text-align:right;
 }
 footer .foot>small::before{
-  content:"GO BIG, S.R.O.\A Doudlebská 1312/4\A Praha 4 – Nusle, PSČ 140 00, Czech Republic\A ID: 24178632 · Tax Number: CZ24178632\A\A ELENA NAUMOVA PR GO BIG (u mirovanju)\A Živojina Ćuluma 32, 21000 Novi Sad, Srbija\A PIB: 112844620 · MB: 66392147";
+  content:"GO BIG, S.R.O.\A Doudlebská 1312/4\A Praha 4 – Nusle, PSČ 140 00, Czech Republic\A ID: 24178632 · Tax Number: CZ24178632\A\A ELENA NAUMOVA PR GO BIG\A Živojina Ćuluma 32, 21000 Novi Sad, Srbija\A PIB: 112844620 · MB: 66392147";
   display:block;
   color:rgba(255,255,255,.72);
   font:500 12px/1.72 var(--font-body);
