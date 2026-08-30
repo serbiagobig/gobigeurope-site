@@ -41,16 +41,59 @@
   color:rgba(255,255,255,.90) !important;
   text-shadow:0 1px 9px rgba(0,0,0,.14) !important;
 }
+
+html,body{max-width:100%;overflow-x:hidden}
+img{max-width:100%}
+
 @media(max-width:850px){
+  header .head{
+    min-height:auto !important;
+    padding:14px 0 !important;
+    gap:12px !important;
+  }
+  header nav{
+    width:100% !important;
+    display:flex !important;
+    flex-wrap:nowrap !important;
+    justify-content:flex-start !important;
+    gap:16px !important;
+    overflow-x:auto !important;
+    overscroll-behavior-inline:contain;
+    scrollbar-width:none;
+    padding:3px 0 8px !important;
+  }
+  header nav::-webkit-scrollbar{display:none}
+  header nav a{white-space:nowrap !important;font-size:13px !important}
+
+  .direction-media{
+    height:500px !important;
+    min-height:500px !important;
+    position:relative !important;
+    overflow:hidden !important;
+  }
+  .direction-media img{
+    width:100% !important;
+    height:100% !important;
+    object-fit:cover !important;
+    object-position:center center !important;
+    filter:grayscale(.30) saturate(.72) brightness(.86) !important;
+  }
+  .direction-media-overlay{
+    background:linear-gradient(0deg,rgba(7,20,34,.56) 0%,rgba(7,20,34,.10) 68%,rgba(7,20,34,.04) 100%) !important;
+  }
   .direction-media-copy{
-    bottom:26px !important;
-    width:calc(100% - 44px) !important;
+    left:50% !important;
+    top:auto !important;
+    bottom:24px !important;
+    width:calc(100% - 32px) !important;
+    transform:translateX(-50%) !important;
+    padding:0 !important;
   }
   .direction-media-copy h3{
     max-width:100% !important;
     font-size:clamp(30px,8vw,40px) !important;
     line-height:1.06 !important;
-    white-space:normal;
+    white-space:normal !important;
   }
   .direction-media-copy p{
     max-width:620px !important;
@@ -59,8 +102,11 @@
     line-height:1.45 !important;
   }
 }
+
 @media(max-width:520px){
-  .direction-media-copy span{font-size:9px !important;}
-  .direction-media-copy h3{font-size:31px !important;}
-  .direction-media-copy p{font-size:14px !important;}
+  .direction-media{height:470px !important;min-height:470px !important}
+  .direction-media-copy{width:calc(100% - 26px) !important;bottom:20px !important}
+  .direction-media-copy span{font-size:9px !important;margin-bottom:7px !important}
+  .direction-media-copy h3{font-size:29px !important;line-height:1.08 !important}
+  .direction-media-copy p{font-size:13.5px !important;line-height:1.42 !important;margin-top:9px !important}
 }
