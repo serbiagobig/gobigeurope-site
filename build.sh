@@ -6,6 +6,9 @@ cp index.html international.html digital-ai.html education-hr.html readiness.htm
 if [ -d assets ]; then cp -R assets dist/assets; fi
 mkdir -p dist/assets
 cp "ChatGPT Image 30 авг. 2026 г., 12_21_44.png" dist/assets/regional-business-white.png
+cp "Serbian market.png" dist/assets/projects-serbia.png
+cp "Technical project.png" dist/assets/projects-tech.png
+cp "book publishing.png" dist/assets/projects-publishing.png
 if [ -d en ]; then cp -R en dist/en; fi
 if [ -d cz ]; then cp -R cz dist/cz; fi
 python3 - <<'PY'
@@ -74,7 +77,6 @@ html,body{max-width:100%;overflow-x:hidden}
   nav{width:100%!important;display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;gap:14px!important;padding:2px 0 8px!important;scrollbar-width:none}nav::-webkit-scrollbar{display:none}nav a,.lang-switch{white-space:nowrap!important;font-size:12px!important}
   .hero{min-height:560px!important}.hero-copy{padding:50px 0 48px!important;max-width:100%!important}.hero h1{font-size:40px!important;line-height:1.02!important;max-width:9ch!important}.lead{font-size:15px!important;line-height:1.5!important;max-width:95%!important}.btns{gap:10px!important}.btn{min-height:50px!important;padding:0 18px!important;font-size:14px!important}
   section{padding:64px 0}.intro-grid,.service-grid,.process-grid,.case-shell,.regions-grid{grid-template-columns:1fr!important}.adv-grid{grid-template-columns:1fr!important}.section-head{display:block!important}.section-head p{margin-top:14px!important}.service-summary h3{font-size:22px!important}.service-summary{padding:22px 62px 20px 22px!important}.service-toggle{right:20px!important;top:23px!important}
-  .case-media{min-height:0!important}.case-media img{width:100%!important;height:auto!important;aspect-ratio:4/3!important;object-fit:cover!important}
   .cta-box{padding:28px 22px!important}.cta-box h2{font-size:34px!important}.foot{flex-direction:column!important}
 }
 @media(max-width:420px){.hero h1{font-size:36px!important}.lead{font-size:14px!important}.btns .btn{width:100%!important}.section-head h2,h2{font-size:34px!important}}
