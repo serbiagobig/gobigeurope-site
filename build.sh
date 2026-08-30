@@ -51,6 +51,11 @@ s = s.replace(
     'Международное развитие — это не только экспорт.',
     'Преимущества работы на международных рынках в современном мире'
 )
+# Use the existing business-discussion image in the regional markets block.
+s = s.replace(
+    '<img src="assets/Belgrad1.jpg" alt="Белград — один из региональных контуров GO BIG"/>',
+    '<img src="assets/poster_event_12352311.jpg" alt="Деловое обсуждение и международное сотрудничество GO BIG"/>'
+)
 # Language switcher foundation for the current Russian master page.
 s = s.replace(
     '<a href="#">RU&nbsp;&nbsp;/&nbsp;&nbsp;EN</a>',
