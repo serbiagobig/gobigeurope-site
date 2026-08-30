@@ -4,6 +4,8 @@ rm -rf dist
 mkdir -p dist
 cp index.html international.html digital-ai.html education-hr.html readiness.html README.txt dist/ 2>/dev/null || true
 if [ -d assets ]; then cp -R assets dist/assets; fi
+mkdir -p dist/assets
+cp "ChatGPT Image 30 авг. 2026 г., 12_21_44.png" dist/assets/regional-business-white.png
 if [ -d en ]; then cp -R en dist/en; fi
 if [ -d cz ]; then cp -R cz dist/cz; fi
 python3 - <<'PY'
@@ -64,7 +66,7 @@ if needle in s and 'readiness.html' not in s:
 
 # Rebuild the regional markets module: clean left column, photo + key approach cards on the right.
 old_regions = '''<section><div class="wrap regions-grid"><div class="regions-copy"><h2>Работаем на нескольких региональных контурах</h2><p>GO BIG соединяет компании с рынками, партнёрами и инфраструктурой роста там, где у нас есть собственная сеть и рабочие связи.</p><div class="chips"><span>Европа</span><span>Балканы</span><span>Сербия</span><span>Центральная Азия</span><span>GCC</span><span>MENA</span></div><div class="note-box">Сильная сторона подхода — сочетание локального присутствия, международной кооперации и компетенций в технологиях, автоматизации и развитии команд.</div></div><div class="regions-media"><img src="assets/Belgrad1.jpg" alt="Белград — один из региональных контуров GO BIG"/><div class="regions-panel"><div class="regions-stat"><strong>01</strong><span>от идеи — к конкретной географии</span></div><div class="regions-stat"><strong>02</strong><span>через сеть локальных партнёров</span></div><div class="regions-stat"><strong>03</strong><span>в прямом диалоге с рынком</span></div><div class="regions-stat"><strong>04</strong><span>без хаотичного набора активностей</span></div></div></div></div></section>'''
-new_regions = '''<section class="regions-modern"><div class="wrap"><div class="regions-modern-shell"><div class="regions-modern-copy"><div class="regions-modern-kicker">География работы</div><h2>Работаем на нескольких региональных контурах</h2><p>GO BIG соединяет компании с рынками, партнёрами и инфраструктурой роста там, где у нас есть собственная сеть и рабочие связи.</p><div class="market-chips"><span>Европа</span><span>Балканы</span><span>Сербия</span><span>Центральная Азия</span><span>GCC</span><span>MENA</span></div></div><div class="regions-modern-media"><img src="assets/poster_event_12352311.jpg" alt="Деловое обсуждение и международное сотрудничество GO BIG"/><div class="regions-modern-shade"></div><div class="approach-overlay"><span>Сильная сторона подхода</span><p>Локальное присутствие, международная кооперация и компетенции в технологиях, автоматизации и развитии команд.</p></div><div class="regions-cards"><div class="regions-card"><b>01</b><i></i><span>От идеи — к конкретной географии</span></div><div class="regions-card"><b>02</b><i></i><span>Через сеть локальных партнёров</span></div><div class="regions-card"><b>03</b><i></i><span>В прямом диалоге с рынком</span></div><div class="regions-card"><b>04</b><i></i><span>Без хаотичного набора активностей</span></div></div></div></div></div></section>'''
+new_regions = '''<section class="regions-modern"><div class="wrap"><div class="regions-modern-shell"><div class="regions-modern-copy"><div class="regions-modern-kicker">География работы</div><h2>Работаем на нескольких региональных контурах</h2><p>GO BIG соединяет компании с рынками, партнёрами и инфраструктурой роста там, где у нас есть собственная сеть и рабочие связи.</p><div class="market-chips"><span>Европа</span><span>Балканы</span><span>Сербия</span><span>Центральная Азия</span><span>GCC</span><span>MENA</span></div></div><div class="regions-modern-media"><img src="assets/regional-business-white.png" alt="Деловое обсуждение и международное сотрудничество GO BIG"/><div class="regions-modern-shade"></div><div class="approach-overlay"><span>Сильная сторона подхода</span><p>Локальное присутствие, международная кооперация и компетенции в технологиях, автоматизации и развитии команд.</p></div><div class="regions-cards"><div class="regions-card"><b>01</b><i></i><span>От идеи — к конкретной географии</span></div><div class="regions-card"><b>02</b><i></i><span>Через сеть локальных партнёров</span></div><div class="regions-card"><b>03</b><i></i><span>В прямом диалоге с рынком</span></div><div class="regions-card"><b>04</b><i></i><span>Без хаотичного набора активностей</span></div></div></div></div></div></section>'''
 if old_regions in s:
     s = s.replace(old_regions, new_regions, 1)
 
@@ -77,17 +79,17 @@ regions_css = '''<style>
 .regions-modern-copy>p{margin-top:24px;max-width:590px;color:var(--muted);font-size:17px;line-height:1.72}
 .market-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
 .market-chips span{padding:11px 16px;border-radius:999px;background:#f1f3f5;border:1px solid rgba(11,44,99,.04);color:var(--navy);font-size:13px;font-weight:800}
-.regions-modern-media{position:relative;min-height:650px;overflow:hidden;border-radius:30px;background:#1b2229;box-shadow:var(--shadow)}
-.regions-modern-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;filter:saturate(.72) contrast(1.04) brightness(.84) grayscale(.08)}
-.regions-modern-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,20,29,.08) 0%,rgba(22,27,33,.08) 36%,rgba(18,23,29,.58) 100%)}
-.approach-overlay{position:absolute;top:28px;right:28px;z-index:3;width:min(45%,360px);padding:20px 22px;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:rgba(42,47,53,.70);backdrop-filter:blur(10px);color:#fff;box-shadow:0 15px 34px rgba(5,12,20,.18)}
-.approach-overlay span{display:block;margin-bottom:9px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#67b48e}
-.approach-overlay p{font-size:14px;line-height:1.55;color:rgba(255,255,255,.94)}
+.regions-modern-media{position:relative;min-height:650px;overflow:hidden;border-radius:30px;background:#eef1f3;box-shadow:var(--shadow)}
+.regions-modern-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 48%;filter:saturate(.92) contrast(1.03) brightness(.98)}
+.regions-modern-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,20,29,.02) 0%,rgba(22,27,33,.03) 42%,rgba(18,23,29,.34) 100%)}
+.approach-overlay{position:absolute;top:28px;right:28px;z-index:3;width:min(45%,360px);padding:20px 22px;border:1px solid rgba(255,255,255,.22);border-radius:20px;background:rgba(42,47,53,.66);backdrop-filter:blur(10px);color:#fff;box-shadow:0 15px 34px rgba(5,12,20,.15)}
+.approach-overlay span{display:block;margin-bottom:9px;font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#78c5a0}
+.approach-overlay p{font-size:14px;line-height:1.55;color:rgba(255,255,255,.96)}
 .regions-cards{position:absolute;left:28px;right:28px;bottom:28px;z-index:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.regions-card{min-height:126px;padding:20px 21px;border:1px solid rgba(255,255,255,.16);border-radius:20px;background:rgba(23,31,41,.82);backdrop-filter:blur(9px);box-shadow:0 14px 32px rgba(6,13,21,.18);color:#fff}
+.regions-card{min-height:126px;padding:20px 21px;border:1px solid rgba(255,255,255,.20);border-radius:20px;background:rgba(23,31,41,.78);backdrop-filter:blur(9px);box-shadow:0 14px 32px rgba(6,13,21,.16);color:#fff}
 .regions-card b{display:block;font:700 30px/1 var(--font-heading);color:#fff}
 .regions-card i{display:block;width:38px;height:2px;background:var(--green);margin:12px 0 13px}
-.regions-card span{display:block;font-size:15px;font-weight:650;line-height:1.38;color:rgba(255,255,255,.96)}
+.regions-card span{display:block;font-size:15px;font-weight:650;line-height:1.38;color:rgba(255,255,255,.98)}
 @media(max-width:1080px){.regions-modern-shell{grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr)}.approach-overlay{width:min(50%,340px)}.regions-card{min-height:118px;padding:18px}.regions-card span{font-size:14px}}
 @media(max-width:900px){.regions-modern-shell{grid-template-columns:1fr}.regions-modern-copy{padding:0 0 8px}.regions-modern-copy h2{max-width:15ch}.regions-modern-media{min-height:650px}.approach-overlay{width:min(48%,360px)}}
 @media(max-width:620px){.regions-modern{padding:72px 0}.regions-modern-media{min-height:760px}.regions-modern-media img{object-position:54% center}.approach-overlay{top:18px;left:18px;right:18px;width:auto;padding:17px 18px}.approach-overlay p{font-size:13px}.regions-cards{left:18px;right:18px;bottom:18px;grid-template-columns:1fr;gap:9px}.regions-card{min-height:auto;padding:16px 17px}.regions-card b{font-size:25px}.regions-card i{margin:8px 0 9px}.regions-card span{font-size:13px}.market-chips span{padding:10px 13px;font-size:12px}}
