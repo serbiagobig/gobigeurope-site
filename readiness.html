@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Оценка готовности к международному масштабированию — GO BIG</title>
+<meta name="description" content="Интерактивная оценка готовности компании к выходу на международные рынки по методике Startup Academy Go Big."/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap');
+:root{--green:#0B6B45;--green-dark:#09583a;--navy:#0B2C63;--graphite:#2C3138;--soft:#F3F5F7;--warm:#F6F5F1;--line:#D9E0E7;--text:#1F2A3D;--muted:#5F6C7C;--white:#fff;--shadow:0 18px 48px rgba(17,29,47,.08);--font-body:"Manrope",Arial,sans-serif;--font-heading:"Source Serif 4",Georgia,serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:var(--font-body);color:var(--text);background:#fff}a{text-decoration:none;color:inherit}.wrap{width:min(1120px,calc(100% - 40px));margin:0 auto}
+header{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.97);border-bottom:1px solid rgba(11,44,99,.10)}.head{min-height:84px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:14px}.mark{width:42px;height:52px;background:var(--green)}.brand strong{display:block;font:700 27px/1 var(--font-heading);color:var(--green)}.brand small{display:block;margin-top:5px;font-size:11px;color:var(--green)}.back{font-size:14px;font-weight:700;color:var(--navy)}
+.hero{background:linear-gradient(135deg,#eef2f5 0%,#f8f7f3 55%,#fff 100%);padding:76px 0 68px}.eyebrow{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:20px}.hero h1{font:700 clamp(40px,5vw,68px)/.98 var(--font-heading);letter-spacing:-.035em;color:var(--navy);max-width:900px;margin:0}.hero p{margin:24px 0 0;max-width:820px;font-size:18px;line-height:1.7;color:var(--muted)}.meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.meta span{padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13px;font-weight:700;color:#344156}
+.assessment{padding:54px 0 90px;background:#fff}.assessment-shell{display:grid;grid-template-columns:280px 1fr;gap:30px;align-items:start}.side{position:sticky;top:112px;border:1px solid var(--line);border-radius:24px;padding:24px;background:var(--warm)}.side-title{font-weight:800;color:var(--navy);margin-bottom:18px}.progress-track{height:8px;background:#dfe5e8;border-radius:999px;overflow:hidden}.progress-bar{height:100%;width:0;background:var(--green);transition:width .25s ease}.progress-copy{margin-top:10px;font-size:13px;color:var(--muted)}.module-list{display:grid;gap:10px;margin-top:24px}.module-dot{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.4;color:var(--muted)}.module-dot b{width:24px;height:24px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;border:1px solid var(--line);color:var(--navy);flex:0 0 auto}.module-dot.active{color:var(--navy);font-weight:700}.module-dot.active b{background:var(--green);border-color:var(--green);color:#fff}.scale{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}.scale strong{font-size:13px;color:var(--navy)}.scale div{font-size:12px;color:var(--muted);margin-top:7px;line-height:1.45}
+.panel{min-width:0}.module{display:none}.module.active{display:block}.module-kicker{font-size:13px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--green);margin-bottom:10px}.module h2{font:700 clamp(32px,4vw,48px)/1 var(--font-heading);letter-spacing:-.03em;color:var(--navy);margin:0}.module-intro{margin:16px 0 28px;color:var(--muted);line-height:1.65}.question{border:1px solid var(--line);border-radius:20px;padding:22px;margin-bottom:14px;background:#fff;box-shadow:0 10px 28px rgba(17,29,47,.04)}.question-title{font-size:16px;font-weight:700;line-height:1.5;color:#29364b;margin-bottom:16px}.choices{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.choice{position:relative}.choice input{position:absolute;opacity:0;pointer-events:none}.choice label{min-height:58px;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;padding:8px;font-weight:700;color:var(--navy);cursor:pointer;background:#f8fafb;transition:.15s ease}.choice input:focus-visible+label{outline:3px solid rgba(11,107,69,.22);outline-offset:2px}.choice input:checked+label{background:var(--green);border-color:var(--green);color:#fff}.choice label span{display:block}.choice label small{display:block;font-size:10px;font-weight:600;opacity:.78;margin-top:3px}.actions{display:flex;justify-content:space-between;gap:14px;margin-top:28px;flex-wrap:wrap}.btn{min-height:54px;padding:0 26px;border:0;border-radius:0;display:inline-flex;align-items:center;justify-content:center;font:700 15px var(--font-body);cursor:pointer}.btn-primary{background:var(--green);color:#fff}.btn-primary:hover{background:var(--green-dark)}.btn-secondary{background:#fff;color:var(--navy);border:1px solid var(--line)}.notice{display:none;margin-top:16px;padding:14px 16px;border-left:4px solid #b26b22;background:#fff7ec;color:#70451d;font-size:14px}.notice.show{display:block}
+.result{display:none;padding:70px 0 94px;background:var(--soft)}.result.show{display:block}.result-top{display:grid;grid-template-columns:260px 1fr;gap:34px;align-items:center}.score-ring{width:230px;height:230px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--green) 0deg,#dfe5e8 0deg);position:relative}.score-ring:after{content:"";position:absolute;inset:18px;border-radius:50%;background:#fff}.score-number{position:relative;z-index:2;text-align:center;color:var(--navy)}.score-number strong{display:block;font:700 62px/1 var(--font-heading)}.score-number span{font-size:13px;font-weight:700;color:var(--muted)}.result h2{font:700 clamp(36px,4.5vw,58px)/1 var(--font-heading);letter-spacing:-.03em;color:var(--navy);margin:0}.result-status{margin-top:16px;font-size:20px;line-height:1.55;color:#334157}.result-note{margin-top:14px;color:var(--muted);line-height:1.7}.breakdown{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:38px}.metric{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px}.metric-head{display:flex;justify-content:space-between;gap:15px;align-items:center}.metric-head strong{color:var(--navy)}.metric-head span{font-weight:800;color:var(--green)}.metric-track{height:8px;background:#e4e9ec;border-radius:999px;margin-top:14px;overflow:hidden}.metric-fill{height:100%;background:var(--green);width:0}.advice{margin-top:26px;background:#fff;border-left:5px solid var(--green);padding:26px 28px}.advice h3{font:700 28px/1.1 var(--font-heading);color:var(--navy);margin:0}.advice p{margin:12px 0 0;color:var(--muted);line-height:1.7}.result-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px}.privacy{margin-top:20px;font-size:12px;color:var(--muted)}
+footer{background:var(--graphite);color:#fff;padding:34px 0}.foot{display:flex;justify-content:space-between;gap:24px}.foot small{color:rgba(255,255,255,.64)}
+@media(max-width:900px){.assessment-shell{grid-template-columns:1fr}.side{position:relative;top:auto}.module-list{grid-template-columns:repeat(2,1fr)}.result-top{grid-template-columns:1fr}.score-ring{width:190px;height:190px}.breakdown{grid-template-columns:1fr}}
+@media(max-width:640px){.wrap{width:min(100% - 26px,1120px)}.head{min-height:72px}.brand small{display:none}.hero{padding:52px 0}.hero p{font-size:16px}.module-list{grid-template-columns:1fr}.question{padding:18px}.choices{grid-template-columns:repeat(2,1fr)}.choice label{min-height:62px}.actions .btn{width:100%}.result-actions .btn{width:100%}.foot{flex-direction:column}.score-number strong{font-size:52px}}
+@media print{header,.hero,.assessment,footer,.result-actions,.privacy{display:none!important}.result{display:block!important;padding:20px;background:#fff}.wrap{width:100%}.score-ring{break-inside:avoid}.metric,.advice{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header><div class="wrap head"><a class="brand" href="index.html"><span class="mark"></span><span><strong>GO BIG</strong><small>Think Global. Grow Smart.</small></span></a><a class="back" href="international.html">← Международное развитие</a></div></header>
+<main>
+<section class="hero"><div class="wrap"><div class="eyebrow">Startup Academy Go Big · диагностика</div><h1>Оценка готовности к международному масштабированию</h1><p>Проверьте, насколько компания готова к выходу на новые рынки. Диагностика охватывает выбор рынка, модель выхода, продукт, партнёрства, риски и операционную готовность.</p><div class="meta"><span>40 утверждений</span><span>4 модуля</span><span>Шкала 0–3</span><span>Около 10 минут</span></div></div></section>
+<section class="assessment" id="assessment"><div class="wrap assessment-shell">
+<aside class="side"><div class="side-title">Ваш прогресс</div><div class="progress-track"><div class="progress-bar" id="progressBar"></div></div><div class="progress-copy" id="progressCopy">0 из 40 ответов</div><div class="module-list" id="moduleList"></div><div class="scale"><strong>Шкала оценки</strong><div><b>0</b> — не проработано</div><div><b>1</b> — есть общее понимание</div><div><b>2</b> — частично проработано</div><div><b>3</b> — полностью проработано</div></div></aside>
+<div class="panel" id="panel"></div>
+</div></section>
+<section class="result" id="result"><div class="wrap"><div class="result-top"><div class="score-ring" id="scoreRing"><div class="score-number"><strong id="scorePct">0%</strong><span>готовность</span></div></div><div><div class="eyebrow">Результат диагностики</div><h2 id="resultTitle">Ваша готовность к масштабированию</h2><div class="result-status" id="resultStatus"></div><p class="result-note">Оценка показывает текущую степень проработки ключевых элементов международного выхода. Это не «экзамен», а инструмент, который помогает увидеть сильные стороны и зоны, требующие внимания.</p></div></div><div class="breakdown" id="breakdown"></div><div class="advice"><h3>Следующий практический шаг</h3><p id="adviceText"></p></div><div class="result-actions"><a class="btn btn-primary" id="contactResult" href="mailto:info@tesla.rs">Обсудить результат с GO BIG</a><button class="btn btn-secondary" type="button" id="printBtn">Сохранить результат</button><button class="btn btn-secondary" type="button" id="restartBtn">Пройти заново</button></div><div class="privacy">Ответы и результат рассчитываются только в вашем браузере и не отправляются на сервер.</div></div></section>
+</main>
+<footer><div class="wrap foot"><div><strong>GO BIG</strong><br><small>Think Global. Grow Smart.</small></div><small>Serbia · Novi Sad · info@tesla.rs</small></div></footer>
+<script>
+const modules=[
+ {title:'Рынки и направление',max:33,sections:[
+  {title:'Понимание рынка',questions:[
+   'Мы понимаем ключевые характеристики рынка в выбранной стране.',
+   'Мы можем описать, как лица, принимающие решения на выбранном рынке, принимают решения о покупке.',
+   'Мы знаем институты развития — торгово-промышленные палаты, технопарки, агентства развития и другие — и понимаем их роль в экосистеме выбранной страны.',
+   'Мы можем определить и описать ключевые барьеры для входа на рынок.',
+   'Мы понимаем, как новые игроки обычно выходят на этот рынок.'
+  ]},
+  {title:'Выбор рынка',questions:[
+   'Мы выбрали 1–2 приоритетных рынка и понимаем, почему выбрали именно их.',
+   'Мы оценили спрос на наш продукт.',
+   'Мы понимаем уровень конкуренции и можем назвать основных конкурентов на целевом рынке.',
+   'Мы можем перечислить наши конкурентные преимущества.',
+   'Мы понимаем риски, связанные с выбором этих рынков.',
+   'Мы не выбираем рынок только потому, что он большой или сейчас считается популярным.'
+  ]}
+ ]},
+ {title:'Go-to-Market и продукт',max:42,sections:[
+  {title:'Модель выхода на рынок',questions:[
+   'У нас есть общее понимание стратегии выхода на рынок.',
+   'Мы выбрали подходящую модель выхода и понимаем, почему выбрали именно её.',
+   'Мы можем описать этапы: выход на рынок → пилот → закрепление → масштабирование.',
+   'Мы рассматриваем пилотный проект как возможную точку входа.',
+   'Мы понимаем, кто будет содействовать нашему выходу на рынок.',
+   'Мы понимаем, какие ресурсы потребуются для выхода.',
+   'Мы учитываем риски выбранной модели.'
+  ]},
+  {title:'Продукт и позиционирование',questions:[
+   'Мы понимаем, что продукт необходимо адаптировать под рынок, и знаем, что именно нужно сделать.',
+   'Мы понимаем ценность нашего продукта для клиентов на выбранном рынке.',
+   'Мы адаптировали или готовы адаптировать ценностное предложение.',
+   'Мы понимаем требования к качеству и соответствию стандартам.',
+   'Мы учитываем регуляторные ограничения.',
+   'Мы адаптируем смысл материалов под рынок, а не просто переводим их.',
+   'Мы учитываем культурные различия.'
+  ]}
+ ]},
+ {title:'Партнёры и выход на рынок',max:27,sections:[
+  {title:'Партнёры',questions:[
+   'Мы понимаем, какие типы партнёров существуют на целевом рынке и какой тип партнёра нужен именно нам.',
+   'Мы понимаем, почему партнёру будет интересно работать с нами и какую ценность мы ему предлагаем.',
+   'Мы понимаем, как партнёр будет зарабатывать на нашем продукте.'
+  ]},
+  {title:'Стратегия партнёрства',questions:[
+   'У нас есть ясное понимание модели сотрудничества и того, как будет выстроено взаимодействие с партнёром.',
+   'Мы понимаем ожидания партнёра.',
+   'Мы понимаем ответственность каждой стороны.',
+   'Мы готовы формализовать договорённости.',
+   'Мы понимаем, что партнёрство требует активного управления.',
+   'Мы ясно понимаем риски выбранной бизнес-модели.'
+  ]}
+ ]},
+ {title:'Риски и операционная готовность',max:18,sections:[
+  {title:'Юридическая структура',questions:[
+   'Мы понимаем, в какой юридической форме будем работать на новом рынке.',
+   'Мы понимаем юридические риски выбранной бизнес-модели.',
+   'Мы учитываем вопросы защиты интеллектуальной собственности.',
+   'Мы понимаем регуляторные ограничения.'
+  ]},
+  {title:'Операционная модель',questions:[
+   'Мы знаем, кто отвечает в компании за международное направление.',
+   'Мы понимаем, как будет организована ежедневная операционная работа.'
+  ]}
+ ]}
+];
+let current=0;const answers={};let qCounter=0;modules.forEach(m=>m.sections.forEach(s=>s.questions.forEach(()=>{answers[qCounter++]=null})));const totalQuestions=qCounter;
+const panel=document.getElementById('panel'),moduleList=document.getElementById('moduleList');
+function buildModules(){let globalIndex=0;modules.forEach((m,mi)=>{const nav=document.createElement('div');nav.className='module-dot'+(mi===0?' active':'');nav.innerHTML=`<b>${mi+1}</b><span>${m.title}</span>`;moduleList.appendChild(nav);const section=document.createElement('section');section.className='module'+(mi===0?' active':'');section.dataset.module=mi;let html=`<div class="module-kicker">Модуль ${mi+1} из ${modules.length}</div><h2>${m.title}</h2><p class="module-intro">Оцените каждое утверждение по шкале от 0 до 3. Максимум за модуль — ${m.max} баллов.</p>`;m.sections.forEach(sub=>{html+=`<h3 style="font:700 23px/1.15 var(--font-heading);color:var(--navy);margin:28px 0 14px">${sub.title}</h3>`;sub.questions.forEach(q=>{const idx=globalIndex++;html+=`<div class="question" data-q="${idx}"><div class="question-title">${q}</div><div class="choices">${[0,1,2,3].map(v=>`<div class="choice"><input type="radio" name="q${idx}" id="q${idx}v${v}" value="${v}"><label for="q${idx}v${v}"><span>${v}<small>${['Не проработано','Общее понимание','Частично','Полностью'][v]}</small></span></label></div>`).join('')}</div></div>`})});html+=`<div class="notice" id="notice${mi}">Ответьте, пожалуйста, на все вопросы этого модуля.</div><div class="actions">${mi>0?'<button class="btn btn-secondary prev" type="button">← Назад</button>':'<span></span>'}<button class="btn btn-primary next" type="button">${mi===modules.length-1?'Показать результат':'Следующий модуль →'}</button></div>`;section.innerHTML=html;panel.appendChild(section)});panel.addEventListener('change',e=>{if(e.target.matches('input[type=radio]')){answers[Number(e.target.name.slice(1))]=Number(e.target.value);updateProgress()}});panel.addEventListener('click',e=>{if(e.target.classList.contains('next'))nextModule();if(e.target.classList.contains('prev'))showModule(current-1)})}
+function moduleRange(mi){let start=0;for(let i=0;i<mi;i++)modules[i].sections.forEach(s=>start+=s.questions.length);let count=0;modules[mi].sections.forEach(s=>count+=s.questions.length);return [start,start+count]}
+function nextModule(){const [a,b]=moduleRange(current);const complete=Array.from({length:b-a},(_,i)=>answers[a+i]).every(v=>v!==null);document.getElementById('notice'+current).classList.toggle('show',!complete);if(!complete)return;if(current<modules.length-1)showModule(current+1);else showResult()}
+function showModule(i){current=i;document.querySelectorAll('.module').forEach((el,idx)=>el.classList.toggle('active',idx===i));document.querySelectorAll('.module-dot').forEach((el,idx)=>el.classList.toggle('active',idx===i));window.scrollTo({top:document.getElementById('assessment').offsetTop-70,behavior:'smooth'})}
+function updateProgress(){const done=Object.values(answers).filter(v=>v!==null).length;document.getElementById('progressBar').style.width=(done/totalQuestions*100)+'%';document.getElementById('progressCopy').textContent=`${done} из ${totalQuestions} ответов`}
+function interpretation(p){if(p<=40)return 'Пока не готовы к выходу на международный рынок.';if(p<=60)return 'Базовое понимание есть, но подготовки пока недостаточно.';if(p<=75)return 'Средняя готовность — несколько областей требуют доработки.';if(p<=90)return 'Высокая готовность — можно переходить к следующему уровню подготовки.';return 'Очень высокая готовность — вы близки к практическому выходу на рынок.'}
+const adviceByModule=[
+ 'Сфокусируйтесь на выборе 1–2 приоритетных рынков: проверьте спрос, конкурентов, барьеры входа, институты развития и реальные точки входа.',
+ 'Соберите чёткую модель выхода: стратегия → пилот → закрепление → масштабирование. Параллельно адаптируйте продукт, ценностное предложение и материалы под требования конкретного рынка.',
+ 'Определите нужный тип партнёра, его экономическую мотивацию, роли сторон и модель управления партнёрством. Это снизит риск случайных и неработающих контактов.',
+ 'Проверьте юридическую модель, регуляторные ограничения, защиту интеллектуальной собственности и внутреннюю ответственность за международное направление.'
+];
+function showResult(){let idx=0,total=0;const scores=modules.map(m=>{let s=0;m.sections.forEach(sec=>sec.questions.forEach(()=>{s+=answers[idx++]||0}));total+=s;return s});const pct=Math.round(total/120*100);document.getElementById('assessment').style.display='none';const result=document.getElementById('result');result.classList.add('show');document.getElementById('scorePct').textContent=pct+'%';document.getElementById('scoreRing').style.background=`conic-gradient(var(--green) ${pct*3.6}deg,#dfe5e8 0deg)`;document.getElementById('resultStatus').textContent=interpretation(pct);document.getElementById('resultTitle').textContent=`Готовность к международному масштабированию — ${pct}%`;const breakdown=document.getElementById('breakdown');breakdown.innerHTML=modules.map((m,i)=>{const mp=Math.round(scores[i]/m.max*100);return `<div class="metric"><div class="metric-head"><strong>${m.title}</strong><span>${scores[i]} / ${m.max}</span></div><div class="metric-track"><div class="metric-fill" style="width:${mp}%"></div></div></div>`}).join('');let weakest=0;modules.forEach((m,i)=>{if(scores[i]/m.max<scores[weakest]/modules[weakest].max)weakest=i});document.getElementById('adviceText').textContent=adviceByModule[weakest];document.getElementById('contactResult').href=`mailto:info@tesla.rs?subject=${encodeURIComponent('GO BIG — результат оценки готовности '+pct+'%')}&body=${encodeURIComponent('Здравствуйте! Я прошёл(а) оценку готовности к международному масштабированию на сайте GO BIG. Мой результат: '+pct+'%. Хотел(а) бы обсудить результат и следующий шаг.')}`;window.scrollTo({top:result.offsetTop-30,behavior:'smooth'})}
+document.getElementById('restartBtn').addEventListener('click',()=>{Object.keys(answers).forEach(k=>answers[k]=null);document.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);document.getElementById('result').classList.remove('show');document.getElementById('assessment').style.display='block';updateProgress();showModule(0)});document.getElementById('printBtn').addEventListener('click',()=>window.print());buildModules();updateProgress();
+</script>
+</body>
+</html>
