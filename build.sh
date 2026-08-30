@@ -45,6 +45,7 @@ p.write_text(s, encoding='utf-8')
 
 p = Path('dist/international.html')
 s = p.read_text(encoding='utf-8')
+s = s.replace('Международное развитие — это не только экспорт.', 'The Advantages of Operating in International Markets in the Modern World')
 link = '<link rel="stylesheet" href="international-hero.css"/>'
 if 'international-hero.css' not in s:
     s = s.replace('</head>', link + '\n</head>', 1)
