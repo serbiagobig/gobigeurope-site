@@ -21,5 +21,6 @@ if [ -d cz ]; then cp -R cz dist/cz; fi
 
 cp home-premium.css dist/home-premium.css
 cp international-hero.css dist/international-hero.css
+cp partners-ecosystem.css dist/partners-ecosystem.css
 
 touch dist/.nojekyll
