@@ -61,10 +61,75 @@
   font-size:12px !important;
   letter-spacing:.14em !important;
 }
+
+/* Projects: more compact cards so the CTA is visible without another full screen. */
+.projects-showcase{
+  padding:70px 0 62px !important;
+}
+.projects-head{
+  margin-bottom:26px !important;
+}
+.project-card{
+  min-height:430px !important;
+}
+.project-top{
+  left:22px !important;
+  right:22px !important;
+  top:20px !important;
+}
+.project-type{
+  font-size:13px !important;
+  letter-spacing:.11em !important;
+}
+.project-type:before{
+  width:8px !important;
+  height:8px !important;
+}
+.project-no{
+  font-size:13px !important;
+  letter-spacing:.10em !important;
+  color:rgba(255,255,255,.90) !important;
+}
+.project-copy{
+  left:26px !important;
+  right:26px !important;
+  bottom:22px !important;
+}
+.project-copy h3{
+  font-size:clamp(27px,2vw,34px) !important;
+  line-height:1.01 !important;
+}
+.project-copy p{
+  margin-top:10px !important;
+  font-size:13px !important;
+}
+.project-more{
+  margin-top:16px !important;
+}
+.projects-foot{
+  margin-top:20px !important;
+}
+.projects-all{
+  min-height:48px !important;
+  font-size:0 !important;
+  padding:0 28px !important;
+}
+.projects-all::before{
+  content:"Показать другие проекты";
+  font-size:14px;
+  font-weight:800;
+}
+.projects-all span{
+  font-size:18px !important;
+}
+
 @media(max-width:1050px){
   .hero{min-height:570px !important;background-position:58% center !important;}
   .hero h1{font-size:clamp(36px,4.2vw,48px) !important;max-width:12ch !important;}
   .hero .lead,.hero p{font-size:16px !important;}
+  .project-card,
+  .project-card:last-child{min-height:410px !important;}
+  .project-type,.project-no{font-size:12px !important;}
 }
 @media(max-width:760px){
   .hero{
@@ -83,4 +148,17 @@
   }
   .hero h1{font-size:clamp(34px,8.4vw,44px) !important;line-height:1.03 !important;max-width:12ch !important;}
   .hero .lead,.hero p{max-width:94% !important;font-size:14px !important;line-height:1.48 !important;}
+  .projects-showcase{padding:58px 0 54px !important;}
+  .project-card,
+  .project-card:last-child{min-height:420px !important;}
+  .project-type,.project-no{font-size:12px !important;}
+  .project-copy h3{font-size:29px !important;}
+}
+@media(max-width:460px){
+  .project-card,
+  .project-card:last-child{min-height:390px !important;}
+  .project-top{left:18px !important;right:18px !important;top:17px !important;}
+  .project-copy{left:20px !important;right:20px !important;bottom:18px !important;}
+  .project-copy h3{font-size:27px !important;}
+  .projects-all{width:100%;justify-content:center;}
 }
