@@ -351,18 +351,24 @@
 .form-success p{color:var(--muted);line-height:1.65;}
 
 /* Legal contacts in the footer */
-footer .foot{align-items:flex-start;}
+footer .foot{
+  align-items:flex-start;
+  justify-content:space-between;
+}
 footer .foot>small{
-  max-width:760px;
+  width:520px;
+  max-width:52%;
+  margin-left:auto;
+  padding-left:28px;
   font-size:0 !important;
   line-height:1.65;
   text-align:right;
 }
 footer .foot>small::before{
-  content:"GO BIG, S.R.O.\A Doudlebská 1312/4, Praha 4 – Nusle, PSČ 140 00, Czech Republic · ID: 24178632 · Tax Number: CZ24178632\A\A ELENA NAUMOVA PR GO BIG (u mirovanju)\A Živojina Ćuluma 32, 21000 Novi Sad, Srbija · PIB: 112844620 · MB: 66392147";
+  content:"GO BIG, S.R.O.\A Doudlebská 1312/4\A Praha 4 – Nusle, PSČ 140 00, Czech Republic\A ID: 24178632 · Tax Number: CZ24178632\A\A ELENA NAUMOVA PR GO BIG (u mirovanju)\A Živojina Ćuluma 32, 21000 Novi Sad, Srbija\A PIB: 112844620 · MB: 66392147";
   display:block;
   color:rgba(255,255,255,.72);
-  font:500 12px/1.7 var(--font-body);
+  font:500 12px/1.72 var(--font-body);
   white-space:pre-line;
 }
 
@@ -409,7 +415,13 @@ footer .foot>small::before{
   .form-actions-right{width:100%;}
   .form-actions-right .form-btn{flex:1;}
   .form-error{margin:0 18px 16px;}
-  footer .foot>small{max-width:none;text-align:left;}
+  footer .foot>small{
+    width:auto;
+    max-width:none;
+    margin-left:0;
+    padding-left:0;
+    text-align:left;
+  }
 }
 @media(max-width:460px){
   .project-card,
