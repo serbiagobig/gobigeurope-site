@@ -1,0 +1,330 @@
+.partners{
+  position:relative;
+  overflow:hidden;
+  padding:88px 0 92px !important;
+  background:
+    radial-gradient(circle at 68% 42%,rgba(42,151,98,.16) 0%,rgba(42,151,98,.05) 23%,rgba(7,15,22,0) 44%),
+    linear-gradient(135deg,#071019 0%,#0a151b 56%,#061016 100%) !important;
+  color:#fff;
+}
+.partners .wrap{
+  position:relative;
+  min-height:760px;
+}
+.partners h2{
+  position:relative;
+  z-index:4;
+  width:32%;
+  min-height:315px;
+  margin:0;
+  color:#55b77e !important;
+  font-family:var(--font-body) !important;
+  font-size:12px !important;
+  font-weight:800 !important;
+  line-height:1.3 !important;
+  letter-spacing:.18em !important;
+  text-transform:uppercase;
+}
+.partners h2::before{
+  content:"Рост через\A правильные связи";
+  white-space:pre-line;
+  position:absolute;
+  left:0;
+  top:40px;
+  width:360px;
+  color:#fff;
+  font-family:var(--font-heading);
+  font-size:clamp(45px,4vw,62px);
+  font-weight:600;
+  line-height:1.02;
+  letter-spacing:-.035em;
+  text-transform:none;
+}
+.partners h2::after{
+  content:"GO BIG работает не как внешний консультант,\A а как точка входа в сеть компаний, экспертов\A и институтов на целевых рынках.";
+  white-space:pre-line;
+  position:absolute;
+  left:0;
+  top:195px;
+  width:385px;
+  color:rgba(255,255,255,.68);
+  font-family:var(--font-body);
+  font-size:15px;
+  font-weight:400;
+  line-height:1.72;
+  letter-spacing:0;
+  text-transform:none;
+}
+.partners .partner-grid{
+  position:absolute !important;
+  z-index:2;
+  top:0;
+  right:0;
+  width:68%;
+  height:600px;
+  margin:0 !important;
+  display:block !important;
+  background:
+    radial-gradient(circle at 52% 52%,transparent 0 88px,rgba(92,205,145,.34) 89px 90px,transparent 91px 145px,rgba(92,205,145,.14) 146px 147px,transparent 148px 212px,rgba(92,205,145,.08) 213px 214px,transparent 215px 286px,rgba(92,205,145,.06) 287px 288px,transparent 289px),
+    radial-gradient(circle at 52% 52%,rgba(53,183,113,.07),transparent 37%);
+}
+.partners .partner-grid::before{
+  content:"GO BIG";
+  position:absolute;
+  z-index:5;
+  left:52%;
+  top:52%;
+  width:174px;
+  height:174px;
+  transform:translate(-50%,-50%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(121,223,166,.70);
+  border-radius:50%;
+  background:radial-gradient(circle at 50% 36%,rgba(45,115,79,.28),rgba(8,22,27,.96) 67%);
+  box-shadow:0 0 0 10px rgba(35,130,82,.04),0 0 36px rgba(80,205,137,.22),inset 0 0 28px rgba(62,172,112,.10);
+  color:#fff;
+  font:600 39px/1 var(--font-heading);
+  letter-spacing:.01em;
+}
+.partners .partner-grid::after{
+  content:"Что получает компания   →   Нужные контакты   →   Первые переговоры   →   Локальные партнёры   →   Совместные проекты";
+  position:absolute;
+  z-index:6;
+  left:-47%;
+  top:620px;
+  width:147%;
+  min-height:92px;
+  padding:0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(121,203,156,.42);
+  border-radius:18px;
+  background:linear-gradient(90deg,rgba(18,39,37,.76),rgba(9,25,30,.84));
+  box-shadow:inset 0 0 28px rgba(62,172,112,.04);
+  color:rgba(255,255,255,.88);
+  font:600 14px/1.7 var(--font-body);
+  letter-spacing:.01em;
+  white-space:pre-wrap;
+  text-align:center;
+}
+.partners .partner-card{
+  position:absolute !important;
+  z-index:4;
+  min-height:132px;
+  margin:0 !important;
+  padding:24px 24px !important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:visible;
+  border:1px solid rgba(139,196,164,.38) !important;
+  border-radius:30px !important;
+  background:linear-gradient(135deg,rgba(23,41,43,.88),rgba(12,27,33,.94)) !important;
+  box-shadow:0 14px 34px rgba(0,0,0,.18),inset 0 0 24px rgba(58,151,102,.04);
+  backdrop-filter:blur(8px);
+}
+.partners .partner-card::before{
+  content:"";
+  position:absolute;
+  left:50%;
+  top:-24px;
+  width:48px;
+  height:48px;
+  transform:translateX(-50%);
+  border:1px solid rgba(97,208,144,.58);
+  border-radius:50%;
+  background:radial-gradient(circle at 42% 34%,rgba(75,184,123,.34),rgba(10,38,31,.92) 68%);
+  box-shadow:0 0 22px rgba(73,194,128,.18);
+}
+.partners .partner-card ul{
+  display:none !important;
+}
+.partners .partner-card h3{
+  width:100%;
+  margin:0;
+  color:#fff !important;
+  font-size:0 !important;
+  line-height:1.2 !important;
+  text-align:center;
+}
+.partners .partner-card h3::before,
+.partners .partner-card h3::after{
+  display:block;
+  font-family:var(--font-body);
+  letter-spacing:0;
+}
+.partners .partner-card h3::before{
+  margin-bottom:8px;
+  color:#fff;
+  font-size:18px;
+  font-weight:700;
+  line-height:1.22;
+  white-space:pre-line;
+}
+.partners .partner-card h3::after{
+  color:rgba(255,255,255,.62);
+  font-size:13px;
+  font-weight:500;
+  line-height:1.5;
+  white-space:pre-line;
+}
+.partners .partner-card:nth-child(1){
+  top:0;
+  left:calc(52% - 137px);
+  width:274px;
+}
+.partners .partner-card:nth-child(1) h3::before{content:"Бизнес и отраслевые\A партнёры";}
+.partners .partner-card:nth-child(1) h3::after{content:"локальные компании · дистрибьюторы\A потенциальные заказчики";}
+.partners .partner-card:nth-child(2){
+  top:222px;
+  left:0;
+  width:276px;
+}
+.partners .partner-card:nth-child(2) h3::before{content:"Технологическая\A экосистема";}
+.partners .partner-card:nth-child(2) h3::after{content:"IT · AI · автоматизация\A интеграторы · разработчики";}
+.partners .partner-card:nth-child(3){
+  top:222px;
+  right:0;
+  width:286px;
+}
+.partners .partner-card:nth-child(3) h3::before{content:"Инвестиционное\A сообщество";}
+.partners .partner-card:nth-child(3) h3::after{content:"фонды · частные инвесторы\A инвестиционные площадки";}
+.partners .partner-card:nth-child(2)::after,
+.partners .partner-card:nth-child(3)::after{
+  position:absolute;
+  top:205px;
+  min-height:116px;
+  padding:24px 22px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(139,196,164,.36);
+  border-radius:28px;
+  background:linear-gradient(135deg,rgba(23,41,43,.90),rgba(12,27,33,.96));
+  box-shadow:0 14px 34px rgba(0,0,0,.16),inset 0 0 24px rgba(58,151,102,.04);
+  color:#fff;
+  font:600 15px/1.55 var(--font-body);
+  white-space:pre-line;
+  text-align:center;
+}
+.partners .partner-card:nth-child(2)::after{
+  content:"Университеты и эксперты\A исследования · кадры · компетенции";
+  left:-18px;
+  width:315px;
+}
+.partners .partner-card:nth-child(3)::after{
+  content:"Институты развития и деловые объединения\A ассоциации · палаты · кластеры";
+  right:-6px;
+  width:330px;
+}
+.partners .partner-card:nth-child(1)::before{
+  box-shadow:0 0 26px rgba(73,194,128,.22),0 0 0 1px rgba(89,197,137,.05);
+}
+
+@media(max-width:1100px){
+  .partners .wrap{min-height:735px;}
+  .partners h2{width:31%;}
+  .partners h2::before{width:320px;font-size:48px;}
+  .partners h2::after{width:335px;font-size:14px;}
+  .partners .partner-grid{width:66%;}
+  .partners .partner-card:nth-child(2){width:245px;}
+  .partners .partner-card:nth-child(3){width:250px;}
+  .partners .partner-card:nth-child(2)::after{width:278px;}
+  .partners .partner-card:nth-child(3)::after{width:285px;}
+}
+
+@media(max-width:900px){
+  .partners{padding:70px 0 72px !important;}
+  .partners .wrap{min-height:0;}
+  .partners h2{
+    width:100%;
+    min-height:290px;
+  }
+  .partners h2::before{
+    top:36px;
+    width:100%;
+    font-size:48px;
+  }
+  .partners h2::after{
+    top:166px;
+    width:min(620px,100%);
+    font-size:15px;
+  }
+  .partners .partner-grid{
+    position:relative !important;
+    top:auto;
+    right:auto;
+    width:100%;
+    height:auto;
+    margin-top:14px !important;
+    display:grid !important;
+    grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+    gap:14px !important;
+    background:none;
+  }
+  .partners .partner-grid::before{
+    position:relative;
+    left:auto;
+    top:auto;
+    transform:none;
+    grid-column:1/-1;
+    width:152px;
+    height:152px;
+    margin:0 auto 22px;
+    font-size:34px;
+  }
+  .partners .partner-grid::after{
+    position:relative;
+    left:auto;
+    top:auto;
+    width:auto;
+    min-height:auto;
+    grid-column:1/-1;
+    margin-top:10px;
+    padding:20px 22px;
+    content:"Что получает компания → Нужные контакты → Первые переговоры → Локальные партнёры → Совместные проекты";
+    white-space:normal;
+    line-height:1.8;
+  }
+  .partners .partner-card,
+  .partners .partner-card:nth-child(1),
+  .partners .partner-card:nth-child(2),
+  .partners .partner-card:nth-child(3){
+    position:relative !important;
+    top:auto;
+    right:auto;
+    left:auto;
+    width:auto;
+    min-height:126px;
+  }
+  .partners .partner-card:nth-child(1){grid-column:1/-1;width:min(360px,100%);justify-self:center;}
+  .partners .partner-card:nth-child(2)::after,
+  .partners .partner-card:nth-child(3)::after{
+    position:relative;
+    top:auto;
+    right:auto;
+    left:auto;
+    width:auto;
+    min-height:108px;
+    margin-top:34px;
+    padding:20px 18px;
+  }
+}
+
+@media(max-width:620px){
+  .partners{padding:62px 0 64px !important;}
+  .partners h2{min-height:300px;}
+  .partners h2::before{top:34px;font-size:40px;max-width:10ch;}
+  .partners h2::after{top:158px;font-size:14px;line-height:1.65;}
+  .partners .partner-grid{grid-template-columns:1fr !important;gap:12px !important;}
+  .partners .partner-grid::before{grid-column:auto;width:138px;height:138px;font-size:31px;}
+  .partners .partner-grid::after{grid-column:auto;font-size:13px;text-align:left;}
+  .partners .partner-card:nth-child(1){grid-column:auto;width:100%;}
+  .partners .partner-card:nth-child(2)::after,
+  .partners .partner-card:nth-child(3)::after{margin-top:28px;}
+  .partners .partner-card h3::before{font-size:17px;}
+  .partners .partner-card h3::after{font-size:12px;}
+}
