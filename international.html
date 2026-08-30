@@ -171,7 +171,7 @@ section{padding:92px 0}h2,h3{font-family:var(--font-heading);margin:0;letter-spa
           <button class="form-btn secondary" id="prevStep" type="button" hidden>Назад</button>
           <div class="form-actions-right"><button class="form-btn primary" id="nextStep" type="button">Продолжить</button><button class="form-btn primary" id="submitInquiry" type="submit" hidden>Отправить заявку</button></div>
         </div>
-        <div class="form-success" id="formSuccess"><b>Заявка подготовлена</b><p>Открылось письмо с заполненными данными. Пожалуйста, завершите отправку в вашем почтовом приложении. Следующим шагом мы подключим прямую автоматическую отправку с сайта.</p></div>
+        <div class="form-success" id="formSuccess"><b>Спасибо! Заявка отправлена.</b><p>Мы получили вашу информацию и свяжемся с вами для обсуждения следующего шага.</p></div>
       </form>
     </div>
   </div>
@@ -196,6 +196,7 @@ section{padding:92px 0}h2,h3{font-family:var(--font-heading);margin:0;letter-spa
 (function(){
   const form=document.getElementById('goBigInquiry');
   if(!form)return;
+  const endpoint='https://script.google.com/macros/s/AKfycbwvAu6w98H7hmw9zaKVMjVKQgROOXhgow9CuUDWymmJimuXTKcBDk-QkWhvkGpGwnhQUA/exec';
   const steps=[...form.querySelectorAll('.form-step')];
   const next=document.getElementById('nextStep');
   const prev=document.getElementById('prevStep');
@@ -228,7 +229,7 @@ section{padding:92px 0}h2,h3{font-family:var(--font-heading);margin:0;letter-spa
   }
   next.addEventListener('click',()=>{if(validCurrent())showStep(current+1)});
   prev.addEventListener('click',()=>showStep(current-1));
-  form.addEventListener('submit',(e)=>{
+  form.addEventListener('submit',async(e)=>{
     e.preventDefault();
     if(!validCurrent())return;
     const fd=new FormData(form);
@@ -237,12 +238,29 @@ section{padding:92px 0}h2,h3{font-family:var(--font-heading);margin:0;letter-spa
       if(!value)continue;
       if(grouped[key])grouped[key]+=', '+value;else grouped[key]=value;
     }
-    const lines=['Новая заявка GO BIG',''];
-    Object.entries(grouped).forEach(([key,value])=>lines.push(`${key}: ${value}`));
-    const subject=`Новая заявка GO BIG — ${grouped['Название компании']||'компания'}`;
-    const mailto=`mailto:info@tesla.rs?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n\n'))}`;
-    window.location.href=mailto;
-    steps[current].classList.remove('active');actions.style.display='none';document.querySelector('.inquiry-top').style.display='none';success.classList.add('show');
+    grouped.source=window.location.href;
+    const originalText=submit.textContent;
+    submit.disabled=true;
+    submit.textContent='Отправляем…';
+    error.classList.remove('show');
+    try{
+      await fetch(endpoint,{
+        method:'POST',
+        mode:'no-cors',
+        headers:{'Content-Type':'application/x-www-form-urlencoded;charset=UTF-8'},
+        body:new URLSearchParams(grouped).toString()
+      });
+      steps[current].classList.remove('active');
+      actions.style.display='none';
+      document.querySelector('.inquiry-top').style.display='none';
+      success.classList.add('show');
+      form.reset();
+    }catch(err){
+      error.textContent='Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз чуть позже.';
+      error.classList.add('show');
+      submit.disabled=false;
+      submit.textContent=originalText;
+    }
   });
   showStep(0);
 })();
