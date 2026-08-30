@@ -86,15 +86,15 @@
   opacity:0;visibility:hidden;pointer-events:none;transition:opacity .18s ease,transform .18s ease,visibility .18s ease;
 }
 .partners .partner-card:nth-child(1)::before{
-  content:"ОРГАНИЗАЦИИ В СЕТИ\A\A TESLA Alijansa HQ — Novi Sad\A Winno — Hungary";
+  content:"TESLA Alijansa HQ — Novi Sad\A Winno — Hungary";
   left:50%;top:calc(100% + 14px);transform:translate(-50%,8px);
 }
 .partners .partner-card:nth-child(2)::before{
-  content:"ОРГАНИЗАЦИИ В СЕТИ\A\A Science and Technology Park Novi Sad";
+  content:"Science and Technology Park Novi Sad";
   left:calc(100% + 14px);top:0;transform:translate(8px,0);
 }
 .partners .partner-card:nth-child(3)::before{
-  content:"ИНВЕСТИЦИОННЫЙ КОНТУР\A\A Профильные фонды, частные инвесторы и площадки подключаются под задачу конкретного проекта.";
+  content:"Профильные фонды, частные инвесторы и площадки подключаются под задачу конкретного проекта.";
   right:calc(100% + 14px);top:0;transform:translate(-8px,0);
 }
 .partners .partner-card:nth-child(1):hover::before,
@@ -138,10 +138,10 @@
   opacity:0;visibility:hidden;pointer-events:none;transform:translateY(8px);transition:opacity .18s ease,transform .18s ease,visibility .18s ease;
 }
 .partners .partner-card:nth-child(2)>ul::after{
-  content:"ОРГАНИЗАЦИИ В СЕТИ\A\A Faculty of Technical Sciences\A University of Novi Sad";left:0;
+  content:"Faculty of Technical Sciences\A University of Novi Sad";left:0;
 }
 .partners .partner-card:nth-child(3)>ul::after{
-  content:"ОРГАНИЗАЦИИ В СЕТИ\A\A Chamber of Commerce and Industry of Vojvodina";right:0;
+  content:"Chamber of Commerce and Industry of Vojvodina";right:0;
 }
 .partners .partner-card:nth-child(2)>ul:hover::after,
 .partners .partner-card:nth-child(3)>ul:hover::after{opacity:1;visibility:visible;transform:translateY(0);}
