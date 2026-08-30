@@ -17,7 +17,7 @@ function doPost(e) {
     if (String(payload.website2 || '').trim()) return json_({ok:true}); // honeypot
 
     const props = PropertiesService.getScriptProperties();
-    const emailTo = props.getProperty('EMAIL_TO');
+    const emailTo = props.getProperty('EMAIL_TO') || 'companygobig@gmail.com';
     const botToken = props.getProperty('TELEGRAM_BOT_TOKEN');
     const chatId = props.getProperty('TELEGRAM_CHAT_ID');
 
