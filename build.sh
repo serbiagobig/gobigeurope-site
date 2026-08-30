@@ -15,6 +15,7 @@ cp "ChatGPT Image 30 авг. 2026 г., 12_21_44.png" dist/assets/regional-busine
 cp "Serbian market.png" dist/assets/projects-serbia.png
 cp "Technical project.png" dist/assets/projects-tech.png
 cp "book publishing.png" dist/assets/projects-publishing.png
+cp "nizkii-ugol-zrenia-ofisnogo-zdania.jpg" dist/assets/digital-transformation-hero.jpg
 
 if [ -d en ]; then cp -R en dist/en; fi
 if [ -d cz ]; then cp -R cz dist/cz; fi
