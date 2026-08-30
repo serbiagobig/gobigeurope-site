@@ -4,6 +4,8 @@ rm -rf dist
 mkdir -p dist
 cp index.html international.html digital-ai.html education-hr.html README.txt dist/ 2>/dev/null || true
 if [ -d assets ]; then cp -R assets dist/assets; fi
+if [ -d en ]; then cp -R en dist/en; fi
+if [ -d cz ]; then cp -R cz dist/cz; fi
 python3 - <<'PY'
 from pathlib import Path
 import base64
@@ -49,9 +51,10 @@ s = s.replace(
     'Международное развитие — это не только экспорт.',
     'Преимущества работы на международных рынках в современном мире'
 )
+# Language switcher foundation for the current Russian master page.
 s = s.replace(
-    '<p class="section-lead" style="margin-top:20px">Мы помогаем превратить намерение выйти на новый рынок в понятный маршрут: от выбора страны и бизнес-модели до первых переговоров, партнёров и устойчивого присутствия.</p>',
-    '<p class="section-lead" style="margin-top:20px">Мы помогаем превратить намерение выйти на новый рынок в понятный маршрут: от выбора страны и бизнес-модели до первых переговоров, партнёров и устойчивого присутствия.</p>'
+    '<a href="#">RU&nbsp;&nbsp;/&nbsp;&nbsp;EN</a>',
+    '<span class="lang-switch"><a href="international.html" aria-current="page">RU</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="en/index.html">EN</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="cz/index.html">CZ</a></span>'
 )
 link = '<link rel="stylesheet" href="international-hero.css"/>'
 if 'international-hero.css' not in s:
