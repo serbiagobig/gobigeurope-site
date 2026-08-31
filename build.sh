@@ -4,7 +4,7 @@ set -eu
 rm -rf dist
 mkdir -p dist/assets
 
-cp index.html international.html digital-ai.html education-hr.html readiness.html README.txt dist/ 2>/dev/null || true
+cp index.html international.html digital-ai.html education-hr.html readiness.html agro-tag.html README.txt dist/ 2>/dev/null || true
 
 if [ -d assets ]; then
   cp -R assets/. dist/assets/
