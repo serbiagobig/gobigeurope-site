@@ -16,6 +16,10 @@ cp "Serbian market.png" dist/assets/projects-serbia.png
 cp "Technical project.png" dist/assets/projects-tech.png
 cp "book publishing.png" dist/assets/projects-publishing.png
 cp "nizkii-ugol-zrenia-ofisnogo-zdania.jpg" dist/assets/digital-transformation-hero.jpg
+cp "Plum Sum.png" dist/assets/project-plum-sum.png
+cp "сельскохозяйственный_комплекс_на_закате.png" dist/assets/project-agriculture.png
+cp "современная_лаборатория_учёные_за_работой.png" dist/assets/project-laboratory.png
+cp "Bank.png" dist/assets/project-bank.png
 
 if [ -d en ]; then cp -R en dist/en; fi
 if [ -d cz ]; then cp -R cz dist/cz; fi
