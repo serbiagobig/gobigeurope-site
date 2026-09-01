@@ -135,6 +135,19 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
+      - name: Ensure homepage typography override is loaded
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = 'home-premium.css'
+          link = '<link rel="stylesheet" href="home-premium.css?v=20260901-6">'
+          if old not in s:
+              s = s.replace('</head>', link + '\n</head>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
