@@ -29,7 +29,7 @@ jobs:
       - name: Build complete site with all assets
         run: sh build.sh
 
-      - name: Add AGRO TAG images
+      - name: Add AGRO TAG images and contact form
         run: |
           cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center.png
           cp "карточка_1-removebg-preview.png" dist/assets/agro-card-01.png
@@ -41,6 +41,7 @@ jobs:
           cp "Карточка 7.png" dist/assets/agro-card-07.png
           cp "Карточка 8.png" dist/assets/agro-card-08.png
           cp "Центральная Азия.png" dist/assets/central-asia.png
+          cp assets/agro-tag-contact.html dist/agro-tag-contact.html
 
       - name: Replace AGRO TAG product images and partner visual
         run: |
@@ -118,7 +119,7 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
-      - name: Balance AGRO TAG initiator descriptions
+      - name: Balance AGRO TAG initiator descriptions and wire contact form
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -126,6 +127,11 @@ jobs:
           s = p.read_text(encoding='utf-8')
           s = s.replace('<p><strong>TESLA Alliance (Сербия)</strong></p>', '<p><strong>TESLA Alliance (Сербия)</strong> — международная бизнес-экосистема и координатор развития AGRO TAG на зарубежных рынках.</p>')
           s = s.replace('<p><strong>Go Big (Чешская Республика)</strong> — международный консалтинг, трансфер технологий и международные образовательные инициативы.</p>', '<p><strong>Go Big (Чешская Республика)</strong> — международный консалтинг, трансфер технологий и развитие бизнеса на зарубежных рынках.</p>')
+          old_cta = '<a class="btn primary" href="mailto:info@atesla.rs?subject=AGRO%20TAG%20partnership">Связаться с нами</a>'
+          new_cta = '<a class="btn primary" href="agro-tag-contact.html" target="_blank" rel="noopener">Связаться с нами</a>'
+          if old_cta not in s:
+              raise SystemExit('AGRO TAG contact CTA not found')
+          s = s.replace(old_cta, new_cta, 1)
           p.write_text(s, encoding='utf-8')
           PY
 
