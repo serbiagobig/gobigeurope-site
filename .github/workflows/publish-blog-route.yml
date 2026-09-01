@@ -1,0 +1,65 @@
+name: Publish GO BIG blog route
+
+on:
+  workflow_run:
+    workflows: ["Deploy GO BIG to GitHub Pages"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-blog-final"
+  cancel-in-progress: true
+
+jobs:
+  patch-and-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current site source
+        uses: actions/checkout@v4
+
+      - name: Download main Pages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: downloaded-pages
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Unpack, add blog route, and wire menu
+        run: |
+          mkdir -p dist
+          TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
+          if [ -z "$TARFILE" ]; then
+            echo "Pages tar artifact not found"
+            find downloaded-pages -maxdepth 3 -type f -print
+            exit 1
+          fi
+          tar -xf "$TARFILE" -C dist
+          cp blog.html dist/blog.html
+          cp assets/blog-data.json dist/assets/blog-data.json
+          python - <<'PY'
+          from pathlib import Path
+          for name in ['international.html', 'index.html', 'digital-ai.html', 'education-hr.html']:
+              p = Path('dist') / name
+              if not p.exists():
+                  continue
+              s = p.read_text(encoding='utf-8')
+              s = s.replace('href="#blog">Блог</a>', 'href="blog.html">Блог</a>')
+              s = s.replace('href="assets/blog/">Блог</a>', 'href="blog.html">Блог</a>')
+              p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Upload final Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy final site
+        uses: actions/deploy-pages@v4
