@@ -2,6 +2,10 @@ name: Sync TESLA blog
 
 on:
   workflow_dispatch:
+  push:
+    paths:
+      - "scripts/sync_tesla_blog.py"
+      - ".github/workflows/sync-tesla-blog.yml"
   schedule:
     - cron: "17 */6 * * *"
 
