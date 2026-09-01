@@ -1,0 +1,66 @@
+name: Deploy AGRO TAG center image
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "agro-tag-image-deploy"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Build site
+        run: sh build.sh
+
+      - name: Put uploaded AGRO TAG image into partnership block
+        run: |
+          curl -fsSL "https://www.gobigeurope.com/agro-tag.html?ts=$(date +%s)" -o dist/agro-tag.html
+          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-generated.png
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+          pattern = r'(<div class="partner-image-placeholder"><img src=")[^"]+(" alt="[^"]*" loading="lazy"/></div>)'
+          replacement = r'\1assets/agro-tag-center-generated.png\2'
+          s, n = re.subn(pattern, replacement, s, count=1)
+          if n != 1:
+              raise SystemExit('Partner image block not found')
+          p.write_text(s, encoding='utf-8')
+          PY
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
