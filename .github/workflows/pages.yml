@@ -31,6 +31,7 @@ jobs:
 
       - name: Refine partner section
         run: |
+          cp "Агро ТАГ ЦЕНТР.jfif" dist/assets/agro-tag-center.jfif
           python - <<'PY'
           from pathlib import Path
           p = Path('dist/agro-tag.html')
@@ -58,6 +59,12 @@ jobs:
           if placeholder not in s:
               raise SystemExit('Partner image placeholder not found')
           s = s.replace(placeholder, image, 1)
+
+          old_service = '<div class="service-image"><img src="assets/project-agriculture.png" alt="Сервис и агротехнологии AGRO TAG"/></div>'
+          new_service = '<div class="service-image"><img src="assets/agro-tag-center.jfif" alt="AGRO TAG центр — сервис и агротехнологии"/></div>'
+          if old_service not in s:
+              raise SystemExit('AGRO TAG service image marker not found')
+          s = s.replace(old_service, new_service, 1)
 
           extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
           if '</style>' not in s:
