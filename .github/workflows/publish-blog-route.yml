@@ -32,7 +32,7 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Unpack, add blog route, and wire menu
+      - name: Unpack, add blog and projects routes, and wire menu
         run: |
           mkdir -p dist
           TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
@@ -43,18 +43,20 @@ jobs:
           fi
           tar -xf "$TARFILE" -C dist
           cp blog.html dist/blog.html
+          cp projects.html dist/projects.html
           cp assets/blog-data.json dist/assets/blog-data.json
           python - <<'PY'
           from pathlib import Path
           import re
 
-          for name in ['international.html', 'index.html', 'digital-ai.html', 'education-hr.html']:
+          for name in ['international.html', 'index.html', 'digital-ai.html', 'education-hr.html', 'blog.html', 'projects.html']:
               p = Path('dist') / name
               if not p.exists():
                   continue
               s = p.read_text(encoding='utf-8')
               s = s.replace('href="#blog">Блог</a>', 'href="blog.html">Блог</a>')
               s = s.replace('href="assets/blog/">Блог</a>', 'href="blog.html">Блог</a>')
+              s = s.replace('href="#projects">Проекты</a>', 'href="projects.html">Проекты</a>')
 
               if name == 'index.html':
                   labels = ['Обсудить задачу', 'Отправить запрос', 'Назначить встречу']
