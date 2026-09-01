@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Блог — GO BIG</title>
+<meta name="description" content="Новости, международные проекты, технологии и партнёрства GO BIG и TESLA Alliance."/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap');
+:root{--green:#0B6B45;--navy:#0B2C63;--ink:#1F2A3D;--muted:#657283;--soft:#F3F5F7;--line:#DDE3E7;--serif:"Source Serif 4",Georgia,serif;--sans:"Manrope",Arial,sans-serif;--shadow:0 18px 42px rgba(17,29,47,.08)}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans)}a{text-decoration:none;color:inherit}.wrap{width:min(1200px,calc(100% - 48px));margin:auto}header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.96);border-bottom:1px solid rgba(11,44,99,.1);backdrop-filter:blur(10px)}.head{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:15px}.mark{width:46px;height:58px;background:var(--green)}.brand strong{display:block;color:var(--green);font:700 29px/1 var(--serif)}.brand small{display:block;margin-top:4px;color:var(--green);font-size:11px}.nav{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:700}.nav a:hover,.nav .active{color:var(--green)}
+.hero{padding:92px 0 64px;background:linear-gradient(135deg,#f6f8f7 0%,#eef2f2 100%)}.kicker{color:var(--green);font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}.hero h1{margin:16px 0 0;color:var(--navy);font:700 clamp(52px,6vw,82px)/.94 var(--serif);letter-spacing:-.04em}.hero p{margin:24px 0 0;max-width:760px;color:var(--muted);font-size:18px;line-height:1.7}.source-note{display:inline-flex;gap:8px;align-items:center;margin-top:26px;padding:10px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;color:#536273}.source-note b{color:var(--green)}
+.blog{padding:70px 0 90px}.blog-top{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:30px}.blog-top h2{margin:0;color:var(--navy);font:700 clamp(34px,4vw,52px)/1 var(--serif)}.sync-state{font-size:12px;color:#7a8793}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.card{display:flex;flex-direction:column;min-height:430px;border:1px solid var(--line);border-radius:26px;overflow:hidden;background:#fff;box-shadow:var(--shadow);transition:transform .22s ease,box-shadow .22s ease}.card:hover{transform:translateY(-3px);box-shadow:0 24px 48px rgba(17,29,47,.11)}.media{height:210px;background:linear-gradient(135deg,#173d35,#527b6b);overflow:hidden}.media img{width:100%;height:100%;object-fit:cover}.body{padding:24px;display:flex;flex:1;flex-direction:column}.meta{color:var(--green);font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}.body h3{margin:13px 0 0;color:var(--navy);font:700 25px/1.08 var(--serif);letter-spacing:-.025em}.body p{margin:13px 0 0;color:var(--muted);font-size:14px;line-height:1.62}.more{margin-top:auto;padding-top:20px;color:var(--green);font-size:13px;font-weight:800}.empty{grid-column:1/-1;padding:38px;border:1px dashed #cbd4d9;border-radius:22px;color:var(--muted);line-height:1.7;background:#fafbfb}.footer{padding:38px 0;background:#2C3138;color:#fff}.foot{display:flex;justify-content:space-between;gap:30px}.foot small{color:rgba(255,255,255,.65)}
+@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}.nav{gap:12px;font-size:12px}}@media(max-width:650px){.wrap{width:calc(100% - 28px)}.head{padding:14px 0;align-items:flex-start;flex-direction:column}.nav{overflow-x:auto;width:100%;white-space:nowrap;padding-bottom:5px}.hero{padding:65px 0 48px}.hero h1{font-size:50px}.grid{grid-template-columns:1fr}.blog-top{display:block}.sync-state{display:block;margin-top:10px}.card{min-height:0}.media{height:220px}.foot{flex-direction:column}}
+</style>
+</head>
+<body>
+<header><div class="wrap head"><a class="brand" href="../../index.html"><span class="mark"></span><span><strong>GO BIG</strong><small>žádné omezení</small></span></a><nav class="nav"><a href="../../international.html">Международное сотрудничество</a><a href="../../digital-ai.html">Цифровизация и ИИ</a><a href="../../education-hr.html">Образование и HR</a><a class="active" href="./">Блог</a></nav></div></header>
+<main>
+<section class="hero"><div class="wrap"><div class="kicker">GO BIG · TESLA Alliance</div><h1>Блог</h1><p>Новости, международные инициативы, технологии, проекты и партнёрства. Публикации TESLA Alliance автоматически появляются здесь после выхода на atesla.rs.</p><div class="source-note">Источник: <b>TESLA Alliance</b> · оригинальные публикации остаются на atesla.rs</div></div></section>
+<section class="blog"><div class="wrap"><div class="blog-top"><h2>Последние публикации</h2><span class="sync-state" id="syncState">Обновляем ленту…</span></div><div class="grid" id="blogGrid"><div class="empty">Загружаем публикации TESLA Alliance…</div></div></div></section>
+</main>
+<footer class="footer"><div class="wrap foot"><div><strong>GO BIG</strong><br><small>Think Global. Grow Smart.</small></div><small>Новости синхронизируются с www.atesla.rs</small></div></footer>
+<script>
+const grid=document.getElementById('blogGrid');
+const state=document.getElementById('syncState');
+const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+fetch('../blog-data.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('feed');return r.json()}).then(data=>{
+ const items=Array.isArray(data.items)?data.items:[];
+ if(!items.length)throw new Error('empty');
+ grid.innerHTML=items.map(x=>`<a class="card" href="${esc(x.url)}" target="_blank" rel="noopener"><div class="media">${x.image?`<img src="${esc(x.image)}" alt="" loading="lazy" onerror="this.remove()">`:''}</div><div class="body"><div class="meta">${esc(x.source||'TESLA Alliance')}${x.date?` · ${esc(x.date)}`:''}</div><h3>${esc(x.title)}</h3>${x.summary?`<p>${esc(x.summary)}</p>`:''}<div class="more">Читать на atesla.rs →</div></div></a>`).join('');
+ if(data.updated_at){const d=new Date(data.updated_at);state.textContent='Лента обновлена: '+d.toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});}else state.textContent='Автоматическая лента TESLA Alliance';
+}).catch(()=>{grid.innerHTML='<div class="empty">Лента временно недоступна. Оригинальные публикации можно посмотреть на <a href="https://www.atesla.rs/blog" target="_blank" rel="noopener" style="color:#0B6B45;font-weight:800">atesla.rs →</a></div>';state.textContent='Источник: atesla.rs';});
+</script>
+</body></html>
