@@ -17,6 +17,8 @@
 .center-benefit:nth-child(4) b,.center-benefit:nth-child(5) b,.center-benefit:nth-child(8) b{color:var(--rose)!important}
 .center-benefit h3{margin-top:9px!important;color:var(--deep)!important;font-size:19px!important;line-height:1.15!important}
 .center-benefit p{margin:6px 0 0!important;color:#667786!important;font-size:12.5px!important;line-height:1.42!important}
+.partner-left>.lead{display:none!important}
+.partner-middle:after{content:"Наличие всей инфраструктуры на старте не обязательно. Критичны репутация, доступ к клиентам, выделенная команда и готовность выполнять согласованный план развития.";display:block;margin-top:24px;padding-top:20px;border-top:1px solid rgba(72,105,133,.18);color:#596b7c;font-size:16px;line-height:1.72}
 @media(max-width:1100px){.center-benefits-shell{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)!important;gap:34px!important}.center-benefits-copy h2{font-size:44px!important}}
 @media(max-width:980px){.center-benefits-shell{grid-template-columns:1fr!important;gap:34px!important}.center-visual{max-width:860px!important}.center-benefits-copy h2{max-width:760px!important}}
 @media(max-width:700px){.center-benefits{padding:58px 0}.center-benefits .wrap{width:calc(100% - 28px)}.center-benefit-grid{grid-template-columns:1fr!important}.center-benefit,.center-benefit:nth-child(even){padding:20px 0!important;border-left:0!important;border-bottom:1px solid rgba(72,105,133,.18)!important}.center-benefit:last-child{border-bottom:0!important}.center-benefits-copy h2{font-size:40px!important}}
