@@ -33,6 +33,13 @@ jobs:
         run: |
           cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center.png
           cp "карточка_1-removebg-preview.png" dist/assets/agro-card-01.png
+          cp "Карточка 2.png" dist/assets/agro-card-02.png
+          cp "Карточка 3.png" dist/assets/agro-card-03.png
+          cp "Карточка 4.png" dist/assets/agro-card-04.png
+          cp "Карточка 5.png" dist/assets/agro-card-05.png
+          cp "Карточка 6.png" dist/assets/agro-card-06.png
+          cp "Карточка 7.png" dist/assets/agro-card-07.png
+          cp "Карточка 8.png" dist/assets/agro-card-08.png
           cp "Центральная Азия.png" dist/assets/central-asia.png
 
       - name: Replace AGRO TAG product images and partner visual
@@ -45,13 +52,13 @@ jobs:
 
           replacements = {
               'https://shop.fpm.rs/media/catalogProduct/teskaFrezaRotas2606/FPM-ROTAS.png': 'assets/agro-card-01.png',
-              'https://agria.rs/wp-content/uploads/2023/08/zitka-featured-image.webp': 'assets/project-agriculture.png',
-              'https://bsk.rs/uploads/ck_editor/images/Rotoprotect-home.jpg': 'assets/agro-soil-no-logo.svg',
-              'https://agria.rs/wp-content/uploads/2023/08/psp-agria-img.webp': 'assets/project-agriculture.png',
-              'https://site.caes.uga.edu/smallfruits/files/2022/07/BBHarvest-Photo1-1024x678.jpg': 'assets/project-agriculture.png',
-              'https://www.lifam-m.com/wp-content/uploads/2022/04/Nenaslovljeni-dizajn-1.jpg': 'assets/agro-tag-facade-white.webp',
-              'https://agria.rs/wp-content/uploads/2023/08/services-agria-image.webp': 'assets/agro-tag-center.png',
-              'https://www.fpm.rs/media/catalogProduct/mulcarZaRatarstvo/Mulcar-za-ratarstvo-1.png': 'assets/project-agriculture.png',
+              'https://agria.rs/wp-content/uploads/2023/08/zitka-featured-image.webp': 'assets/agro-card-02.png',
+              'https://bsk.rs/uploads/ck_editor/images/Rotoprotect-home.jpg': 'assets/agro-card-03.png',
+              'https://agria.rs/wp-content/uploads/2023/08/psp-agria-img.webp': 'assets/agro-card-04.png',
+              'https://site.caes.uga.edu/smallfruits/files/2022/07/BBHarvest-Photo1-1024x678.jpg': 'assets/agro-card-05.png',
+              'https://www.lifam-m.com/wp-content/uploads/2022/04/Nenaslovljeni-dizajn-1.jpg': 'assets/agro-card-06.png',
+              'https://agria.rs/wp-content/uploads/2023/08/services-agria-image.webp': 'assets/agro-card-07.png',
+              'https://www.fpm.rs/media/catalogProduct/mulcarZaRatarstvo/Mulcar-za-ratarstvo-1.png': 'assets/agro-card-08.png',
           }
 
           for old, new in replacements.items():
@@ -87,7 +94,7 @@ jobs:
           from pathlib import Path
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
-          link = '<link rel="stylesheet" href="assets/agro-benefits-final.css?v=20260901-3">'
+          link = '<link rel="stylesheet" href="assets/agro-benefits-final.css?v=20260901-4">'
           if link not in s:
               s = s.replace('</head>', link + '\n</head>', 1)
           p.write_text(s, encoding='utf-8')
