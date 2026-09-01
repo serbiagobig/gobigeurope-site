@@ -29,6 +29,33 @@ jobs:
       - name: Build complete site with all assets
         run: sh build.sh
 
+      - name: Use full AGRO TAG CENTR image in service section
+        run: |
+          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-full.png
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+
+          pattern = r'(<div class="service-image"><img src=")[^"]+(" alt="[^"]*"/?></div>)'
+          replacement = r'\1assets/agro-tag-center-full.png\2'
+          s, n = re.subn(pattern, replacement, s, count=1)
+          if n != 1:
+              raise SystemExit('Service image block not found')
+
+          css = '''
+          .service-image{background:#fff;display:flex;align-items:center;justify-content:center}
+          .service-image img{width:100%;height:100%;object-fit:contain!important;object-position:center!important;filter:none!important}
+          '''
+          if '</style>' not in s:
+              raise SystemExit('Style closing tag not found')
+          s = s.replace('</style>', css + '</style>', 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
