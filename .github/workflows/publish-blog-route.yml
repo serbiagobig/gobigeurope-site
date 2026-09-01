@@ -46,6 +46,8 @@ jobs:
           cp assets/blog-data.json dist/assets/blog-data.json
           python - <<'PY'
           from pathlib import Path
+          import re
+
           for name in ['international.html', 'index.html', 'digital-ai.html', 'education-hr.html']:
               p = Path('dist') / name
               if not p.exists():
@@ -53,6 +55,20 @@ jobs:
               s = p.read_text(encoding='utf-8')
               s = s.replace('href="#blog">Блог</a>', 'href="blog.html">Блог</a>')
               s = s.replace('href="assets/blog/">Блог</a>', 'href="blog.html">Блог</a>')
+
+              if name == 'index.html':
+                  s, count = re.subn(
+                      r'(<a\b[^>]*?href=")[^"]*("[^>]*>\s*Обсудить задачу\s*</a>)',
+                      r'\1international.html#application\2',
+                      s,
+                      count=1,
+                      flags=re.IGNORECASE,
+                  )
+                  if count == 0:
+                      print('Homepage button "Обсудить задачу" not found; no CTA link changed')
+                  else:
+                      print('Homepage CTA wired to international.html#application')
+
               p.write_text(s, encoding='utf-8')
           PY
 
