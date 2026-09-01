@@ -29,6 +29,19 @@ jobs:
       - name: Build site
         run: sh build.sh
 
+      - name: Force partner heading typography
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+          old = '.partner .kicker{color:var(--rose);font-family:var(--serif);font-weight:600;letter-spacing:-.01em;text-transform:none;font-size:20px}'
+          new = '.partner .kicker{color:var(--rose);font-family:var(--serif);font-weight:700;letter-spacing:-.03em;text-transform:none;font-size:22px;line-height:1.15}'
+          if old not in s:
+              raise SystemExit('Partner kicker style not found')
+          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
