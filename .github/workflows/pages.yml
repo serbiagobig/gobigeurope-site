@@ -29,17 +29,36 @@ jobs:
       - name: Build site
         run: sh build.sh
 
-      - name: Merge partner heading
+      - name: Refine partner section
         run: |
           python - <<'PY'
           from pathlib import Path
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
-          old = '<div class="kicker">Приглашаем к партнёрству</div><h2>Сильный оператор рынка, готовый строить систему</h2>'
-          new = '<h2>Приглашаем к партнёрству сильного оператора рынка, готового строить систему</h2>'
-          if old not in s:
+
+          old_heading = '<div class="kicker">Приглашаем к партнёрству</div><h2>Сильный оператор рынка, готовый строить систему</h2>'
+          new_heading = '<h2>Приглашаем<br><span class="keep-together">к партнёрству</span> сильного оператора рынка, готового строить систему</h2>'
+          if old_heading not in s:
               raise SystemExit('Partner heading block not found')
-          p.write_text(s.replace(old, new, 1), encoding='utf-8')
+          s = s.replace(old_heading, new_heading, 1)
+
+          note = '<p class="lead">Наличие всей инфраструктуры на старте не обязательно. Критичны репутация, доступ к клиентам, выделенная команда и готовность выполнять согласованный план развития.</p>'
+          if note not in s:
+              raise SystemExit('Partner note not found')
+          s = s.replace(note, '', 1)
+
+          marker = '</ul></div><div class="partner-right">'
+          replacement = '</ul><p class="partner-note">Наличие всей инфраструктуры на старте не обязательно. Критичны репутация, доступ к клиентам, выделенная команда и готовность выполнять согласованный план развития.</p></div><div class="partner-right">'
+          if marker not in s:
+              raise SystemExit('Partner middle column marker not found')
+          s = s.replace(marker, replacement, 1)
+
+          extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}'
+          if '</style>' not in s:
+              raise SystemExit('Style closing tag not found')
+          s = s.replace('</style>', extra_css + '</style>', 1)
+
+          p.write_text(s, encoding='utf-8')
           PY
 
       - name: Configure Pages
