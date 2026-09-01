@@ -21,16 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build current published page
-        run: |
-          rm -rf dist
-          mkdir -p dist/assets
-          curl -fsSL "https://www.gobigeurope.com/agro-tag.html?ts=$(date +%s)" -o dist/agro-tag.html
-          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-wide.png
-          curl -fsSL "https://cabar.asia/wp-content/uploads/2024/02/polia-1-1200x800.jpg" -o dist/assets/central-asia-mountain-farmland.jpg
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
 
-      - name: Replace AGRO TAG images
+      - name: Build complete site with all assets
+        run: sh build.sh
+
+      - name: Apply only the two requested AGRO TAG image changes
         run: |
+          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-wide.png
+          base64 -d assets/agro-tag-center-generated.b64 > dist/assets/central-asia-mountain-farmland.jpg
           python - <<'PY'
           from pathlib import Path
           import re
