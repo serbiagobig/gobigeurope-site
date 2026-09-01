@@ -27,8 +27,9 @@ jobs:
           mkdir -p dist/assets
           curl -fsSL "https://www.gobigeurope.com/agro-tag.html?ts=$(date +%s)" -o dist/agro-tag.html
           cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-wide.png
+          curl -fsSL "https://cabar.asia/wp-content/uploads/2024/02/polia-1-1200x800.jpg" -o dist/assets/central-asia-mountain-farmland.jpg
 
-      - name: Replace benefits image
+      - name: Replace AGRO TAG images
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -37,11 +38,15 @@ jobs:
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
 
-          pattern = r'(<div class="service-image"><img src=")[^"]+(" alt="[^"]*"/?></div>)'
-          replacement = r'\1assets/agro-tag-center-wide.png\2'
-          s, n = re.subn(pattern, replacement, s, count=1)
-          if n != 1:
+          benefits_pattern = r'(<div class="service-image"><img src=")[^"]+(" alt="[^"]*"/?></div>)'
+          s, n1 = re.subn(benefits_pattern, r'\1assets/agro-tag-center-wide.png\2', s, count=1)
+          if n1 != 1:
               raise SystemExit('Benefits image block not found')
+
+          partner_pattern = r'(<div class="partner-image-placeholder"><img src=")[^"]+(" alt="[^"]*"(?: loading="lazy")?/?></div>)'
+          s, n2 = re.subn(partner_pattern, r'\1assets/central-asia-mountain-farmland.jpg\2', s, count=1)
+          if n2 != 1:
+              raise SystemExit('Partner image block not found')
 
           p.write_text(s, encoding='utf-8')
           PY
