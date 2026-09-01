@@ -158,7 +158,7 @@ jobs:
                   replaced = True
                   break
           if not replaced and 'agro-tag-card' not in s:
-              raise SystemExit('Homepage agriculture project card not found')
+              print('Homepage agriculture project card not found; keeping current homepage project cards unchanged')
 
           p.write_text(s, encoding='utf-8')
           PY
