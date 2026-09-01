@@ -76,8 +76,10 @@ jobs:
               p.write_text(s, encoding='utf-8')
           PY
 
-      - name: Generate English and Czech versions
-        run: python scripts/localize_site_v2.py dist
+      - name: Generate and validate English and Czech versions
+        run: |
+          python scripts/localize_site_v2.py dist
+          python scripts/localize_cleanup.py dist
 
       - name: Upload final Pages artifact
         uses: actions/upload-pages-artifact@v3
