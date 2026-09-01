@@ -100,6 +100,24 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
+      - name: Refine AGRO TAG Central Asia section
+        run: |
+          cp assets/agro-asia-final.css dist/assets/agro-asia-final.css
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+          old = '''<section class="asia"><div class="wrap asia-shell"><div><div class="kicker">Центральная Азия</div><h2>Преференции сегодня. Локализация завтра.</h2><p class="lead" style="margin-top:24px">Казахстан и Кыргызстан входят в ЕАЭС. Соглашение о свободной торговле между Сербией и ЕАЭС действует с 10 июля 2021 года.</p><p class="legal-note">Для отдельных товаров сербского происхождения возможен преференциальный или беспошлинный режим. Применимость проверяется по коду ТН ВЭД, правилам происхождения, исключениям и документам конкретной поставки.</p></div><div><div class="ladder"><article class="rung"><b>01</b><h3>Импорт</h3><p>Готовая техника.</p></article><article class="rung"><b>02</b><h3>Сервис</h3><p>Склад и ремонт.</p></article><article class="rung"><b>03</b><h3>Сборка</h3><p>Узлы и комплектация.</p></article><article class="rung"><b>04</b><h3>Кооперация</h3><p>Компоненты и производство.</p></article></div><p class="legal-note">Преференции и локализация оцениваются отдельно для конкретной страны, товара и проекта.</p></div></div></section>'''
+          new = '''<section class="asia"><div class="wrap asia-shell"><div class="asia-copy"><div class="kicker">Центральная Азия</div><h2>Преференции сегодня. Локализация завтра.</h2><p class="asia-main-note">Для отдельных товаров сербского происхождения возможен преференциальный или беспошлинный режим. Применимость проверяется по коду ТН ВЭД, правилам происхождения, исключениям и документам конкретной поставки.</p></div><div class="asia-path"><div class="ladder-kicker">Лестница развития</div><div class="ladder"><article class="rung"><b>01</b><h3>Импорт</h3><p>Готовая техника.</p></article><article class="rung"><b>02</b><h3>Сервис</h3><p>Склад и ремонт.</p></article><article class="rung"><b>03</b><h3>Сборка</h3><p>Узлы и комплектация.</p></article><article class="rung"><b>04</b><h3>Кооперация</h3><p>Компоненты и производство.</p></article></div><p class="legal-note">Преференции и локализация оцениваются отдельно для конкретной страны, товара и проекта.</p></div></div></section>'''
+          if old not in s:
+              raise SystemExit('AGRO TAG Central Asia section not found')
+          s = s.replace(old, new, 1)
+          link = '<link rel="stylesheet" href="assets/agro-asia-final.css?v=20260901-1">'
+          if link not in s:
+              s = s.replace('</head>', link + '\n</head>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
