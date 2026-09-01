@@ -62,6 +62,24 @@ s = s.replace(old_service_section, new_center_section, 1).replace(old_benefits_s
 p.write_text(s, encoding='utf-8')
 PY
 
+# Final display fix: keep the full AGRO TAG center image, but let the image itself define the height.
+python - <<'PY'
+from pathlib import Path
+p = Path('dist/agro-tag.html')
+s = p.read_text(encoding='utf-8')
+override = '''<style>
+.center-benefits-shell{grid-template-columns:1.05fr 1.35fr!important;gap:46px!important;align-items:start!important}
+.center-visual{min-height:0!important;height:auto!important;background:transparent!important;overflow:hidden!important;border-radius:24px!important}
+.center-visual img{position:static!important;inset:auto!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center center!important;filter:brightness(1.08) saturate(1.04) contrast(1.01)!important;background:transparent!important}
+.center-visual:after{display:none!important}
+@media(max-width:980px){.center-benefits-shell{grid-template-columns:1fr!important}.center-visual{min-height:0!important}}
+</style>'''
+if '</head>' not in s:
+    raise SystemExit('AGRO TAG head closing tag not found')
+s = s.replace('</head>', override + '\n</head>', 1)
+p.write_text(s, encoding='utf-8')
+PY
+
 if [ -d en ]; then cp -R en dist/en; fi
 if [ -d cz ]; then cp -R cz dist/cz; fi
 
