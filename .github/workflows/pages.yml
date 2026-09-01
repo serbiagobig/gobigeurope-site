@@ -29,16 +29,16 @@ jobs:
       - name: Build site
         run: sh build.sh
 
-      - name: Force partner heading typography
+      - name: Merge partner heading
         run: |
           python - <<'PY'
           from pathlib import Path
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
-          old = '.partner .kicker{color:var(--rose);font-family:var(--serif);font-weight:600;letter-spacing:-.01em;text-transform:none;font-size:20px}'
-          new = '.partner .kicker{color:var(--deep);font-family:var(--serif);font-weight:700;letter-spacing:-.03em;text-transform:none;font-size:clamp(42px,4.4vw,60px);line-height:.96;margin-bottom:18px}'
+          old = '<div class="kicker">Приглашаем к партнёрству</div><h2>Сильный оператор рынка, готовый строить систему</h2>'
+          new = '<h2>Приглашаем к партнёрству сильного оператора рынка, готового строить систему</h2>'
           if old not in s:
-              raise SystemExit('Partner kicker style not found')
+              raise SystemExit('Partner heading block not found')
           p.write_text(s.replace(old, new, 1), encoding='utf-8')
           PY
 
