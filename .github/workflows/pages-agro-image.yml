@@ -57,6 +57,8 @@ jobs:
           for old, new in replacements.items():
               s = s.replace(old, new)
 
+          s = s.replace('Создадим новый центр агротехнологий', 'Станьте национальным или региональным партнёром AGRO TAG')
+
           placeholder = '<div class="partner-image-placeholder" role="img" aria-label="Место для изображения сельхозугодий в горной местности Центральной Азии"></div>'
           image = '<div class="partner-image-placeholder"><img src="assets/central-asia.png" alt="Сельхозугодья в горной местности Центральной Азии"/></div>'
           s = s.replace(placeholder, image)
