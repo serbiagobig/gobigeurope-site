@@ -1,21 +1,22 @@
-.center-benefits{padding:74px 0;background:#fff}
-.center-benefits .wrap{width:min(1280px,calc(100% - 48px))}
-.center-benefits-shell{display:grid!important;grid-template-columns:minmax(0,1.02fr) minmax(0,1.28fr)!important;gap:56px!important;align-items:start!important}
-.center-visual{position:relative!important;min-height:0!important;height:auto!important;border-radius:26px!important;overflow:hidden!important;background:transparent!important;box-shadow:0 18px 42px rgba(34,56,77,.10)!important}
-.center-visual img{position:static!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:brightness(1.08) saturate(1.05) contrast(1.01)!important;background:transparent!important}
+.center-benefits{padding:78px 0;background:#fff}
+.center-benefits .wrap{width:min(1420px,calc(100% - 48px))}
+.center-benefits-shell{display:grid!important;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)!important;gap:44px!important;align-items:start!important}
+.center-visual{position:relative!important;min-height:0!important;height:auto!important;border-radius:26px!important;overflow:hidden!important;background:transparent!important;box-shadow:0 18px 42px rgba(34,56,77,.11)!important}
+.center-visual img{position:static!important;inset:auto!important;display:block!important;width:100%!important;height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:brightness(1.20) saturate(1.10) contrast(.99)!important;background:transparent!important}
 .center-visual:after{display:none!important}
-.center-benefits-copy{padding-top:4px}
-.center-benefits-copy .kicker{margin-bottom:16px!important;color:var(--rose)!important;font-size:12px!important;letter-spacing:.16em!important}
-.center-benefits-copy h2{max-width:720px!important;font-size:clamp(42px,4.15vw,60px)!important;line-height:.98!important;color:var(--deep)!important}
-.center-benefits-copy>.lead{max-width:760px!important;margin:22px 0 0!important;color:#617284!important;font-size:16px!important;line-height:1.65!important}
-.center-benefit-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important;margin-top:34px!important;border-top:1px solid rgba(72,105,133,.20)!important;border-bottom:1px solid rgba(72,105,133,.20)!important}
-.center-benefit{position:relative!important;min-height:0!important;padding:22px 24px 24px 0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;border-bottom:1px solid rgba(72,105,133,.18)!important}
-.center-benefit:nth-child(even){padding-left:28px!important;padding-right:0!important;border-left:1px solid rgba(72,105,133,.18)!important}
+.center-benefits-copy{padding-top:2px}
+.center-benefits-copy .kicker{margin-bottom:15px!important;color:var(--rose)!important;font-size:12px!important;letter-spacing:.16em!important}
+.center-benefits-copy h2{max-width:660px!important;font-size:clamp(40px,3.65vw,56px)!important;line-height:.98!important;color:var(--deep)!important}
+.center-benefits-copy>.lead{max-width:680px!important;margin:18px 0 0!important;color:#617284!important;font-size:15.5px!important;line-height:1.6!important}
+.center-benefit-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:0!important;margin-top:28px!important;border-top:1px solid rgba(72,105,133,.22)!important;border-bottom:1px solid rgba(72,105,133,.22)!important}
+.center-benefit{position:relative!important;min-height:0!important;padding:18px 22px 19px 0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;overflow:visible!important;border-bottom:1px solid rgba(72,105,133,.18)!important}
+.center-benefit:nth-child(even){padding-left:24px!important;padding-right:0!important;border-left:1px solid rgba(72,105,133,.18)!important}
 .center-benefit:nth-child(7),.center-benefit:nth-child(8){border-bottom:0!important}
 .center-benefit:before{display:none!important}
-.center-benefit b{display:block!important;color:var(--blue)!important;font-family:var(--serif)!important;font-size:31px!important;font-weight:600!important;line-height:1!important;letter-spacing:-.02em!important}
+.center-benefit b{display:block!important;color:var(--blue)!important;font-family:var(--serif)!important;font-size:29px!important;font-weight:600!important;line-height:1!important;letter-spacing:-.02em!important}
 .center-benefit:nth-child(4) b,.center-benefit:nth-child(5) b,.center-benefit:nth-child(8) b{color:var(--rose)!important}
-.center-benefit h3{margin-top:12px!important;color:var(--deep)!important;font-size:21px!important;line-height:1.16!important}
-.center-benefit p{margin:8px 0 0!important;color:#667786!important;font-size:13px!important;line-height:1.5!important}
-@media(max-width:980px){.center-benefits-shell{grid-template-columns:1fr!important;gap:34px!important}.center-visual{max-width:760px!important}.center-benefits-copy h2{max-width:760px!important}}
+.center-benefit h3{margin-top:9px!important;color:var(--deep)!important;font-size:19px!important;line-height:1.15!important}
+.center-benefit p{margin:6px 0 0!important;color:#667786!important;font-size:12.5px!important;line-height:1.42!important}
+@media(max-width:1100px){.center-benefits-shell{grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)!important;gap:34px!important}.center-benefits-copy h2{font-size:44px!important}}
+@media(max-width:980px){.center-benefits-shell{grid-template-columns:1fr!important;gap:34px!important}.center-visual{max-width:860px!important}.center-benefits-copy h2{max-width:760px!important}}
 @media(max-width:700px){.center-benefits{padding:58px 0}.center-benefits .wrap{width:calc(100% - 28px)}.center-benefit-grid{grid-template-columns:1fr!important}.center-benefit,.center-benefit:nth-child(even){padding:20px 0!important;border-left:0!important;border-bottom:1px solid rgba(72,105,133,.18)!important}.center-benefit:last-child{border-bottom:0!important}.center-benefits-copy h2{font-size:40px!important}}
