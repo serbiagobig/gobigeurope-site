@@ -36,30 +36,19 @@ jobs:
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
 
-          old_heading = '<div class="kicker">Приглашаем к партнёрству</div><h2>Сильный оператор рынка, готовый строить систему</h2>'
-          new_heading = '<h2>Приглашаем<br><span class="keep-together">к партнёрству</span> сильного оператора рынка, готового строить систему</h2>'
-          if old_heading not in s:
-              raise SystemExit('Partner heading block not found')
-          s = s.replace(old_heading, new_heading, 1)
-
-          note = '<p class="lead">Наличие всей инфраструктуры на старте не обязательно. Критичны репутация, доступ к клиентам, выделенная команда и готовность выполнять согласованный план развития.</p>'
-          if note not in s:
-              raise SystemExit('Partner note not found')
-          s = s.replace(note, '', 1)
-
-          marker = '</ul></div><div class="partner-right">'
-          replacement = '</ul><p class="partner-note">Наличие всей инфраструктуры на старте не обязательно. Критичны репутация, доступ к клиентам, выделенная команда и готовность выполнять согласованный план развития.</p></div><div class="partner-right">'
-          if marker not in s:
-              raise SystemExit('Partner middle column marker not found')
-          s = s.replace(marker, replacement, 1)
+          marker = '<li>Доступ к фермерам, агрохолдингам и отраслевым организациям.</li>'
+          added = marker + '<li>Выделенный руководитель направления и коммерческая команда.</li>'
+          if 'Выделенный руководитель направления и коммерческая команда.' not in s:
+              if marker not in s:
+                  raise SystemExit('Partner criteria marker not found')
+              s = s.replace(marker, added, 1)
 
           placeholder = '<div class="partner-image-placeholder" role="img" aria-label="Место для изображения сельхозугодий в горной местности Центральной Азии"></div>'
           image = '<div class="partner-image-placeholder"><img src="https://i.gyazo.com/b98ec6f968e616e1c09312aa6957adce.jpg" alt="Сельхозугодья в горной местности Центральной Азии" loading="lazy"/></div>'
-          if placeholder not in s:
-              raise SystemExit('Partner image placeholder not found')
-          s = s.replace(placeholder, image, 1)
+          if placeholder in s:
+              s = s.replace(placeholder, image, 1)
 
-          extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
+          extra_css = '.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
           if '</style>' not in s:
               raise SystemExit('Style closing tag not found')
           s = s.replace('</style>', extra_css + '</style>', 1)
