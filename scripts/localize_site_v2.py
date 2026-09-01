@@ -28,17 +28,133 @@ COMMON_CZ = load_dictionary('COMMON_CZ')
 EN = load_dictionary('EN')
 CZ = load_dictionary('CZ')
 
+# Technical and metadata strings identified by the first localisation QA pass.
+EXTRA_EN = {
+    'index.html': {
+        'GO BIG помогает компаниям выходить на новые рынки, внедрять цифровые решения и развивать людей и команды.': 'GO BIG helps companies enter new markets, implement digital solutions and develop people and teams.',
+    },
+    'international.html': {
+        'GO BIG помогает компаниям выходить на рынки Европы, Балкан, Центральной Азии и GCC: стратегия, партнёры, сопровождение и развитие международных связей.': 'GO BIG helps companies enter markets across Europe, the Balkans, Central Asia and the GCC through strategy, partnerships, hands-on support and international business development.',
+        'Рынки и международный опыт': 'Markets and international experience',
+        'Международный опыт': 'International experience',
+        'Целевые рынки': 'Target markets',
+        'Опыт на целевом рынке': 'Target-market experience',
+        'Задача компании': 'Company objective',
+        'Описание задачи': 'Objective description',
+        'Готовность и ожидания': 'Readiness and expectations',
+        'Стадия': 'Stage',
+        'Бюджет': 'Budget',
+        'Срок старта': 'Preferred start date',
+        'Ожидаемая поддержка': 'Expected support',
+        'Критерий успеха': 'Success criterion',
+        'Документы / интеллектуальные права': 'Documents / intellectual property',
+        'Готовность предоставить дополнительную информацию': 'Willingness to provide additional information',
+    },
+    'digital-ai.html': {
+        'GO BIG соединяет задачи бизнеса и государства с цифровыми технологиями, помогает запускать пилоты, внедрять решения и масштабировать технологии на международных рынках.': 'GO BIG connects business and public-sector challenges with digital technologies, helping to launch pilots, implement solutions and scale technology internationally.',
+        'Что мы делаем': 'What we do',
+        'Как строится работа': 'How we work',
+        'Проекты и кейсы': 'Projects and case studies',
+        'цифровая%20трансформация': 'digital%20transformation',
+    },
+    'education-hr.html': {
+        'GO BIG развивает руководителей и команды, создаёт корпоративные программы обучения, собственные методологии развития и Academy GO BIG для международного роста.': 'GO BIG develops leaders and teams, designs corporate learning programmes, proprietary development methodologies and Academy GO BIG programmes for international growth.',
+        'Что мы делаем': 'What we do',
+        'Имя': 'Name',
+        'Интерес': 'Area of interest',
+        'Задача': 'Objective',
+        'Сроки': 'Timing',
+    },
+    'projects.html': {
+        'Проекты GO BIG в международном развитии, технологической кооперации, цифровизации, AI и агротехнологиях.': 'GO BIG projects in international development, technology cooperation, digital transformation, AI and agri-technology.',
+    },
+    'blog.html': {
+        'Новости, международные проекты, технологии и партнёрства GO BIG и TESLA Alliance.': 'News, international projects, technology and partnerships from GO BIG and TESLA Alliance.',
+    },
+    'agro-tag.html': {
+        'AGRO TAG — международная экспортно-сервисная платформа для развития техники, технологий, сервиса и дилерской инфраструктуры на рынках Центральной Азии.': 'AGRO TAG is an international export and service platform for machinery, technology, service and dealer-network development in Central Asian markets.',
+    },
+    'agro-tag-contact.html': {
+        'Короткая форма заявки на партнёрство с AGRO TAG для дилеров, дистрибьюторов и производителей.': 'A short AGRO TAG partnership enquiry form for dealers, distributors and manufacturers.',
+        'запрос на партнёрство — ': 'partnership enquiry — ',
+        'Новая заявка AGRO TAG': 'New AGRO TAG enquiry',
+        'Кого представляет: ': 'Represents: ',
+        'Страна / рынок: ': 'Country / market: ',
+        'Интерес: ': 'Interest: ',
+        'Источник: ': 'Source: ',
+    },
+    'readiness.html': {
+        'Мы понимаем регуляторные ограничения.': 'We understand the regulatory constraints.',
+    },
+}
+
+EXTRA_CZ = {
+    'index.html': {
+        'GO BIG помогает компаниям выходить на новые рынки, внедрять цифровые решения и развивать людей и команды.': 'GO BIG pomáhá firmám vstupovat na nové trhy, zavádět digitální řešení a rozvíjet lidi i týmy.',
+    },
+    'international.html': {
+        'GO BIG помогает компаниям выходить на рынки Европы, Балкан, Центральной Азии и GCC: стратегия, партнёры, сопровождение и развитие международных связей.': 'GO BIG pomáhá firmám vstupovat na trhy Evropy, Balkánu, Střední Asie a zemí GCC prostřednictvím strategie, partnerství, praktické podpory a rozvoje mezinárodních obchodních vztahů.',
+        'Рынки и международный опыт': 'Trhy a mezinárodní zkušenosti',
+        'Международный опыт': 'Mezinárodní zkušenosti',
+        'Целевые рынки': 'Cílové trhy',
+        'Опыт на целевом рынке': 'Zkušenosti na cílovém trhu',
+        'Задача компании': 'Záměr společnosti',
+        'Описание задачи': 'Popis záměru',
+        'Готовность и ожидания': 'Připravenost a očekávání',
+        'Стадия': 'Fáze',
+        'Бюджет': 'Rozpočet',
+        'Срок старта': 'Požadovaný termín zahájení',
+        'Ожидаемая поддержка': 'Očekávaná podpora',
+        'Критерий успеха': 'Kritérium úspěchu',
+        'Документы / интеллектуальные права': 'Dokumenty / duševní vlastnictví',
+        'Готовность предоставить дополнительную информацию': 'Ochota poskytnout doplňující informace',
+    },
+    'digital-ai.html': {
+        'GO BIG соединяет задачи бизнеса и государства с цифровыми технологиями, помогает запускать пилоты, внедрять решения и масштабировать технологии на международных рынках.': 'GO BIG propojuje potřeby firem a veřejného sektoru s digitálními technologiemi a pomáhá spouštět piloty, zavádět řešení a škálovat technologie na mezinárodních trzích.',
+        'Что мы делаем': 'Co děláme',
+        'Как строится работа': 'Jak pracujeme',
+        'Проекты и кейсы': 'Projekty a případové studie',
+        'цифровая%20трансформация': 'digitalni%20transformace',
+    },
+    'education-hr.html': {
+        'GO BIG развивает руководителей и команды, создаёт корпоративные программы обучения, собственные методологии развития и Academy GO BIG для международного роста.': 'GO BIG rozvíjí manažery a týmy, vytváří firemní vzdělávací programy, vlastní rozvojové metodiky a programy Academy GO BIG pro mezinárodní růst.',
+        'Что мы делаем': 'Co děláme',
+        'Имя': 'Jméno',
+        'Интерес': 'Oblast zájmu',
+        'Задача': 'Záměr',
+        'Сроки': 'Termín',
+    },
+    'projects.html': {
+        'Проекты GO BIG в международном развитии, технологической кооперации, цифровизации, AI и агротехнологиях.': 'Projekty GO BIG v mezinárodním rozvoji, technologické spolupráci, digitalizaci, AI a agrotechnologiích.',
+    },
+    'blog.html': {
+        'Новости, международные проекты, технологии и партнёрства GO BIG и TESLA Alliance.': 'Novinky, mezinárodní projekty, technologie a partnerství GO BIG a TESLA Alliance.',
+    },
+    'agro-tag.html': {
+        'AGRO TAG — международная экспортно-сервисная платформа для развития техники, технологий, сервиса и дилерской инфраструктуры на рынках Центральной Азии.': 'AGRO TAG je mezinárodní exportní a servisní platforma pro rozvoj techniky, technologií, servisu a dealerské infrastruktury na trzích Střední Asie.',
+    },
+    'agro-tag-contact.html': {
+        'Короткая форма заявки на партнёрство с AGRO TAG для дилеров, дистрибьюторов и производителей.': 'Krátký formulář partnerské poptávky AGRO TAG pro dealery, distributory a výrobce.',
+        'запрос на партнёрство — ': 'partnerská poptávka — ',
+        'Новая заявка AGRO TAG': 'Nová poptávka AGRO TAG',
+        'Кого представляет: ': 'Zastupuje: ',
+        'Страна / рынок: ': 'Země / trh: ',
+        'Интерес: ': 'Zájem: ',
+        'Источник: ': 'Zdroj: ',
+    },
+    'readiness.html': {
+        'Мы понимаем регуляторные ограничения.': 'Rozumíme regulatorním omezením.',
+    },
+}
+
 
 def apply_map(text, mapping):
-    # Longest source strings first. This prevents short navigation words such as
-    # “Проекты” or “Сервис” from breaking longer, page-specific translations.
     for source in sorted(mapping, key=len, reverse=True):
         text = text.replace(source, mapping[source])
     return text
 
 
 def fix_paths(text):
-    # Localised pages live one directory below the Russian master pages.
     text = text.replace('src="assets/', 'src="../assets/')
     text = text.replace("src='assets/", "src='../assets/")
     text = text.replace('href="assets/', 'href="../assets/')
@@ -47,7 +163,6 @@ def fix_paths(text):
     text = text.replace('url("assets/', 'url("../assets/')
     for css in ['home-premium.css', 'international-hero.css', 'partners-ecosystem.css']:
         text = text.replace(f'href="{css}', f'href="../{css}')
-    # Root image references that are not already relative/absolute URLs.
     text = re.sub(
         r'(src=["\'])(?!https?://|data:|/|\.\./)([^/"\']+\.(?:png|jpe?g|webp|svg))',
         r'\1../\2', text, flags=re.I
@@ -94,14 +209,10 @@ def install_switch(text, switch):
 
 
 def patch_locale_links(text, lang):
-    # Internal page-to-page links should stay inside the selected language.
-    for page in PAGES:
-        text = text.replace(f'href="{page}', f'href="{page}')
     if lang == 'en':
         text = text.replace('https://webridge.tech/ru/academy', 'https://webridge.tech/en/academy')
         text = text.replace('https://webridge.tech/ru', 'https://webridge.tech/en')
     elif lang == 'cz':
-        # WE BRIDGE currently has no Czech route; use its English international page.
         text = text.replace('https://webridge.tech/ru/academy', 'https://webridge.tech/en/academy')
         text = text.replace('https://webridge.tech/ru', 'https://webridge.tech/en')
     return text
@@ -117,7 +228,7 @@ def patch_root_switches():
         path.write_text(text, encoding='utf-8')
 
 
-def localise(filename, lang, common, page_maps):
+def localise(filename, lang, common, page_maps, extras):
     source = ROOT / filename
     if not source.exists():
         print(f'SKIP missing {source}')
@@ -126,17 +237,19 @@ def localise(filename, lang, common, page_maps):
     text = source.read_text(encoding='utf-8')
     merged = dict(common)
     merged.update(page_maps.get(filename, {}))
+    merged.update(extras.get(filename, {}))
     text = apply_map(text, merged)
     text = re.sub(r'<html lang="[^"]+">', f'<html lang="{lang}">', text, count=1)
     text = fix_paths(text)
     text = install_switch(text, locale_switch(filename, lang))
     text = patch_locale_links(text, lang)
+    # A second pass also covers strings introduced by final build/patch operations.
+    text = apply_map(text, merged)
 
     output = ROOT / lang / filename
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(text, encoding='utf-8')
 
-    # Report actual Cyrillic fragments so the CI log can be used as a QA pass.
     residual = []
     for match in re.finditer(r'[А-Яа-яЁё][^<>\n]{0,140}', text):
         fragment = match.group(0).strip()
@@ -144,7 +257,7 @@ def localise(filename, lang, common, page_maps):
             residual.append(fragment)
     if residual:
         print(f'WARNING {lang}/{filename}: {len(residual)} Cyrillic fragment(s) remain')
-        for fragment in residual[:25]:
+        for fragment in residual[:30]:
             print('  CYR:', fragment)
     else:
         print(f'OK {lang}/{filename}: no Cyrillic text remains')
@@ -152,7 +265,7 @@ def localise(filename, lang, common, page_maps):
 
 patch_root_switches()
 for filename in PAGES:
-    localise(filename, 'en', COMMON_EN, EN)
-    localise(filename, 'cz', COMMON_CZ, CZ)
+    localise(filename, 'en', COMMON_EN, EN, EXTRA_EN)
+    localise(filename, 'cz', COMMON_CZ, CZ, EXTRA_CZ)
 
 print('English (UK) and Czech site versions generated.')
