@@ -67,6 +67,107 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
+      - name: Add editorial polish
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+          css = r'''
+          /* Editorial / magazine polish */
+          .palette-dots{display:none!important}
+
+          .presence{padding-top:78px;padding-bottom:82px}
+          .flow{gap:0;border-top:1px solid rgba(72,105,133,.20);border-bottom:1px solid rgba(72,105,133,.14)}
+          .flow-card{min-height:230px;padding:28px 26px 24px;border:0;border-radius:0;background:transparent;box-shadow:none}
+          .flow-card+ .flow-card{border-left:1px solid rgba(72,105,133,.14)}
+          .flow-card:before{display:none}
+          .flow-card b{font-size:34px;line-height:1;letter-spacing:.03em}
+          .flow-card h3{margin-top:24px;font-size:30px}
+          .flow-card p{font-size:14.5px;line-height:1.62}
+
+          .mini{min-height:132px;padding:18px 18px 16px;border:0;border-radius:0;background:rgba(255,255,255,.34);box-shadow:none;border-top:1px solid rgba(72,105,133,.18)}
+          .mini:before{display:none}
+          .mini b{font-size:30px;line-height:1}
+          .mini h3{margin-top:12px}
+
+          .market{padding-top:82px;padding-bottom:84px}
+          .market-grid{gap:0;border-top:1px solid rgba(255,255,255,.22);border-bottom:1px solid rgba(255,255,255,.16)}
+          .market-card{min-height:250px;padding:34px 28px;border:0;border-radius:0;background:transparent;box-shadow:none}
+          .market-card+ .market-card{border-left:1px solid rgba(255,255,255,.14)}
+          .market-card:before{display:none}
+          .market-card b{font-size:36px;line-height:1;letter-spacing:.02em}
+          .market-card h3{margin-top:30px;font-size:27px}
+          .market-card p{font-size:13.5px}
+
+          .service-list{gap:0;border-top:1px solid rgba(72,105,133,.18);margin-top:28px}
+          .service-list span{padding:15px 0;border:0;border-bottom:1px solid rgba(72,105,133,.14);border-radius:0;background:transparent;font-size:14px;font-weight:700}
+          .service-list span:nth-child(even){padding-left:18px}
+          .service-list span:nth-child(odd){padding-right:18px}
+          .service-list span:nth-child(3),.service-list span:nth-child(6){border-left:0}
+          .minimum{margin-top:26px;padding-left:0;border-left:0;border-top:1px solid rgba(72,105,133,.18);padding-top:20px}
+
+          .benefits{padding-top:82px;padding-bottom:84px}
+          .benefit-grid{gap:0;border-top:1px solid rgba(72,105,133,.20);border-bottom:1px solid rgba(72,105,133,.16)}
+          .benefit{min-height:205px;padding:30px 24px;border:0;border-radius:0;background:transparent;box-shadow:none}
+          .benefit:before{display:none}
+          .benefit:not(:nth-child(4n+1)){border-left:1px solid rgba(72,105,133,.14)}
+          .benefit:nth-child(n+5){border-top:1px solid rgba(72,105,133,.14)}
+          .benefit b{font-size:36px;line-height:1;letter-spacing:.02em}
+          .benefit h3{margin-top:25px;font-size:24px}
+          .benefit p{font-size:13.5px}
+
+          .asia{padding-top:82px;padding-bottom:84px}
+          .ladder{gap:0;border-top:1px solid rgba(72,105,133,.22);border-bottom:1px solid rgba(72,105,133,.16)}
+          .rung{min-height:178px;padding:30px 22px;border:0;border-radius:0;background:transparent}
+          .rung+ .rung{border-left:1px solid rgba(72,105,133,.14)}
+          .rung:before{top:-5px;left:22px;bottom:auto;width:10px;height:10px;border-radius:50%;background:var(--blue)}
+          .rung:nth-child(3):before,.rung:nth-child(4):before{background:var(--rose)}
+          .rung b{font-size:34px;line-height:1}
+          .rung h3{margin-top:27px}
+
+          .launch{padding-top:82px;padding-bottom:84px}
+          .launch-grid{position:relative;gap:0;border-top:1px solid rgba(72,105,133,.22);border-bottom:1px solid rgba(72,105,133,.16)}
+          .launch-card{min-height:172px;padding:30px 22px;border:0;border-radius:0;background:transparent}
+          .launch-card+ .launch-card{border-left:1px solid rgba(72,105,133,.14)}
+          .launch-card:before{top:-5px;left:22px;right:auto;width:10px;height:10px;border-radius:50%;background:var(--blue)}
+          .launch-card:last-child:before{background:var(--rose)}
+          .launch-card b,.launch-card:last-child b{font-size:34px;line-height:1}
+          .launch-card h3{margin-top:25px;font-size:23px}
+          .launch .note{margin-top:28px;background:transparent;border-radius:0;border-left:0;border-top:1px solid rgba(72,105,133,.18);padding:20px 0 0}
+
+          @media(max-width:980px){
+            .flow{grid-template-columns:1fr}
+            .flow-card+ .flow-card{border-left:0;border-top:1px solid rgba(72,105,133,.14)}
+            .market-grid{grid-template-columns:repeat(2,1fr)}
+            .market-card:nth-child(odd){border-left:0}
+            .market-card:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}
+            .benefit-grid{grid-template-columns:repeat(2,1fr)}
+            .benefit:not(:nth-child(4n+1)){border-left:0}
+            .benefit:nth-child(even){border-left:1px solid rgba(72,105,133,.14)}
+            .benefit:nth-child(n+3){border-top:1px solid rgba(72,105,133,.14)}
+            .ladder{grid-template-columns:repeat(2,1fr)}
+            .rung:nth-child(odd){border-left:0}
+            .rung:nth-child(n+3){border-top:1px solid rgba(72,105,133,.14)}
+            .launch-grid{grid-template-columns:repeat(3,1fr)}
+            .launch-card:nth-child(4){border-left:0;border-top:1px solid rgba(72,105,133,.14)}
+            .launch-card:nth-child(5){border-top:1px solid rgba(72,105,133,.14)}
+          }
+          @media(max-width:700px){
+            .market-grid,.benefit-grid,.ladder,.launch-grid{grid-template-columns:1fr}
+            .market-card+ .market-card,.benefit:nth-child(even),.rung+ .rung,.launch-card+ .launch-card{border-left:0}
+            .market-card+ .market-card,.benefit:nth-child(n+2),.rung+ .rung,.launch-card+ .launch-card{border-top:1px solid rgba(72,105,133,.14)}
+            .market-card+ .market-card{border-top-color:rgba(255,255,255,.14)}
+            .service-list{grid-template-columns:1fr}
+            .service-list span:nth-child(even),.service-list span:nth-child(odd){padding-left:0;padding-right:0}
+          }
+          '''
+          if '</style>' not in s:
+              raise SystemExit('Style closing tag not found')
+          s = s.replace('</style>', css + '</style>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
