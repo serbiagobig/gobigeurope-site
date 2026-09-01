@@ -53,7 +53,13 @@ jobs:
               raise SystemExit('Partner middle column marker not found')
           s = s.replace(marker, replacement, 1)
 
-          extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}'
+          placeholder = '<div class="partner-image-placeholder" role="img" aria-label="Место для изображения сельхозугодий в горной местности Центральной Азии"></div>'
+          image = '<div class="partner-image-placeholder"><img src="https://i.gyazo.com/b98ec6f968e616e1c09312aa6957adce.jpg" alt="Сельхозугодья в горной местности Центральной Азии" loading="lazy"/></div>'
+          if placeholder not in s:
+              raise SystemExit('Partner image placeholder not found')
+          s = s.replace(placeholder, image, 1)
+
+          extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
           if '</style>' not in s:
               raise SystemExit('Style closing tag not found')
           s = s.replace('</style>', extra_css + '</style>', 1)
