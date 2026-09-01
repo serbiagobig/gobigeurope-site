@@ -8,11 +8,14 @@
 .ladder{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .rung{position:relative;min-height:196px;padding:24px 22px;border-radius:18px;background:linear-gradient(180deg,#f8faf9,#eef2f3);color:var(--ink);border:1px solid rgba(72,105,133,.14);overflow:hidden}
 .rung:before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--blue)}
-.rung:nth-child(3):before,.rung:nth-child(4):before{background:var(--rose)}
 .rung b{font-size:25px;font-weight:800;letter-spacing:.08em;color:var(--blue)}
-.rung:nth-child(3) b,.rung:nth-child(4) b{color:var(--rose)}
 .rung h3{margin-top:34px;color:var(--deep);font-size:24px}
 .rung p{margin-top:10px;color:#596b7c;font-size:13.5px;line-height:1.55}
+.rung:nth-child(3),.rung:nth-child(4){background:linear-gradient(180deg,#5b959a 0%,#4f878c 100%);border-color:rgba(79,135,140,.45);box-shadow:0 14px 28px rgba(41,62,82,.10)}
+.rung:nth-child(3):before,.rung:nth-child(4):before{background:#c97a83}
+.rung:nth-child(3) b,.rung:nth-child(4) b{color:#fff}
+.rung:nth-child(3) h3,.rung:nth-child(4) h3{color:#fff}
+.rung:nth-child(3) p,.rung:nth-child(4) p{color:rgba(255,255,255,.88)}
 .asia-path>.legal-note{margin-top:22px;color:#455b70;font-size:13px;line-height:1.65;font-weight:600}
 @media(max-width:980px){
   .asia-shell{grid-template-columns:1fr;gap:28px}
