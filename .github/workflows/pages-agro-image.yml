@@ -32,6 +32,34 @@ jobs:
       - name: Add full AGRO TAG CENTR image
         run: cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center.png
 
+      - name: Replace AGRO TAG product images with local assets
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+
+          replacements = {
+              'https://shop.fpm.rs/media/catalogProduct/teskaFrezaRotas2606/FPM-ROTAS.png': 'assets/project-agriculture.png',
+              'https://agria.rs/wp-content/uploads/2023/08/zitka-featured-image.webp': 'assets/project-agriculture.png',
+              'https://bsk.rs/uploads/ck_editor/images/Rotoprotect-home.jpg': 'assets/agro-soil-no-logo.svg',
+              'https://agria.rs/wp-content/uploads/2023/08/psp-agria-img.webp': 'assets/project-agriculture.png',
+              'https://site.caes.uga.edu/smallfruits/files/2022/07/BBHarvest-Photo1-1024x678.jpg': 'assets/project-agriculture.png',
+              'https://www.lifam-m.com/wp-content/uploads/2022/04/Nenaslovljeni-dizajn-1.jpg': 'assets/agro-tag-facade-white.webp',
+              'https://agria.rs/wp-content/uploads/2023/08/services-agria-image.webp': 'assets/agro-tag-center.png',
+              'https://www.fpm.rs/media/catalogProduct/mulcarZaRatarstvo/Mulcar-za-ratarstvo-1.png': 'assets/project-agriculture.png',
+          }
+
+          for old, new in replacements.items():
+              s = s.replace(old, new)
+
+          if 'https://' in s[s.find('<section class="products"'):s.find('<section class="partner"')]:
+              raise SystemExit('External image URL remains in AGRO TAG product block')
+
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Apply final AGRO TAG benefits layout
         run: |
           cp assets/agro-benefits-final.css dist/assets/agro-benefits-final.css
