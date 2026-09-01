@@ -1,4 +1,4 @@
-name: Deploy AGRO TAG center image
+name: Deploy GO BIG to GitHub Pages
 
 on:
   push:
@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "agro-tag-image-deploy"
+  group: "pages"
   cancel-in-progress: true
 
 jobs:
@@ -21,30 +21,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-      - name: Build site
-        run: sh build.sh
-
-      - name: Put uploaded AGRO TAG image into partnership block
+      - name: Build current published page
         run: |
+          rm -rf dist
+          mkdir -p dist/assets
           curl -fsSL "https://www.gobigeurope.com/agro-tag.html?ts=$(date +%s)" -o dist/agro-tag.html
-          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-generated.png
+          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-wide.png
+
+      - name: Replace benefits image
+        run: |
           python - <<'PY'
           from pathlib import Path
           import re
+
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
-          pattern = r'(<div class="partner-image-placeholder"><img src=")[^"]+(" alt="[^"]*" loading="lazy"/></div>)'
-          replacement = r'\1assets/agro-tag-center-generated.png\2'
+
+          pattern = r'(<div class="service-image"><img src=")[^"]+(" alt="[^"]*"/?></div>)'
+          replacement = r'\1assets/agro-tag-center-wide.png\2'
           s, n = re.subn(pattern, replacement, s, count=1)
           if n != 1:
-              raise SystemExit('Partner image block not found')
+              raise SystemExit('Benefits image block not found')
+
           p.write_text(s, encoding='utf-8')
           PY
+          touch dist/.nojekyll
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
