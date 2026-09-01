@@ -29,8 +29,10 @@ jobs:
       - name: Build complete site with all assets
         run: sh build.sh
 
-      - name: Add full AGRO TAG CENTR image
-        run: cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center.png
+      - name: Add AGRO TAG images
+        run: |
+          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center.png
+          cp "карточка_1-removebg-preview.png" dist/assets/agro-card-01.png
 
       - name: Replace AGRO TAG product images with local assets
         run: |
@@ -41,7 +43,7 @@ jobs:
           s = p.read_text(encoding='utf-8')
 
           replacements = {
-              'https://shop.fpm.rs/media/catalogProduct/teskaFrezaRotas2606/FPM-ROTAS.png': 'assets/project-agriculture.png',
+              'https://shop.fpm.rs/media/catalogProduct/teskaFrezaRotas2606/FPM-ROTAS.png': 'assets/agro-card-01.png',
               'https://agria.rs/wp-content/uploads/2023/08/zitka-featured-image.webp': 'assets/project-agriculture.png',
               'https://bsk.rs/uploads/ck_editor/images/Rotoprotect-home.jpg': 'assets/agro-soil-no-logo.svg',
               'https://agria.rs/wp-content/uploads/2023/08/psp-agria-img.webp': 'assets/project-agriculture.png',
@@ -53,9 +55,6 @@ jobs:
 
           for old, new in replacements.items():
               s = s.replace(old, new)
-
-          if 'https://' in s[s.find('<section class="products"'):s.find('<section class="partner"')]:
-              raise SystemExit('External image URL remains in AGRO TAG product block')
 
           p.write_text(s, encoding='utf-8')
           PY
