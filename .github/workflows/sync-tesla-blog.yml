@@ -1,0 +1,36 @@
+name: Sync TESLA blog
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Sync TESLA blog feed
+        run: python scripts/sync_tesla_blog.py assets/blog-data.json
+
+      - name: Commit updated feed
+        run: |
+          if git diff --quiet -- assets/blog-data.json; then
+            echo "No blog changes"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/blog-data.json
+          git commit -m "Update TESLA blog feed"
+          git push
