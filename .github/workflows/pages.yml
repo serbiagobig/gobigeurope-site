@@ -78,7 +78,13 @@ jobs:
               raise SystemExit('AGRO TAG service copy not found')
           s = s.replace(old_service_copy, new_service_copy, 1)
 
-          extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
+          old_service_list = '<div class="service-list"><span>Предпродажная консультация</span><span>Ввод в эксплуатацию</span><span>Диагностика и ремонт</span><span>Стартовый склад запчастей</span><span>Обучение операторов и механиков</span><span>Полевые демонстрации и пилоты</span></div><div class="minimum">Минимальный старт: координатор + обученный механик + инструменты + матрица склада.</div>'
+          new_service_list = '<div class="service-list"><span><strong>Многопрофильный портфель</strong><small>Перекрёстные продажи и работа с разными сегментами.</small></span><span><strong>Единая координация</strong><small>Одна точка взаимодействия по портфелю и рынку.</small></span><span><strong>Дилерские условия</strong><small>Индивидуальные цены и возможные объёмные скидки.</small></span><span><strong>Защита проектов</strong><small>Регистрация привлечённых возможностей и территории.</small></span><span><strong>Маркетинг</strong><small>Материалы, выставки, демонстрации и переговоры.</small></span><span><strong>Обучение</strong><small>Продавцы, операторы и технические специалисты.</small></span><span><strong>Запчасти и сервис</strong><small>Матрица склада и повторные сервисные продажи.</small></span><span><strong>Путь к локализации</strong><small>Сборка и кооперация после подтверждения спроса.</small></span></div>'
+          if old_service_list not in s:
+              raise SystemExit('AGRO TAG service list not found')
+          s = s.replace(old_service_list, new_service_list, 1)
+
+          extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}.service-list span strong{display:block;color:var(--deep);font-size:15px;line-height:1.35}.service-list span small{display:block;margin-top:6px;color:#667786;font-size:12.5px;font-weight:500;line-height:1.5}'
           if '</style>' not in s:
               raise SystemExit('Style closing tag not found')
           s = s.replace('</style>', extra_css + '</style>', 1)
