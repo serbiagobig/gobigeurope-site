@@ -29,31 +29,6 @@ jobs:
       - name: Build complete site with all assets
         run: sh build.sh
 
-      - name: Apply only the two requested AGRO TAG image changes
-        run: |
-          cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-wide.png
-          base64 -d assets/agro-tag-center-generated.b64 > dist/assets/central-asia-mountain-farmland.jpg
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          p = Path('dist/agro-tag.html')
-          s = p.read_text(encoding='utf-8')
-
-          benefits_pattern = r'(<div class="service-image"><img src=")[^"]+(" alt="[^"]*"/?></div>)'
-          s, n1 = re.subn(benefits_pattern, r'\1assets/agro-tag-center-wide.png\2', s, count=1)
-          if n1 != 1:
-              raise SystemExit('Benefits image block not found')
-
-          partner_pattern = r'(<div class="partner-image-placeholder"><img src=")[^"]+(" alt="[^"]*"(?: loading="lazy")?/?></div>)'
-          s, n2 = re.subn(partner_pattern, r'\1assets/central-asia-mountain-farmland.jpg\2', s, count=1)
-          if n2 != 1:
-              raise SystemExit('Partner image block not found')
-
-          p.write_text(s, encoding='utf-8')
-          PY
-          touch dist/.nojekyll
-
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
