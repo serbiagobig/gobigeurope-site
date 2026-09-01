@@ -118,6 +118,17 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
+      - name: Balance AGRO TAG initiator descriptions
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+          s = s.replace('<p><strong>TESLA Alliance (Сербия)</strong></p>', '<p><strong>TESLA Alliance (Сербия)</strong> — международная бизнес-экосистема и координатор развития AGRO TAG на зарубежных рынках.</p>')
+          s = s.replace('<p><strong>Go Big (Чешская Республика)</strong> — международный консалтинг, трансфер технологий и международные образовательные инициативы.</p>', '<p><strong>Go Big (Чешская Республика)</strong> — международный консалтинг, трансфер технологий и развитие бизнеса на зарубежных рынках.</p>')
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
