@@ -33,8 +33,9 @@ jobs:
         run: |
           cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center.png
           cp "карточка_1-removebg-preview.png" dist/assets/agro-card-01.png
+          cp "Центральная Азия.png" dist/assets/central-asia.png
 
-      - name: Replace AGRO TAG product images with local assets
+      - name: Replace AGRO TAG product images and partner visual
         run: |
           python - <<'PY'
           from pathlib import Path
@@ -55,6 +56,10 @@ jobs:
 
           for old, new in replacements.items():
               s = s.replace(old, new)
+
+          placeholder = '<div class="partner-image-placeholder" role="img" aria-label="Место для изображения сельхозугодий в горной местности Центральной Азии"></div>'
+          image = '<div class="partner-image-placeholder"><img src="assets/central-asia.png" alt="Сельхозугодья в горной местности Центральной Азии"/></div>'
+          s = s.replace(placeholder, image)
 
           p.write_text(s, encoding='utf-8')
           PY
