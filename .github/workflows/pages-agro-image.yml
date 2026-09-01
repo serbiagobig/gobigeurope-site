@@ -29,7 +29,7 @@ jobs:
       - name: Build complete site with all assets
         run: sh build.sh
 
-      - name: Use full AGRO TAG CENTR image in service section
+      - name: Use full AGRO TAG CENTR image and partnership benefits copy
         run: |
           cp "AGRO TAG CENTR.png" dist/assets/agro-tag-center-full.png
           python - <<'PY'
@@ -44,6 +44,9 @@ jobs:
           s, n = re.subn(pattern, replacement, s, count=1)
           if n != 1:
               raise SystemExit('Service image block not found')
+
+          s = s.replace('<div class="kicker">Сервис и компетенции</div><h2>Поставка становится долгосрочным бизнесом</h2>', '<div class="kicker">Преимущества партнёрства</div><h2>Больше, чем право продавать технику</h2>', 1)
+          s = s.replace('<p class="lead">Региональный сервисный центр создаёт доверие, сокращает простой техники и формирует повторные продажи.</p>', '<p class="lead">Коммерческие условия, территория, склад и план продаж согласовываются индивидуально по выбранным группам.</p>', 1)
 
           css = '''
           .service-image{background:#fff;display:flex;align-items:center;justify-content:center}
