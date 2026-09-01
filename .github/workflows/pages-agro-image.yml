@@ -64,6 +64,20 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
+      - name: Add partnership roles under center image
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/agro-tag.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<div class="center-visual"><img src="assets/agro-tag-center.png" alt="AGRO TAG CENTR"/></div>'
+          new = '''<div class="center-left-stack"><div class="center-visual"><img src="assets/agro-tag-center.png" alt="AGRO TAG CENTR"/></div><div class="partnership-roles"><div class="role-line"><span class="role-label partner-label">ПАРТНЁР</span><span class="role-text">рынок · клиенты · продажи · логистика · сервис</span></div><div class="role-line"><span class="role-label tag-label">AGRO TAG</span><span class="role-text">продукция · технологии · координация · обучение</span></div><div class="role-line"><span class="role-label joint-label">СОВМЕСТНО</span><span class="role-text">запуск · склад · развитие · локализация</span></div><div class="role-key"><small>Ключевой критерий</small><strong>AGRO TAG — долгосрочное направление, а не разовая сделка.</strong></div></div></div>'''
+          if old not in s:
+              raise SystemExit('AGRO TAG center visual block not found')
+          s = s.replace(old, new, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
       - name: Apply final AGRO TAG benefits layout
         run: |
           cp assets/agro-benefits-final.css dist/assets/agro-benefits-final.css
@@ -71,7 +85,7 @@ jobs:
           from pathlib import Path
           p = Path('dist/agro-tag.html')
           s = p.read_text(encoding='utf-8')
-          link = '<link rel="stylesheet" href="assets/agro-benefits-final.css?v=20260901-2">'
+          link = '<link rel="stylesheet" href="assets/agro-benefits-final.css?v=20260901-3">'
           if link not in s:
               s = s.replace('</head>', link + '\n</head>', 1)
           p.write_text(s, encoding='utf-8')
