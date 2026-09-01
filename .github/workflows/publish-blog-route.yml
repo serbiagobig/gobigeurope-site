@@ -57,17 +57,19 @@ jobs:
               s = s.replace('href="assets/blog/">Блог</a>', 'href="blog.html">Блог</a>')
 
               if name == 'index.html':
-                  s, count = re.subn(
-                      r'(<a\b[^>]*?href=")[^"]*("[^>]*>\s*Обсудить задачу\s*</a>)',
-                      r'\1international.html#application\2',
-                      s,
-                      count=1,
-                      flags=re.IGNORECASE,
-                  )
-                  if count == 0:
-                      print('Homepage button "Обсудить задачу" not found; no CTA link changed')
-                  else:
-                      print('Homepage CTA wired to international.html#application')
+                  labels = ['Обсудить задачу', 'Отправить запрос', 'Назначить встречу']
+                  for label in labels:
+                      s, count = re.subn(
+                          rf'(<a\b[^>]*?href=")[^"]*("[^>]*>\s*{re.escape(label)}\s*</a>)',
+                          r'\1international.html#application\2',
+                          s,
+                          count=1,
+                          flags=re.IGNORECASE,
+                      )
+                      if count == 0:
+                          print(f'Homepage button "{label}" not found')
+                      else:
+                          print(f'Homepage button "{label}" wired to international.html#application')
 
               p.write_text(s, encoding='utf-8')
           PY
