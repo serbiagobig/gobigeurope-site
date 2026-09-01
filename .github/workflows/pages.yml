@@ -66,6 +66,12 @@ jobs:
               raise SystemExit('AGRO TAG service image marker not found')
           s = s.replace(old_service, new_service, 1)
 
+          old_service_titles = '<div class="kicker">Сервис и компетенции</div><h2>Поставка становится долгосрочным бизнесом</h2>'
+          new_service_titles = '<div class="kicker">Преимущества партнёрства</div><h2>Больше, чем право продавать технику</h2>'
+          if old_service_titles not in s:
+              raise SystemExit('AGRO TAG service title block not found')
+          s = s.replace(old_service_titles, new_service_titles, 1)
+
           extra_css = '.partner-left h2{max-width:none}.partner-left h2 .keep-together{white-space:nowrap}.partner-note{margin:26px 0 0;padding-top:22px;border-top:1px solid rgba(72,105,133,.14);color:#596b7c;font-size:15.5px;line-height:1.65}.partner-image-placeholder:before,.partner-image-placeholder:after{display:none!important}.partner-image-placeholder img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}'
           if '</style>' not in s:
               raise SystemExit('Style closing tag not found')
