@@ -23,8 +23,8 @@ REPLACEMENTS = {
 }
 
 HOMEPAGE_PSEUDO_HEADING = {
-    'en': 'Markets. Technology. People.',
-    'cz': 'Trhy. Technologie. Lidé.',
+    'en': 'Markets\A Technology\A People',
+    'cz': 'Trhy\A Technologie\A Lidé',
 }
 
 LEGACY_LANGUAGE_LINK = re.compile(
@@ -40,14 +40,12 @@ LEGACY_LANGUAGE_HREF = re.compile(
 def remove_legacy_language_links(text):
     """Remove obsolete flat en.html/cz.html links left by the old language switch."""
     text = LEGACY_LANGUAGE_LINK.sub('', text)
-    # The old switch sometimes left one extra closing span after the legacy anchor.
     text = re.sub(r'(</span>)\s*</span>(\s*</nav>)', r'\1\2', text, flags=re.IGNORECASE)
     return text
 
 
 failed = False
 
-# Clean the Russian homepage too: it is the page from which users first switch language.
 root_home = ROOT / 'index.html'
 if root_home.exists():
     root_text = remove_legacy_language_links(root_home.read_text(encoding='utf-8'))
@@ -67,13 +65,11 @@ for lang, replacements in REPLACEMENTS.items():
 
         text = remove_legacy_language_links(text)
 
-        # The homepage visual heading is rendered by a ::before pseudo-element
-        # in the shared Russian CSS. Override it inside each localised homepage.
         if path.name == 'index.html':
             heading = HOMEPAGE_PSEUDO_HEADING[lang]
             override = (
                 '<style id="locale-home-heading">'
-                f'.direction-media-copy h3::before{{content:"{heading}" !important;}}'
+                f'.direction-media-copy h3::before{{content:"{heading}" !important;white-space:pre-line !important;}}'
                 '</style>'
             )
             if 'id="locale-home-heading"' in text:
