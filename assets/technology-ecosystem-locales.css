@@ -1,0 +1,70 @@
+/* Shared multilingual institution list for the Technology ecosystem card. */
+
+html[lang="ru"] .partners .partner-card:nth-child(2)::before{
+  content:"Научно-технологический парк Нови-Сад\A Научно-технологический парк Чачак\A Научно-технологический парк Республики Сербской\A Ассоциация фермеров Казахстана\A Национальный инфраструктурный проект «Туран», Кыргызстан\A ОБФ «Кыргыз ТехноВумен»" !important;
+}
+
+html[lang="en"] .partners .partner-card:nth-child(2)::before{
+  content:"Science and Technology Park Novi Sad\A Science and Technology Park Čačak\A Science and Technology Park of Republika Srpska\A Association of Farmers of Kazakhstan\A National Infrastructure Project “Turan”, Kyrgyz Republic\A “Kyrgyz TechnoWomen” Public Charitable Foundation" !important;
+}
+
+html[lang="cs"] .partners .partner-card:nth-child(2)::before,
+html[lang="cz"] .partners .partner-card:nth-child(2)::before{
+  content:"Vědeckotechnologický park Novi Sad\A Vědeckotechnologický park Čačak\A Vědeckotechnologický park Republiky srbské\A Asociace farmářů Kazachstánu\A Národní infrastrukturní projekt „Turan“, Kyrgyzská republika\A Veřejná charitativní nadace „Kyrgyz TechnoWomen“" !important;
+}
+
+@media (min-width:901px){
+  html[lang="ru"] .partners .partner-card:nth-child(2)::before,
+  html[lang="en"] .partners .partner-card:nth-child(2)::before,
+  html[lang="cs"] .partners .partner-card:nth-child(2)::before,
+  html[lang="cz"] .partners .partner-card:nth-child(2)::before{
+    width:390px !important;
+    font-size:11px !important;
+    line-height:1.55 !important;
+  }
+}
+
+@media (max-width:900px){
+  html[lang="ru"] .partners .partner-card:nth-child(2),
+  html[lang="en"] .partners .partner-card:nth-child(2),
+  html[lang="cs"] .partners .partner-card:nth-child(2),
+  html[lang="cz"] .partners .partner-card:nth-child(2){
+    flex-direction:column !important;
+    align-items:stretch !important;
+  }
+  html[lang="ru"] .partners .partner-card:nth-child(2) h3,
+  html[lang="en"] .partners .partner-card:nth-child(2) h3,
+  html[lang="cs"] .partners .partner-card:nth-child(2) h3,
+  html[lang="cz"] .partners .partner-card:nth-child(2) h3{order:1;}
+  html[lang="ru"] .partners .partner-card:nth-child(2)::before,
+  html[lang="en"] .partners .partner-card:nth-child(2)::before,
+  html[lang="cs"] .partners .partner-card:nth-child(2)::before,
+  html[lang="cz"] .partners .partner-card:nth-child(2)::before{
+    display:block !important;
+    order:2;
+    position:relative !important;
+    left:auto !important;
+    right:auto !important;
+    top:auto !important;
+    width:auto !important;
+    margin:16px -8px 0 !important;
+    padding:14px 12px !important;
+    border:1px solid rgba(116,207,156,.24) !important;
+    border-radius:16px !important;
+    background:rgba(7,20,26,.42) !important;
+    box-shadow:none !important;
+    color:#72c99b !important;
+    font-size:9px !important;
+    line-height:1.5 !important;
+    white-space:pre-line !important;
+    text-align:center !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+    pointer-events:none !important;
+  }
+  html[lang="ru"] .partners .partner-card:nth-child(2)>ul,
+  html[lang="en"] .partners .partner-card:nth-child(2)>ul,
+  html[lang="cs"] .partners .partner-card:nth-child(2)>ul,
+  html[lang="cz"] .partners .partner-card:nth-child(2)>ul{order:3;}
+}
