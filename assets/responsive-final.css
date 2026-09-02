@@ -12,19 +12,12 @@ body{
   overflow-x:clip;
 }
 *,*::before,*::after{box-sizing:border-box}
-img,svg,video,canvas,iframe{
-  max-width:100%;
-}
+img,svg,video,canvas,iframe{max-width:100%}
 img,video,canvas{height:auto}
 iframe{width:100%}
-input,select,textarea,button{
-  max-width:100%;
-  min-width:0;
-  font:inherit;
-}
+input,select,textarea,button{max-width:100%;min-width:0;font:inherit}
 textarea{width:100%;resize:vertical}
 
-/* Grid/Flex children must be allowed to shrink instead of forcing horizontal overflow. */
 [class*="grid"]>* ,
 [class*="shell"]>* ,
 .cards>* ,
@@ -34,400 +27,175 @@ textarea{width:100%;resize:vertical}
 .partner-grid>* ,
 .benefit-grid>* ,
 .market-grid>* ,
-.flow>*{
-  min-width:0;
-}
+.flow>*{min-width:0}
 
-h1,h2,h3,h4,
-p,li,label,
-.project-copy,.card,.service-card,.criterion,.choice{
-  overflow-wrap:break-word;
+p,li,label,.project-copy,.card,.service-card,.criterion,.choice{overflow-wrap:break-word}
+
+/* Headings should wrap only at natural word boundaries. Breaking words inside a large
+   display heading creates the ugly mobile fragments seen in RU/EN/CZ. */
+h1,h2,h3,h4{
+  max-width:100%;
+  overflow-wrap:normal !important;
+  word-break:normal !important;
+  hyphens:none !important;
+  text-wrap:balance;
 }
-h1,h2,h3{ text-wrap:balance; }
-p{ text-wrap:pretty; }
+p{text-wrap:pretty}
+
+/* Slightly more generous desktop measure for the two text-heavy hero pages. */
+@media (min-width:761px){
+  body:has(.hero-lead-grid) .hero h1{max-width:18ch !important}
+  body:has(.value-grid) .hero h1{max-width:16ch !important}
+}
 
 section[id]{scroll-margin-top:110px}
 
 @media (pointer:coarse){
-  button,
-  .btn,
-  .form-btn,
-  .projects-all,
-  .back,
-  input[type="submit"]{
-    min-height:44px;
-  }
+  button,.btn,.form-btn,.projects-all,.back,input[type="submit"]{min-height:44px}
 }
 
 @media (max-width:1024px){
   section[id]{scroll-margin-top:24px}
-
-  .cta-box,
-  .application-box,
-  .form-wrap,
-  .card,
-  .project-card{
-    max-width:100%;
-  }
-
-  .section-head,
-  .projects-head{
-    min-width:0;
-  }
+  .cta-box,.application-box,.form-wrap,.card,.project-card{max-width:100%}
+  .section-head,.projects-head{min-width:0}
 }
 
 @media (max-width:760px){
-  .wrap{
-    max-width:calc(100% - 28px);
-  }
+  .wrap{max-width:calc(100% - 28px)}
 
-  .direction-grid{
-    grid-template-columns:1fr !important;
-    width:100% !important;
-  }
-  .direction-item{
-    min-height:0 !important;
-    width:100% !important;
-    padding:28px 24px 26px !important;
-    border-right:0 !important;
-    border-bottom:1px solid rgba(10,37,88,.12) !important;
-  }
-  .direction-item:last-child{
-    border-bottom:0 !important;
-  }
-  .direction-item h3{
-    max-width:none !important;
-    font-size:clamp(28px,8.5vw,36px) !important;
-    line-height:1.04 !important;
-    overflow-wrap:normal !important;
-    word-break:normal !important;
-    hyphens:none !important;
-  }
-  .direction-item p{
-    max-width:42rem !important;
-    font-size:15px !important;
-    line-height:1.6 !important;
-  }
-
-  .geo,
-  .geo .wrap,
-  .geopanel,
-  .geocopy,
-  .map{
+  /* Shared hero typography audit — Digital, Education and International. */
+  body:has(.hero-lead-grid) .hero-copy,
+  body:has(.value-grid) .hero-copy,
+  body:has(.regions-modern) .hero-copy{
     width:100% !important;
     max-width:100% !important;
-    min-width:0 !important;
   }
-  .geopanel{
-    grid-template-columns:minmax(0,1fr) !important;
-    height:auto !important;
-    min-height:0 !important;
-    overflow:hidden !important;
-  }
-  .geocopy{
-    padding:34px 20px 18px !important;
-  }
-  .geocopy .eyebrow{
-    margin-bottom:16px !important;
-    font-size:10px !important;
-    letter-spacing:.16em !important;
-  }
-  .geocopy h2{
+  body:has(.hero-lead-grid) .hero h1,
+  body:has(.value-grid) .hero h1{
     width:100% !important;
     max-width:100% !important;
-    margin:0 !important;
-    font-size:clamp(30px,9vw,38px) !important;
-    line-height:1.03 !important;
+    font-size:clamp(31px,8.6vw,36px) !important;
+    line-height:1.01 !important;
     letter-spacing:-.025em !important;
-    overflow-wrap:normal !important;
-    word-break:normal !important;
-    hyphens:none !important;
-    text-wrap:wrap !important;
+    text-wrap:balance !important;
   }
-  .geocopy>p:not(.eyebrow){
-    margin-top:18px !important;
-    max-width:100% !important;
-    font-size:14px !important;
-    line-height:1.55 !important;
-  }
-  .regions{
-    display:grid !important;
-    grid-template-columns:1fr !important;
-    gap:8px !important;
+  body:has(.regions-modern) .hero h1{
     width:100% !important;
+    max-width:14ch !important;
+    font-size:clamp(32px,9vw,39px) !important;
+    line-height:1.01 !important;
+    letter-spacing:-.025em !important;
+  }
+  body:has(.hero-lead-grid) .eyebrow,
+  body:has(.value-grid) .eyebrow,
+  body:has(.regions-modern) .eyebrow{
     max-width:100% !important;
-    margin-top:22px !important;
+    line-height:1.45 !important;
   }
-  .regions span{
-    display:block !important;
-    width:100% !important;
-    min-width:0 !important;
-    padding:10px 12px !important;
-    white-space:normal !important;
-    line-height:1.3 !important;
-  }
-  .map{
-    padding:8px 18px 28px !important;
-    overflow:hidden !important;
-  }
-  .map img{
-    display:block !important;
-    width:100% !important;
+  body:has(.value-grid) .hero p,
+  body:has(.regions-modern) .lead{
     max-width:100% !important;
-    height:auto !important;
-    object-fit:contain !important;
   }
 
-  .btns,
-  .actions,
-  .form-actions,
-  .form-actions-right,
-  .services-cta,
-  .cta-box{
-    max-width:100%;
-    flex-wrap:wrap;
+  /* Section headings across all pages: maintain editorial line lengths without word splits. */
+  section h2{
+    max-width:100% !important;
+    font-size:clamp(30px,8.8vw,38px) !important;
+    line-height:1.04 !important;
+    letter-spacing:-.025em !important;
   }
+  .section-head h2,.projects-head h2{max-width:100% !important}
 
-  .field,
-  .field.full,
-  .form-field,
-  .choice,
-  .criterion{
-    min-width:0;
+  .direction-grid{grid-template-columns:1fr !important;width:100% !important}
+  .direction-item{
+    min-height:0 !important;width:100% !important;padding:28px 24px 26px !important;
+    border-right:0 !important;border-bottom:1px solid rgba(10,37,88,.12) !important;
   }
+  .direction-item:last-child{border-bottom:0 !important}
+  .direction-item h3{
+    max-width:none !important;font-size:clamp(28px,8.5vw,36px) !important;line-height:1.04 !important;
+  }
+  .direction-item p{max-width:42rem !important;font-size:15px !important;line-height:1.6 !important}
+
+  .geo,.geo .wrap,.geopanel,.geocopy,.map{width:100% !important;max-width:100% !important;min-width:0 !important}
+  .geopanel{grid-template-columns:minmax(0,1fr) !important;height:auto !important;min-height:0 !important;overflow:hidden !important}
+  .geocopy{padding:34px 20px 18px !important}
+  .geocopy .eyebrow{margin-bottom:16px !important;font-size:10px !important;letter-spacing:.16em !important}
+  .geocopy h2{
+    width:100% !important;max-width:100% !important;margin:0 !important;
+    font-size:clamp(30px,9vw,38px) !important;line-height:1.03 !important;letter-spacing:-.025em !important;text-wrap:wrap !important;
+  }
+  .geocopy>p:not(.eyebrow){margin-top:18px !important;max-width:100% !important;font-size:14px !important;line-height:1.55 !important}
+  .regions{display:grid !important;grid-template-columns:1fr !important;gap:8px !important;width:100% !important;max-width:100% !important;margin-top:22px !important}
+  .regions span{display:block !important;width:100% !important;min-width:0 !important;padding:10px 12px !important;white-space:normal !important;line-height:1.3 !important}
+  .map{padding:8px 18px 28px !important;overflow:hidden !important}
+  .map img{display:block !important;width:100% !important;max-width:100% !important;height:auto !important;object-fit:contain !important}
+
+  .btns,.actions,.form-actions,.form-actions-right,.services-cta,.cta-box{max-width:100%;flex-wrap:wrap}
+  .field,.field.full,.form-field,.choice,.criterion{min-width:0}
 
   header .head{flex-wrap:wrap}
   header .nav{
-    display:flex !important;
-    flex:1 1 100%;
-    width:100%;
-    max-width:100%;
-    flex-wrap:nowrap !important;
-    justify-content:flex-start !important;
-    gap:14px !important;
-    overflow-x:auto;
-    overscroll-behavior-inline:contain;
-    scrollbar-width:none;
-    padding:3px 0 8px;
-    -webkit-overflow-scrolling:touch;
+    display:flex !important;flex:1 1 100%;width:100%;max-width:100%;flex-wrap:nowrap !important;
+    justify-content:flex-start !important;gap:14px !important;overflow-x:auto;overscroll-behavior-inline:contain;
+    scrollbar-width:none;padding:3px 0 8px;-webkit-overflow-scrolling:touch;
   }
   header .nav::-webkit-scrollbar{display:none}
-  header .nav a,
-  header .nav .lang-switch{
-    flex:0 0 auto;
-    white-space:nowrap;
-  }
+  header .nav a,header .nav .lang-switch{flex:0 0 auto;white-space:nowrap}
 
-  .project-copy,
-  .project-top,
-  .map-tag,
-  .image-map-tag{
-    max-width:100%;
-  }
-
-  table{
-    width:100%;
-    max-width:100%;
-  }
+  .project-copy,.project-top,.map-tag,.image-map-tag{max-width:100%}
+  table{width:100%;max-width:100%}
 }
 
 @media (max-width:520px){
-  .choice-grid,
-  .choice-grid.three,
-  .radio-row,
-  .choices,
-  .role-group{
-    grid-template-columns:1fr !important;
-  }
+  .choice-grid,.choice-grid.three,.radio-row,.choices,.role-group{grid-template-columns:1fr !important}
 
-  .direction-item{
-    padding:26px 22px 24px !important;
+  body:has(.hero-lead-grid) .hero h1,
+  body:has(.value-grid) .hero h1{
+    font-size:clamp(29px,8.2vw,33px) !important;
+    line-height:1.02 !important;
   }
-  .direction-item h3{
-    font-size:clamp(27px,9vw,33px) !important;
+  body:has(.regions-modern) .hero h1{
+    max-width:100% !important;
+    font-size:clamp(30px,8.6vw,35px) !important;
   }
+  section h2{font-size:clamp(29px,8.5vw,35px) !important}
 
-  .geocopy{
-    padding:30px 18px 16px !important;
-  }
-  .geocopy h2{
-    font-size:clamp(29px,9.2vw,34px) !important;
-    line-height:1.04 !important;
-  }
-  .map{
-    padding:6px 14px 24px !important;
-  }
+  .direction-item{padding:26px 22px 24px !important}
+  .direction-item h3{font-size:clamp(27px,9vw,33px) !important}
 
-  .btns>.btn,
-  .actions>.btn,
-  .form-actions-right>.form-btn,
-  .services-cta .btn{
-    width:100%;
-  }
+  .geocopy{padding:30px 18px 16px !important}
+  .geocopy h2{font-size:clamp(29px,9.2vw,34px) !important;line-height:1.04 !important}
+  .map{padding:6px 14px 24px !important}
 
-  .form-actions-right{
-    width:100%;
-  }
-
-  h1,h2,h3{
-    max-width:100%;
-  }
+  .btns>.btn,.actions>.btn,.form-actions-right>.form-btn,.services-cta .btn{width:100%}
+  .form-actions-right{width:100%}
 }
 
 @media (max-width:380px){
-  .wrap{
-    max-width:calc(100% - 22px);
-  }
-  .project-copy,
-  .project-top{
-    left:16px !important;
-    right:16px !important;
-  }
+  .wrap{max-width:calc(100% - 22px)}
+  body:has(.hero-lead-grid) .hero h1,
+  body:has(.value-grid) .hero h1{font-size:28px !important}
+  .project-copy,.project-top{left:16px !important;right:16px !important}
 }
 
-/* Homepage only: modern full-width mobile navigation. */
+/* Legacy homepage mobile navigation rules kept for source compatibility; the universal
+   mobile navigation stylesheet now overrides the actual published mobile header. */
 @media (max-width:850px){
-  header:has(.menu-toggle){
-    position:sticky !important;
-    top:0;
-    z-index:100;
-    background:#fff;
-    box-shadow:0 1px 0 rgba(10,37,88,.08);
-  }
-  header:has(.menu-toggle) .head{
-    min-height:84px !important;
-    padding:10px 0 !important;
-    flex-direction:row !important;
-    align-items:center !important;
-    flex-wrap:nowrap !important;
-  }
-  header:has(.menu-toggle) .menu-toggle{
-    width:46px !important;
-    height:46px !important;
-    padding:10px !important;
-    border-radius:50%;
-    transition:background .2s ease;
-  }
-  header:has(.menu-toggle) .menu-toggle:active{
-    background:#f1f4f2;
-  }
-  header:has(.menu-toggle) nav#main-nav{
-    position:fixed !important;
-    z-index:98 !important;
-    inset:84px 0 0 0 !important;
-    width:100% !important;
-    max-width:none !important;
-    height:calc(100dvh - 84px) !important;
-    padding:28px 22px 24px !important;
-    display:flex !important;
-    flex-direction:column !important;
-    align-items:stretch !important;
-    justify-content:flex-start !important;
-    gap:4px !important;
-    overflow-y:auto !important;
-    overflow-x:hidden !important;
-    background:linear-gradient(180deg,#f8faf8 0%,#f4f7f5 100%) !important;
-    box-shadow:none !important;
-    transform:translateX(100%) !important;
-    opacity:.98;
-    transition:transform .32s cubic-bezier(.22,.75,.24,1) !important;
-  }
-  header:has(.menu-toggle).nav-open nav#main-nav{
-    transform:translateX(0) !important;
-  }
-  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link){
-    width:100% !important;
-    min-height:62px !important;
-    padding:13px 4px !important;
-    display:grid !important;
-    grid-template-columns:minmax(0,1fr) auto !important;
-    align-items:center !important;
-    gap:18px !important;
-    border:0 !important;
-    color:#17304d !important;
-    font-family:var(--font-heading,Georgia,serif) !important;
-    font-size:clamp(22px,6.4vw,28px) !important;
-    font-weight:700 !important;
-    line-height:1.08 !important;
-    letter-spacing:-.02em !important;
-    white-space:normal !important;
-  }
-  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link)::after{
-    content:"→" !important;
-    display:block !important;
-    color:#0b6b45 !important;
-    font-family:Arial,sans-serif !important;
-    font-size:24px !important;
-    font-weight:400 !important;
-    transform:translateX(0);
-    transition:transform .2s ease;
-  }
-  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link):active::after{
-    transform:translateX(4px);
-  }
-  header:has(.menu-toggle) nav#main-nav>a.contact-link{
-    order:20;
-    width:100% !important;
-    min-height:54px !important;
-    margin:22px 0 0 !important;
-    padding:0 22px !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    border:0 !important;
-    border-radius:999px !important;
-    background:#0b6b45 !important;
-    color:#fff !important;
-    font-size:0 !important;
-    font-weight:800 !important;
-    box-shadow:0 10px 24px rgba(11,107,69,.16);
-  }
-  html[lang="ru"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{
-    content:"Обсудить задачу";
-    font-size:14px;
-  }
-  html[lang="en"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{
-    content:"Discuss your project";
-    font-size:14px;
-  }
-  html[lang="cs"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before,
-  html[lang="cz"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{
-    content:"Probrat váš záměr";
-    font-size:14px;
-  }
-  header:has(.menu-toggle) nav#main-nav .lang-switch{
-    order:30;
-    width:100% !important;
-    margin:18px 0 0 !important;
-    padding:18px 0 4px !important;
-    display:flex !important;
-    align-items:center !important;
-    justify-content:flex-start !important;
-    gap:8px !important;
-    border-top:1px solid rgba(10,37,88,.09);
-    color:transparent !important;
-    font-size:0 !important;
-    white-space:normal !important;
-  }
-  header:has(.menu-toggle) nav#main-nav .lang-switch a{
-    min-width:44px !important;
-    min-height:38px !important;
-    padding:0 12px !important;
-    display:inline-flex !important;
-    align-items:center !important;
-    justify-content:center !important;
-    border:1px solid rgba(10,37,88,.12) !important;
-    border-radius:999px !important;
-    background:#fff !important;
-    color:#536273 !important;
-    font-family:var(--font-body,Arial,sans-serif) !important;
-    font-size:11px !important;
-    font-weight:800 !important;
-    letter-spacing:.06em !important;
-  }
-  header:has(.menu-toggle) nav#main-nav .lang-switch a[aria-current="page"]{
-    border-color:#0b6b45 !important;
-    background:#eaf5ef !important;
-    color:#0b6b45 !important;
-  }
+  header:has(.menu-toggle){position:sticky !important;top:0;z-index:100;background:#fff;box-shadow:0 1px 0 rgba(10,37,88,.08)}
+  header:has(.menu-toggle) .head{min-height:84px !important;padding:10px 0 !important;flex-direction:row !important;align-items:center !important;flex-wrap:nowrap !important}
+  header:has(.menu-toggle) .menu-toggle{width:46px !important;height:46px !important;padding:10px !important;border-radius:50%;transition:background .2s ease}
+  header:has(.menu-toggle) .menu-toggle:active{background:#f1f4f2}
+  header:has(.menu-toggle) nav#main-nav{position:fixed !important;z-index:98 !important;inset:84px 0 0 0 !important;width:100% !important;max-width:none !important;height:calc(100dvh - 84px) !important;padding:28px 22px 24px !important;display:flex !important;flex-direction:column !important;align-items:stretch !important;justify-content:flex-start !important;gap:4px !important;overflow-y:auto !important;overflow-x:hidden !important;background:linear-gradient(180deg,#f8faf8 0%,#f4f7f5 100%) !important;box-shadow:none !important;transform:translateX(100%) !important;opacity:.98;transition:transform .32s cubic-bezier(.22,.75,.24,1) !important}
+  header:has(.menu-toggle).nav-open nav#main-nav{transform:translateX(0) !important}
+  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link){width:100% !important;min-height:62px !important;padding:13px 4px !important;display:grid !important;grid-template-columns:minmax(0,1fr) auto !important;align-items:center !important;gap:18px !important;border:0 !important;color:#17304d !important;font-family:var(--font-heading,Georgia,serif) !important;font-size:clamp(22px,6.4vw,28px) !important;font-weight:700 !important;line-height:1.08 !important;letter-spacing:-.02em !important;white-space:normal !important}
+  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link)::after{content:"→" !important;display:block !important;color:#0b6b45 !important;font-family:Arial,sans-serif !important;font-size:24px !important;font-weight:400 !important;transform:translateX(0);transition:transform .2s ease}
+  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link):active::after{transform:translateX(4px)}
+  header:has(.menu-toggle) nav#main-nav>a.contact-link{order:20;width:100% !important;min-height:54px !important;margin:22px 0 0 !important;padding:0 22px !important;display:flex !important;align-items:center !important;justify-content:center !important;border:0 !important;border-radius:999px !important;background:#0b6b45 !important;color:#fff !important;font-size:0 !important;font-weight:800 !important;box-shadow:0 10px 24px rgba(11,107,69,.16)}
+  html[lang="ru"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{content:"Обсудить задачу";font-size:14px}
+  html[lang="en"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{content:"Discuss your project";font-size:14px}
+  html[lang="cs"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before,html[lang="cz"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{content:"Probrat váš záměr";font-size:14px}
+  header:has(.menu-toggle) nav#main-nav .lang-switch{order:30;width:100% !important;margin:18px 0 0 !important;padding:18px 0 4px !important;display:flex !important;align-items:center !important;justify-content:flex-start !important;gap:8px !important;border-top:1px solid rgba(10,37,88,.09);color:transparent !important;font-size:0 !important;white-space:normal !important}
+  header:has(.menu-toggle) nav#main-nav .lang-switch a{min-width:44px !important;min-height:38px !important;padding:0 12px !important;display:inline-flex !important;align-items:center !important;justify-content:center !important;border:1px solid rgba(10,37,88,.12) !important;border-radius:999px !important;background:#fff !important;color:#536273 !important;font-family:var(--font-body,Arial,sans-serif) !important;font-size:11px !important;font-weight:800 !important;letter-spacing:.06em !important}
+  header:has(.menu-toggle) nav#main-nav .lang-switch a[aria-current="page"]{border-color:#0b6b45 !important;background:#eaf5ef !important;color:#0b6b45 !important}
 }
