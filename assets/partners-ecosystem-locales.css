@@ -2,7 +2,7 @@
 
 /* University / expert institutions — RU */
 html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after{
-  content:"Факультет технических наук Университета Нови-Сада\A INSTEM — Институт технологического и экологического менеджмента в Центральной Азии\A Казахский национальный университет имени аль-Фараби (KazNU)" !important;
+  content:"Факультет технических наук Университета Нови-Сада\A Факультет сельскохозяйственных наук Университета Нови-Сада\A INSTEM — Институт технологического и экологического менеджмента в Центральной Азии\A Казахский национальный университет имени аль-Фараби (KazNU)\A Институт овощных культур, Смедеревска-Паланка" !important;
 }
 
 html[lang="en"] .partners h2::before{content:"Growth through\A the right connections";}
@@ -17,7 +17,7 @@ html[lang="en"] .partners .partner-card:nth-child(3) h3::after{content:"funds ·
 html[lang="en"] .partners .partner-card:nth-child(3)::before{content:"Specialist funds, private investors and platforms are engaged according to the needs of each project.";}
 html[lang="en"] .partners .partner-card:nth-child(2)>ul::before{content:"Universities and experts\A research · talent · expertise";}
 html[lang="en"] .partners .partner-card:nth-child(2)>ul::after{
-  content:"Faculty of Technical Sciences, University of Novi Sad\A INSTEM — Institute of Technological and Environmental Management in Central Asia\A Al-Farabi Kazakh National University (KazNU)" !important;
+  content:"Faculty of Technical Sciences, University of Novi Sad\A Faculty of Agriculture, University of Novi Sad\A INSTEM — Institute of Technological and Environmental Management in Central Asia\A Al-Farabi Kazakh National University (KazNU)\A Institute for Vegetable Crops, Smederevska Palanka" !important;
 }
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::before{content:"Development institutions and business associations\A chambers · associations · clusters";}
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::after{content:"Chamber of Commerce and Industry of Vojvodina\A Chamber of Commerce and Industry of Republika Srpska\A Osh Regional Chamber of Commerce and Industry of the Kyrgyz Republic\A TESLA Alliance HQ Ambassador\A Namangan Regional Department of the Chamber of Commerce and Industry of the Republic of Uzbekistan\A Andijan Regional Branch of the Chamber of Commerce and Industry of Uzbekistan\A Chamber of Commerce and Industry of the Sughd Region of the Republic of Tajikistan" !important;}
@@ -41,7 +41,7 @@ html[lang="cs"] .partners .partner-card:nth-child(2)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(2)>ul::before{content:"Univerzity a experti\A výzkum · talenty · odborné kompetence";}
 html[lang="cs"] .partners .partner-card:nth-child(2)>ul::after,
 html[lang="cz"] .partners .partner-card:nth-child(2)>ul::after{
-  content:"Fakulta technických věd Univerzity v Novém Sadu\A INSTEM — Institut technologického a environmentálního managementu ve Střední Asii\A Kazašská národní univerzita al-Farabiho (KazNU)" !important;
+  content:"Fakulta technických věd Univerzity v Novém Sadu\A Zemědělská fakulta Univerzity v Novém Sadu\A INSTEM — Institut technologického a environmentálního managementu ve Střední Asii\A Kazašská národní univerzita al-Farabiho (KazNU)\A Ústav pro zeleninové plodiny, Smederevska Palanka" !important;
 }
 html[lang="cs"] .partners .partner-card:nth-child(3) h3::before,
 html[lang="cz"] .partners .partner-card:nth-child(3) h3::before{content:"Investiční\A komunita";}
@@ -65,7 +65,7 @@ html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !impor
   html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
-    width:390px;
+    width:410px;
     font-size:11px;
     line-height:1.5;
   }
@@ -75,7 +75,7 @@ html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !impor
   html[lang="en"] .partners .partner-card:nth-child(2)>ul,
   html[lang="cs"] .partners .partner-card:nth-child(2)>ul,
   html[lang="cz"] .partners .partner-card:nth-child(2)>ul{
-    padding-bottom:92px !important;
+    padding-bottom:138px !important;
   }
   html[lang="en"] .partners .partner-card:nth-child(3)>ul,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul,
