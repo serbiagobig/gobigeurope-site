@@ -38,9 +38,15 @@ LEGACY_LANGUAGE_HREF = re.compile(
 
 
 def remove_legacy_language_links(text):
-    """Remove obsolete flat en.html/cz.html links left by the old language switch."""
     text = LEGACY_LANGUAGE_LINK.sub('', text)
     text = re.sub(r'(</span>)\s*</span>(\s*</nav>)', r'\1\2', text, flags=re.IGNORECASE)
+    return text
+
+
+def fix_localized_runtime_paths(text):
+    """Fix runtime paths inside inline JS that HTML asset rewriting does not catch."""
+    text = text.replace("fetch('assets/blog-data.json'", "fetch('../assets/blog-data.json'")
+    text = text.replace('fetch("assets/blog-data.json"', 'fetch("../assets/blog-data.json"')
     return text
 
 
@@ -64,6 +70,7 @@ for lang, replacements in REPLACEMENTS.items():
             text = text.replace(source, target)
 
         text = remove_legacy_language_links(text)
+        text = fix_localized_runtime_paths(text)
 
         if path.name == 'index.html':
             heading = HOMEPAGE_PSEUDO_HEADING[lang]
@@ -89,6 +96,16 @@ for lang, replacements in REPLACEMENTS.items():
             failed = True
             print(f'ERROR {lang}/{path.name}: stale en.html/cz.html language link remains')
 
+        if path.name == 'blog.html':
+            if '../assets/blog-data.json' not in text:
+                failed = True
+                print(f'ERROR {lang}/{path.name}: localized blog feed path is incorrect')
+            elif 'fetch(\'assets/blog-data.json\'' in text or 'fetch("assets/blog-data.json"' in text:
+                failed = True
+                print(f'ERROR {lang}/{path.name}: stale localized blog feed path remains')
+            else:
+                print(f'PASS {lang}/{path.name}: shared blog feed path resolves correctly')
+
         residuals = []
         for match in re.finditer(r'[А-Яа-яЁё][^<>\n]{0,160}', text):
             fragment = match.group(0).strip()
@@ -103,5 +120,5 @@ for lang, replacements in REPLACEMENTS.items():
             print(f'PASS {lang}/{path.name}')
 
 if failed:
-    raise SystemExit('Localisation QA failed: language links or untranslated text remain.')
-print('Localisation QA passed: EN/CZ contain no Cyrillic text or legacy language links.')
+    raise SystemExit('Localisation QA failed: language links, runtime paths or untranslated text remain.')
+print('Localisation QA passed: EN/CZ contain no Cyrillic text, legacy language links or broken blog feed paths.')
