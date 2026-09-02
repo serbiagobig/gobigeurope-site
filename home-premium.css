@@ -40,11 +40,12 @@
   white-space:normal !important;
 }
 .direction-media-copy h3::before{
-  content:"Рынки Технологии Люди";
+  content:"Рынки\AТехнологии\AЛюди";
   display:block;
+  white-space:pre-line !important;
   font-family:var(--font-heading) !important;
-  font-size:clamp(24px,2.7vw,38px) !important;
-  line-height:1.04 !important;
+  font-size:clamp(36px,4.05vw,57px) !important;
+  line-height:1.02 !important;
   letter-spacing:-.02em !important;
   color:#fff !important;
   text-shadow:0 2px 14px rgba(0,0,0,.18) !important;
@@ -128,8 +129,8 @@ img{max-width:100%}
     white-space:normal !important;
   }
   .direction-media-copy h3::before{
-    font-size:clamp(20px,4.65vw,26px) !important;
-    line-height:1.08 !important;
+    font-size:clamp(30px,6.98vw,39px) !important;
+    line-height:1.05 !important;
   }
   .direction-media-copy p{
     max-width:540px !important;
@@ -144,6 +145,6 @@ img{max-width:100%}
   .direction-media-copy{width:calc(100% - 26px) !important;top:50% !important;bottom:auto !important}
   .direction-media-copy span{font-size:9px !important;margin-bottom:7px !important}
   .direction-media-copy h3{font-size:0 !important;line-height:1.1 !important}
-  .direction-media-copy h3::before{font-size:17px !important;line-height:1.1 !important}
+  .direction-media-copy h3::before{font-size:25.5px !important;line-height:1.06 !important}
   .direction-media-copy p{font-size:10.5px !important;line-height:1.45 !important;margin-top:10px !important}
 }
