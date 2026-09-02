@@ -1,0 +1,39 @@
+/* Localised copy for the GO BIG ecosystem visual. Loaded after partners-ecosystem.css. */
+
+html[lang="en"] .partners h2::before{content:"Growth through\A the right connections";}
+html[lang="en"] .partners h2::after{content:"GO BIG does not operate as an external consultant,\A but as a gateway to a network of companies, experts\A and institutions in target markets.";}
+html[lang="en"] .partners .partner-grid::after{content:"Right contacts → First conversations → Local partners → Joint projects";}
+html[lang="en"] .partners .partner-card:nth-child(1) h3::before{content:"Business and industry\A partners";}
+html[lang="en"] .partners .partner-card:nth-child(1) h3::after{content:"local companies · distributors\A prospective clients";}
+html[lang="en"] .partners .partner-card:nth-child(2) h3::before{content:"Technology\A ecosystem";}
+html[lang="en"] .partners .partner-card:nth-child(2) h3::after{content:"IT · AI · automation\A integrators · developers";}
+html[lang="en"] .partners .partner-card:nth-child(3) h3::before{content:"Investment\A community";}
+html[lang="en"] .partners .partner-card:nth-child(3) h3::after{content:"funds · private investors\A investment platforms";}
+html[lang="en"] .partners .partner-card:nth-child(3)::before{content:"Specialist funds, private investors and platforms are engaged according to the needs of each project.";}
+html[lang="en"] .partners .partner-card:nth-child(2)>ul::before{content:"Universities and experts\A research · talent · expertise";}
+html[lang="en"] .partners .partner-card:nth-child(3)>ul::before{content:"Development institutions and business associations\A chambers · associations · clusters";}
+
+html[lang="cs"] .partners h2::before,
+html[lang="cz"] .partners h2::before{content:"Růst díky\A správným kontaktům";}
+html[lang="cs"] .partners h2::after,
+html[lang="cz"] .partners h2::after{content:"GO BIG nepůsobí jako externí konzultant,\A ale jako vstupní bod do sítě firem, expertů\A a institucí na cílových trzích.";}
+html[lang="cs"] .partners .partner-grid::after,
+html[lang="cz"] .partners .partner-grid::after{content:"Správné kontakty → První jednání → Místní partneři → Společné projekty";}
+html[lang="cs"] .partners .partner-card:nth-child(1) h3::before,
+html[lang="cz"] .partners .partner-card:nth-child(1) h3::before{content:"Obchodní a oboroví\A partneři";}
+html[lang="cs"] .partners .partner-card:nth-child(1) h3::after,
+html[lang="cz"] .partners .partner-card:nth-child(1) h3::after{content:"místní firmy · distributoři\A potenciální zákazníci";}
+html[lang="cs"] .partners .partner-card:nth-child(2) h3::before,
+html[lang="cz"] .partners .partner-card:nth-child(2) h3::before{content:"Technologický\A ekosystém";}
+html[lang="cs"] .partners .partner-card:nth-child(2) h3::after,
+html[lang="cz"] .partners .partner-card:nth-child(2) h3::after{content:"IT · AI · automatizace\A integrátoři · vývojáři";}
+html[lang="cs"] .partners .partner-card:nth-child(3) h3::before,
+html[lang="cz"] .partners .partner-card:nth-child(3) h3::before{content:"Investiční\A komunita";}
+html[lang="cs"] .partners .partner-card:nth-child(3) h3::after,
+html[lang="cz"] .partners .partner-card:nth-child(3) h3::after{content:"fondy · soukromí investoři\A investiční platformy";}
+html[lang="cs"] .partners .partner-card:nth-child(3)::before,
+html[lang="cz"] .partners .partner-card:nth-child(3)::before{content:"Specializované fondy, soukromí investoři a platformy se zapojují podle potřeb konkrétního projektu.";}
+html[lang="cs"] .partners .partner-card:nth-child(2)>ul::before,
+html[lang="cz"] .partners .partner-card:nth-child(2)>ul::before{content:"Univerzity a experti\A výzkum · talenty · odborné kompetence";}
+html[lang="cs"] .partners .partner-card:nth-child(3)>ul::before,
+html[lang="cz"] .partners .partner-card:nth-child(3)>ul::before{content:"Rozvojové instituce a podnikatelská sdružení\A komory · asociace · klastry";}
