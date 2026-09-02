@@ -68,7 +68,7 @@ def mobile_markup(lang, page):
         links.append(f'<a href="{target}"{current}>{labels[target]}</a>')
 
     lang_links = []
-    for code, text in [('ru', 'RU'), ('en', 'EN'), ('cz', 'CZ')]:
+    for code, text in [('en', 'EN'), ('cz', 'CZ'), ('ru', 'RU')]:
         href = language_page_href(lang, code, page)
         current = ' aria-current="page"' if code == lang else ''
         lang_links.append(f'<a href="{href}"{current}>{text}</a>')
@@ -116,7 +116,6 @@ def inject_file(path, lang, page):
 
     markup = mobile_markup(lang, page)
 
-    # Normal content pages: insert the universal toggle/overlay next to the existing brand.
     brand_match = re.search(
         r'(<header\b.*?<div\b[^>]*class=["\'][^"\']*\bhead\b[^"\']*["\'][^>]*>.*?</a>)',
         text,
@@ -126,8 +125,6 @@ def inject_file(path, lang, page):
         insert_at = brand_match.end(1)
         text = text[:insert_at] + markup + text[insert_at:]
     else:
-        # Utility pages (e.g. AGRO TAG contact form/readiness) do not use the standard header.
-        # Give them the same mobile navigation without altering their desktop layout.
         shell = fallback_header(lang, page, markup)
         if re.search(r'<body\b[^>]*>', text, flags=re.I):
             text = re.sub(r'(<body\b[^>]*>)', r'\1' + shell, text, count=1, flags=re.I)
