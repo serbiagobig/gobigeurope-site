@@ -12,6 +12,7 @@ html[lang="en"] .partners .partner-card:nth-child(3) h3::after{content:"funds ·
 html[lang="en"] .partners .partner-card:nth-child(3)::before{content:"Specialist funds, private investors and platforms are engaged according to the needs of each project.";}
 html[lang="en"] .partners .partner-card:nth-child(2)>ul::before{content:"Universities and experts\A research · talent · expertise";}
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::before{content:"Development institutions and business associations\A chambers · associations · clusters";}
+html[lang="en"] .partners .partner-card:nth-child(3)>ul::after{content:"Chamber of Commerce and Industry of Vojvodina\A Chamber of Commerce and Industry of Republika Srpska\A Osh Regional Chamber of Commerce and Industry of the Kyrgyz Republic\A TESLA Alliance HQ Ambassador\A Namangan Regional Department of the Chamber of Commerce and Industry of the Republic of Uzbekistan\A Andijan Regional Branch of the Chamber of Commerce and Industry of Uzbekistan\A Chamber of Commerce and Industry of the Sughd Region of the Republic of Tajikistan" !important;}
 html[lang="en"] .projects-all::before{content:"View more projects" !important;}
 
 html[lang="cs"] .partners h2::before,
@@ -38,5 +39,46 @@ html[lang="cs"] .partners .partner-card:nth-child(2)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(2)>ul::before{content:"Univerzity a experti\A výzkum · talenty · odborné kompetence";}
 html[lang="cs"] .partners .partner-card:nth-child(3)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(3)>ul::before{content:"Rozvojové instituce a podnikatelská sdružení\A komory · asociace · klastry";}
+html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
+html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{content:"Obchodní a průmyslová komora Vojvodiny\A Obchodní a průmyslová komora Republiky srbské\A Ošská regionální obchodní a průmyslová komora Kyrgyzské republiky\A Ambasador TESLA Alliance HQ\A Namanganské regionální oddělení Obchodní a průmyslové komory Republiky Uzbekistán\A Andižanská regionální pobočka Obchodní a průmyslové komory Uzbekistánu\A Obchodní a průmyslová komora Sogdijského regionu Republiky Tádžikistán" !important;}
 html[lang="cs"] .projects-all::before,
 html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !important;}
+
+/* The institutional list is longer than the former single-line tooltip. Keep it readable. */
+@media (min-width:901px){
+  html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
+  html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
+  html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
+    width:390px;
+    font-size:11px;
+    line-height:1.5;
+  }
+}
+@media (max-width:900px){
+  html[lang="en"] .partners .partner-card:nth-child(3)>ul,
+  html[lang="cs"] .partners .partner-card:nth-child(3)>ul,
+  html[lang="cz"] .partners .partner-card:nth-child(3)>ul{
+    padding-bottom:124px !important;
+  }
+  html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
+  html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
+  html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
+    display:block !important;
+    opacity:1 !important;
+    visibility:visible !important;
+    transform:none !important;
+    position:absolute;
+    left:12px;
+    right:12px;
+    bottom:10px;
+    width:auto;
+    padding:0;
+    border:0;
+    background:none;
+    box-shadow:none;
+    color:#72c99b;
+    font-size:9px;
+    line-height:1.45;
+    text-align:center;
+  }
+}
