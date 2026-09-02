@@ -31,11 +31,45 @@
   .site-universal-link[aria-current="page"]::after{
     content:"";position:absolute;left:0;right:0;bottom:3px;height:2px;background:#0b6b45;
   }
-  .site-universal-langs{display:flex;align-items:center;gap:6px;flex:0 0 auto}
-  .site-universal-lang{
-    min-width:28px;padding:7px 6px;color:#7a8793;font:800 11px/1 "Manrope",Arial,sans-serif;text-align:center;text-decoration:none;
+
+  /* Refined language switch: one compact segmented control instead of loose text links. */
+  .site-universal-langs{
+    display:flex;
+    align-items:center;
+    gap:3px;
+    flex:0 0 auto;
+    padding:3px;
+    border:1px solid rgba(11,44,99,.09);
+    border-radius:999px;
+    background:#f4f7f5;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.8);
   }
-  .site-universal-lang[aria-current="page"]{color:#0b6b45}
+  .site-universal-lang{
+    min-width:36px;
+    height:30px;
+    padding:0 10px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid transparent;
+    border-radius:999px;
+    color:#7a8793;
+    font:800 10px/1 "Manrope",Arial,sans-serif;
+    letter-spacing:.06em;
+    text-align:center;
+    text-decoration:none !important;
+    transition:background .18s ease,color .18s ease,border-color .18s ease,box-shadow .18s ease;
+  }
+  .site-universal-lang:hover{
+    color:#0b6b45;
+    background:rgba(255,255,255,.72);
+  }
+  .site-universal-lang[aria-current="page"]{
+    color:#0b6b45;
+    background:#fff;
+    border-color:rgba(11,107,69,.18);
+    box-shadow:0 2px 8px rgba(11,44,99,.08);
+  }
 
   .site-universal-shell{display:block !important;background:#fff;border-bottom:1px solid rgba(11,44,99,.10)}
   .site-universal-shell-head{width:min(1200px,calc(100% - 48px));min-height:88px;margin:auto;display:flex;align-items:center;gap:22px}
@@ -52,7 +86,7 @@
   .site-universal-nav{gap:14px}
   .site-universal-links{gap:14px}
   .site-universal-link{font-size:12px !important}
-  .site-universal-lang{font-size:10px}
+  .site-universal-lang{min-width:32px;height:28px;padding:0 8px;font-size:9px}
 }
 
 @media (max-width:850px){
@@ -86,9 +120,41 @@
   .site-mobile-link[aria-current="page"]{color:#0b6b45}
   .site-mobile-link.site-contact-link{margin-top:10px;min-height:50px;padding:0 18px;display:flex;justify-content:center;border-radius:999px;background:#0b6b45;color:#fff !important;font-family:"Manrope",Arial,sans-serif;font-size:14px;font-weight:800;letter-spacing:0}
   .site-mobile-link.site-contact-link::after{display:none}
-  .site-mobile-langs{margin-top:16px;padding-top:16px;display:flex;align-items:center;gap:8px;border-top:1px solid rgba(10,37,88,.09)}
-  .site-mobile-lang{min-width:44px;min-height:38px;padding:0 12px;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(10,37,88,.12);border-radius:999px;background:#fff;color:#586777;font-size:11px;font-weight:800;letter-spacing:.06em;text-decoration:none}
-  .site-mobile-lang[aria-current="page"]{border-color:#0b6b45;background:#eaf5ef;color:#0b6b45}
+
+  /* Same segmented-language visual language inside the mobile overlay. */
+  .site-mobile-langs{
+    align-self:flex-start;
+    margin-top:18px;
+    padding:3px;
+    display:flex;
+    align-items:center;
+    gap:3px;
+    border:1px solid rgba(11,44,99,.09);
+    border-radius:999px;
+    background:#eef3f0;
+  }
+  .site-mobile-lang{
+    min-width:46px;
+    height:38px;
+    padding:0 12px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    border:1px solid transparent;
+    border-radius:999px;
+    background:transparent;
+    color:#657283;
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.06em;
+    text-decoration:none !important;
+  }
+  .site-mobile-lang[aria-current="page"]{
+    border-color:rgba(11,107,69,.18);
+    background:#fff;
+    color:#0b6b45;
+    box-shadow:0 2px 8px rgba(11,44,99,.08);
+  }
 
   .site-context-back-wrap{display:block;width:calc(100% - 28px);margin:14px auto 0}
   .site-context-back{display:inline-flex;align-items:center;min-height:36px;color:#0b6b45;font:800 12px/1.2 "Manrope",Arial,sans-serif;text-decoration:none}
