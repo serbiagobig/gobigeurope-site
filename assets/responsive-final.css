@@ -84,8 +84,7 @@ section[id]{scroll-margin-top:110px}
     max-width:calc(100% - 28px);
   }
 
-  /* Homepage directions: force a true mobile stack. The source page contains a later
-     desktop rule that otherwise restores three narrow columns on small screens. */
+  /* Homepage directions: force a true mobile stack. */
   .direction-grid{
     grid-template-columns:1fr !important;
     width:100% !important;
@@ -112,6 +111,76 @@ section[id]{scroll-margin-top:110px}
     max-width:42rem !important;
     font-size:15px !important;
     line-height:1.6 !important;
+  }
+
+  /* Homepage geography: prevent the one-column grid from keeping desktop min-content width. */
+  .geo,
+  .geo .wrap,
+  .geopanel,
+  .geocopy,
+  .map{
+    width:100% !important;
+    max-width:100% !important;
+    min-width:0 !important;
+  }
+  .geopanel{
+    grid-template-columns:minmax(0,1fr) !important;
+    height:auto !important;
+    min-height:0 !important;
+    overflow:hidden !important;
+  }
+  .geocopy{
+    padding:34px 20px 18px !important;
+  }
+  .geocopy .eyebrow{
+    margin-bottom:16px !important;
+    font-size:10px !important;
+    letter-spacing:.16em !important;
+  }
+  .geocopy h2{
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    font-size:clamp(30px,9vw,38px) !important;
+    line-height:1.03 !important;
+    letter-spacing:-.025em !important;
+    overflow-wrap:normal !important;
+    word-break:normal !important;
+    hyphens:none !important;
+    text-wrap:wrap !important;
+  }
+  .geocopy>p:not(.eyebrow){
+    margin-top:18px !important;
+    max-width:100% !important;
+    font-size:14px !important;
+    line-height:1.55 !important;
+  }
+  .regions{
+    display:grid !important;
+    grid-template-columns:1fr !important;
+    gap:8px !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin-top:22px !important;
+  }
+  .regions span{
+    display:block !important;
+    width:100% !important;
+    min-width:0 !important;
+    padding:10px 12px !important;
+    white-space:normal !important;
+    line-height:1.3 !important;
+  }
+  .map{
+    padding:8px 18px 28px !important;
+    overflow:hidden !important;
+  }
+  .map img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:auto !important;
+    object-fit:contain !important;
   }
 
   /* Do not let controls or CTA groups overflow translated text. */
@@ -185,6 +254,17 @@ section[id]{scroll-margin-top:110px}
   }
   .direction-item h3{
     font-size:clamp(27px,9vw,33px) !important;
+  }
+
+  .geocopy{
+    padding:30px 18px 16px !important;
+  }
+  .geocopy h2{
+    font-size:clamp(29px,9.2vw,34px) !important;
+    line-height:1.04 !important;
+  }
+  .map{
+    padding:6px 14px 24px !important;
   }
 
   .btns>.btn,
