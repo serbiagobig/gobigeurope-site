@@ -1,4 +1,4 @@
-/* Localised copy for the GO BIG ecosystem visual. Loaded after partners-ecosystem.css. */
+/* Localised copy for the GO BIG ecosystem visual and CSS-generated International-page labels. */
 
 html[lang="en"] .partners h2::before{content:"Growth through\A the right connections";}
 html[lang="en"] .partners h2::after{content:"GO BIG does not operate as an external consultant,\A but as a gateway to a network of companies, experts\A and institutions in target markets.";}
@@ -12,6 +12,7 @@ html[lang="en"] .partners .partner-card:nth-child(3) h3::after{content:"funds ·
 html[lang="en"] .partners .partner-card:nth-child(3)::before{content:"Specialist funds, private investors and platforms are engaged according to the needs of each project.";}
 html[lang="en"] .partners .partner-card:nth-child(2)>ul::before{content:"Universities and experts\A research · talent · expertise";}
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::before{content:"Development institutions and business associations\A chambers · associations · clusters";}
+html[lang="en"] .projects-all::before{content:"View more projects" !important;}
 
 html[lang="cs"] .partners h2::before,
 html[lang="cz"] .partners h2::before{content:"Růst díky\A správným kontaktům";}
@@ -37,3 +38,5 @@ html[lang="cs"] .partners .partner-card:nth-child(2)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(2)>ul::before{content:"Univerzity a experti\A výzkum · talenty · odborné kompetence";}
 html[lang="cs"] .partners .partner-card:nth-child(3)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(3)>ul::before{content:"Rozvojové instituce a podnikatelská sdružení\A komory · asociace · klastry";}
+html[lang="cs"] .projects-all::before,
+html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !important;}
