@@ -27,13 +27,45 @@ HOMEPAGE_PSEUDO_HEADING = {
     'cz': 'Trhy. Technologie. Lidé.',
 }
 
+LEGACY_LANGUAGE_LINK = re.compile(
+    r'<a\b[^>]*href=["\'](?:en|cz)\.html["\'][^>]*>\s*(?:EN|CZ)\s*</a>',
+    re.IGNORECASE,
+)
+LEGACY_LANGUAGE_HREF = re.compile(
+    r'href=["\'](?:en|cz)\.html["\']',
+    re.IGNORECASE,
+)
+
+
+def remove_legacy_language_links(text):
+    """Remove obsolete flat en.html/cz.html links left by the old language switch."""
+    text = LEGACY_LANGUAGE_LINK.sub('', text)
+    # The old switch sometimes left one extra closing span after the legacy anchor.
+    text = re.sub(r'(</span>)\s*</span>(\s*</nav>)', r'\1\2', text, flags=re.IGNORECASE)
+    return text
+
+
 failed = False
+
+# Clean the Russian homepage too: it is the page from which users first switch language.
+root_home = ROOT / 'index.html'
+if root_home.exists():
+    root_text = remove_legacy_language_links(root_home.read_text(encoding='utf-8'))
+    root_home.write_text(root_text, encoding='utf-8')
+    if LEGACY_LANGUAGE_HREF.search(root_text):
+        failed = True
+        print('ERROR index.html: stale en.html/cz.html language link remains')
+    else:
+        print('PASS index.html: language switch contains no legacy flat links')
+
 for lang, replacements in REPLACEMENTS.items():
     folder = ROOT / lang
     for path in sorted(folder.glob('*.html')):
         text = path.read_text(encoding='utf-8')
         for source, target in replacements.items():
             text = text.replace(source, target)
+
+        text = remove_legacy_language_links(text)
 
         # The homepage visual heading is rendered by a ::before pseudo-element
         # in the shared Russian CSS. Override it inside each localised homepage.
@@ -57,6 +89,10 @@ for lang, replacements in REPLACEMENTS.items():
 
         path.write_text(text, encoding='utf-8')
 
+        if LEGACY_LANGUAGE_HREF.search(text):
+            failed = True
+            print(f'ERROR {lang}/{path.name}: stale en.html/cz.html language link remains')
+
         residuals = []
         for match in re.finditer(r'[А-Яа-яЁё][^<>\n]{0,160}', text):
             fragment = match.group(0).strip()
@@ -67,9 +103,9 @@ for lang, replacements in REPLACEMENTS.items():
             print(f'ERROR {lang}/{path.name}: Cyrillic remains')
             for fragment in residuals[:30]:
                 print('  CYR:', fragment)
-        else:
+        elif not LEGACY_LANGUAGE_HREF.search(text):
             print(f'PASS {lang}/{path.name}')
 
 if failed:
-    raise SystemExit('Localisation QA failed: untranslated Cyrillic remains.')
-print('Localisation QA passed: EN and CZ contain no Cyrillic text.')
+    raise SystemExit('Localisation QA failed: language links or untranslated text remain.')
+print('Localisation QA passed: EN/CZ contain no Cyrillic text or legacy language links.')
