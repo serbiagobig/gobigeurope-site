@@ -46,6 +46,8 @@ jobs:
           cp projects.html dist/projects.html
           cp assets/blog-data.json dist/assets/blog-data.json
           cp assets/responsive-final.css dist/assets/responsive-final.css
+          cp assets/universal-mobile-nav.css dist/assets/universal-mobile-nav.css
+          cp assets/universal-mobile-nav.js dist/assets/universal-mobile-nav.js
           python - <<'PY'
           from pathlib import Path
           import re
@@ -89,12 +91,13 @@ jobs:
               p.write_text(s, encoding='utf-8')
           PY
 
-      - name: Generate and validate English and Czech versions
+      - name: Generate English and Czech versions and inject universal mobile navigation
         run: |
           python scripts/localize_site_v2.py dist
           python scripts/localize_cleanup.py dist
+          python scripts/inject_universal_mobile_nav.py dist
 
-      - name: Validate routes, assets, localisation and responsive layer
+      - name: Validate routes, assets, localisation, responsive layer, and mobile navigation
         run: |
           python - <<'PY'
           from html.parser import HTMLParser
@@ -118,8 +121,14 @@ jobs:
               raise SystemExit('Missing final pages: ' + ', '.join(missing))
 
           css = root / 'assets' / 'responsive-final.css'
+          nav_css = root / 'assets' / 'universal-mobile-nav.css'
+          nav_js = root / 'assets' / 'universal-mobile-nav.js'
           if not css.exists() or css.stat().st_size < 1000:
               raise SystemExit('responsive-final.css missing or unexpectedly small')
+          if not nav_css.exists() or nav_css.stat().st_size < 1000:
+              raise SystemExit('universal-mobile-nav.css missing or unexpectedly small')
+          if not nav_js.exists() or nav_js.stat().st_size < 300:
+              raise SystemExit('universal-mobile-nav.js missing or unexpectedly small')
 
           class RefParser(HTMLParser):
               def __init__(self):
@@ -136,6 +145,12 @@ jobs:
               text=path.read_text(encoding='utf-8')
               if 'responsive-final.css' not in text:
                   errors.append(f'{rel}: responsive stylesheet not linked')
+              if 'universal-mobile-nav.css' not in text or 'universal-mobile-nav.js' not in text:
+                  errors.append(f'{rel}: universal mobile navigation assets not linked')
+              if text.count('class="site-mobile-toggle"') != 1:
+                  errors.append(f'{rel}: universal mobile toggle missing or duplicated')
+              if text.count('class="site-mobile-nav"') != 1:
+                  errors.append(f'{rel}: universal mobile overlay missing or duplicated')
               if str(rel).startswith(('en/','cz/')) and cyr.search(text):
                   errors.append(f'{rel}: Cyrillic text remains')
               if re.search(r'href=["\'](?:en|cz)\.html["\']', text, re.I):
@@ -159,6 +174,7 @@ jobs:
           print(f'PASS: {len(required)} HTML pages validated across RU/EN/CZ')
           print('PASS: local routes and assets resolve')
           print('PASS: responsive layer is linked on every page')
+          print('PASS: universal hamburger navigation is present exactly once on every page')
           print('PASS: EN/CZ contain no Cyrillic and no legacy flat language links')
           PY
 
