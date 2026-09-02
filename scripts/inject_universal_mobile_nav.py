@@ -51,6 +51,14 @@ def current_nav_page(page):
     return None
 
 
+def language_page_href(lang, code, page):
+    if lang == 'ru':
+        return page if code == 'ru' else f'{code}/{page}'
+    if lang == 'en':
+        return f'../{page}' if code == 'ru' else (page if code == 'en' else f'../cz/{page}')
+    return f'../{page}' if code == 'ru' else (f'../en/{page}' if code == 'en' else page)
+
+
 def mobile_markup(lang, page):
     labels = LABELS[lang]
     active = current_nav_page(page)
@@ -60,13 +68,8 @@ def mobile_markup(lang, page):
         links.append(f'<a href="{target}"{current}>{labels[target]}</a>')
 
     lang_links = []
-    for code, folder, text in [('ru', '..' if lang != 'ru' else '', 'RU'), ('en', '../en' if lang != 'en' else '', 'EN'), ('cz', '../cz' if lang != 'cz' else '', 'CZ')]:
-        if lang == 'ru':
-            href = page if code == 'ru' else f'{code}/{page}'
-        elif lang == 'en':
-            href = f'../{page}' if code == 'ru' else (page if code == 'en' else f'../cz/{page}')
-        else:
-            href = f'../{page}' if code == 'ru' else (f'../en/{page}' if code == 'en' else page)
+    for code, text in [('ru', 'RU'), ('en', 'EN'), ('cz', 'CZ')]:
+        href = language_page_href(lang, code, page)
         current = ' aria-current="page"' if code == lang else ''
         lang_links.append(f'<a href="{href}"{current}>{text}</a>')
 
@@ -82,29 +85,54 @@ def mobile_markup(lang, page):
     )
 
 
+def fallback_header(lang, page, markup):
+    home_href = 'index.html' if lang == 'ru' else 'index.html'
+    return (
+        '<header class="site-mobile-shell">'
+        '<div class="site-mobile-shell-head">'
+        f'<a class="site-mobile-shell-brand" href="{home_href}">'
+        '<span class="site-mobile-shell-mark"></span>'
+        '<span><strong>GO BIG</strong><small>žádné omezení</small></span>'
+        '</a>'
+        + markup +
+        '</div>'
+        '</header>'
+    )
+
+
 def inject_file(path, lang, page):
     text = path.read_text(encoding='utf-8')
 
-    css_href = 'assets/universal-mobile-nav.css?v=20260902-1' if lang == 'ru' else '../assets/universal-mobile-nav.css?v=20260902-1'
-    js_src = 'assets/universal-mobile-nav.js?v=20260902-1' if lang == 'ru' else '../assets/universal-mobile-nav.js?v=20260902-1'
+    css_href = 'assets/universal-mobile-nav.css?v=20260902-2' if lang == 'ru' else '../assets/universal-mobile-nav.css?v=20260902-2'
+    js_src = 'assets/universal-mobile-nav.js?v=20260902-2' if lang == 'ru' else '../assets/universal-mobile-nav.js?v=20260902-2'
 
     css_tag = f'<link id="universal-mobile-nav-css" rel="stylesheet" href="{css_href}"/>'
     js_tag = f'<script id="universal-mobile-nav-js" src="{js_src}" defer></script>'
 
     if 'id="universal-mobile-nav-css"' not in text:
+        if '</head>' not in text:
+            raise SystemExit(f'Cannot inject mobile-nav assets: {path} has no </head>')
         text = text.replace('</head>', css_tag + '\n' + js_tag + '\n</head>', 1)
-
-    # Remove an older injected version if the script is re-run.
-    text = re.sub(r'<button class="site-mobile-toggle".*?</div>\s*</div>', '', text, flags=re.S)
 
     markup = mobile_markup(lang, page)
 
-    # Insert into the header's .head container immediately after the brand.
-    brand_match = re.search(r'(<header\b.*?<div\b[^>]*class=["\'][^"\']*\bhead\b[^"\']*["\'][^>]*>.*?</a>)', text, flags=re.S | re.I)
-    if not brand_match:
-        raise SystemExit(f'Cannot locate header brand in {path}')
-    insert_at = brand_match.end(1)
-    text = text[:insert_at] + markup + text[insert_at:]
+    # Normal content pages: insert the universal toggle/overlay next to the existing brand.
+    brand_match = re.search(
+        r'(<header\b.*?<div\b[^>]*class=["\'][^"\']*\bhead\b[^"\']*["\'][^>]*>.*?</a>)',
+        text,
+        flags=re.S | re.I,
+    )
+    if brand_match:
+        insert_at = brand_match.end(1)
+        text = text[:insert_at] + markup + text[insert_at:]
+    else:
+        # Utility pages (e.g. AGRO TAG contact form/readiness) do not use the standard header.
+        # Give them the same mobile navigation without altering their desktop layout.
+        shell = fallback_header(lang, page, markup)
+        if re.search(r'<body\b[^>]*>', text, flags=re.I):
+            text = re.sub(r'(<body\b[^>]*>)', r'\1' + shell, text, count=1, flags=re.I)
+        else:
+            raise SystemExit(f'Cannot locate <body> in {path}')
 
     path.write_text(text, encoding='utf-8')
 
