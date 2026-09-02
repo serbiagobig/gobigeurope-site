@@ -1,6 +1,7 @@
 /* GO BIG universal mobile navigation — shared across all pages/languages */
 .site-mobile-toggle,
-.site-mobile-nav{display:none}
+.site-mobile-nav,
+.site-mobile-shell{display:none}
 
 @media (max-width:850px){
   body.site-nav-open{overflow:hidden !important}
@@ -24,7 +25,6 @@
     gap:16px !important;
   }
 
-  /* Hide each page's legacy mobile/desktop navigation and old homepage toggle. */
   header .head > nav,
   header .head > .nav,
   header .head > .menu-toggle{
@@ -34,6 +34,50 @@
   header .brand{
     flex:0 1 auto !important;
     min-width:0 !important;
+  }
+
+  .site-mobile-shell{
+    display:block !important;
+    position:sticky !important;
+    top:0 !important;
+    z-index:200 !important;
+    background:#fff !important;
+    box-shadow:0 1px 0 rgba(10,37,88,.08) !important;
+  }
+  .site-mobile-shell-head{
+    width:calc(100% - 28px);
+    min-height:84px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+  }
+  .site-mobile-shell-brand{
+    min-width:0;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    color:#0b6b45;
+    text-decoration:none;
+  }
+  .site-mobile-shell-mark{
+    width:34px;
+    height:42px;
+    flex:0 0 34px;
+    background:#0b6b45;
+  }
+  .site-mobile-shell-brand strong{
+    display:block;
+    font:700 24px/1 "Source Serif 4",Georgia,serif;
+    letter-spacing:.01em;
+  }
+  .site-mobile-shell-brand small{
+    display:block;
+    margin-top:4px;
+    font-size:9px;
+    line-height:1.1;
+    color:#0b6b45;
   }
 
   .site-mobile-toggle{
@@ -178,4 +222,5 @@
 @media (max-width:380px){
   .site-mobile-nav{padding-left:18px;padding-right:18px}
   .site-mobile-links a{font-size:22px}
+  .site-mobile-shell-head{width:calc(100% - 22px)}
 }
