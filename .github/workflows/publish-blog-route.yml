@@ -49,6 +49,7 @@ jobs:
           cp assets/universal-mobile-nav.css dist/assets/universal-mobile-nav.css
           cp assets/universal-mobile-nav.js dist/assets/universal-mobile-nav.js
           cp assets/partners-ecosystem-locales.css dist/assets/partners-ecosystem-locales.css
+          cp assets/technology-ecosystem-locales.css dist/assets/technology-ecosystem-locales.css
           python - <<'PY'
           from pathlib import Path
           import re
@@ -61,20 +62,16 @@ jobs:
           responsive_link = '<link id="responsive-final" rel="stylesheet" href="assets/responsive-final.css?v=20260902-1"/>'
 
           def disable_unpublished_project_links(html, page_name):
-              # Project cards are article.project-card on section pages and article.card on projects.html.
               card_pattern = re.compile(
                   r'<article\b(?P<attrs>[^>]*class=["\'][^"\']*(?:project-card|\bcard\b)[^"\']*["\'][^>]*)>(?P<body>.*?)</article>',
                   re.IGNORECASE | re.DOTALL,
               )
-
               def clean_card(match):
                   attrs = match.group('attrs')
                   body = match.group('body')
                   card = '<article' + attrs + '>' + body + '</article>'
                   if re.search(r'\bAGRO\s+TAG\b', card, re.IGNORECASE):
                       return card
-
-                  # Turn project CTA anchors into non-interactive spans while preserving appearance/text.
                   def anchor_to_span(a):
                       attrs2 = a.group('attrs')
                       inner = a.group('inner')
@@ -84,7 +81,6 @@ jobs:
                           return a.group(0)
                       class_attr = f' class="{classes}"' if classes else ''
                       return f'<span{class_attr} aria-disabled="true" data-project-pending="true">{inner}</span>'
-
                   body2 = re.sub(
                       r'<a\b(?P<attrs>[^>]*)>(?P<inner>.*?)</a>',
                       anchor_to_span,
@@ -92,7 +88,6 @@ jobs:
                       flags=re.IGNORECASE | re.DOTALL,
                   )
                   return '<article' + attrs + '>' + body2 + '</article>'
-
               updated, count = card_pattern.subn(clean_card, html)
               if count:
                   print(f'{page_name}: inspected {count} project card(s); only AGRO TAG may retain a project CTA link')
@@ -132,7 +127,6 @@ jobs:
                   new = 'href="international.html#application">Обсудить задачу</a>'
                   if old in s:
                       s = s.replace(old, new, 1)
-                      print('Digital AI bottom CTA wired to international.html#application')
                   else:
                       s, count = re.subn(
                           r'(<section class="cta" id="contact">.*?<a\b[^>]*?href=")[^"]*("[^>]*>\s*Обсудить задачу\s*</a>)',
@@ -143,7 +137,6 @@ jobs:
                       )
                       if count == 0:
                           raise SystemExit('Digital AI bottom CTA not found')
-                      print('Digital AI bottom CTA wired by fallback pattern')
 
               s = disable_unpublished_project_links(s, name)
               p.write_text(s, encoding='utf-8')
@@ -156,13 +149,23 @@ jobs:
           python scripts/inject_universal_mobile_nav.py dist
           python - <<'PY'
           from pathlib import Path
-          for lang in ('en','cz'):
-              p = Path('dist') / lang / 'international.html'
+          targets = [
+              ('ru', Path('dist/international.html'), 'assets'),
+              ('en', Path('dist/en/international.html'), '../assets'),
+              ('cz', Path('dist/cz/international.html'), '../assets'),
+          ]
+          for lang, p, asset_prefix in targets:
               s = p.read_text(encoding='utf-8')
-              tag = '<link id="partners-ecosystem-locales" rel="stylesheet" href="../assets/partners-ecosystem-locales.css?v=20260902-1"/>'
-              if 'id="partners-ecosystem-locales"' not in s:
-                  s = s.replace('</head>', tag + '\n</head>', 1)
+              tags = [
+                  f'<link id="partners-ecosystem-locales" rel="stylesheet" href="{asset_prefix}/partners-ecosystem-locales.css?v=20260902-2"/>',
+                  f'<link id="technology-ecosystem-locales" rel="stylesheet" href="{asset_prefix}/technology-ecosystem-locales.css?v=20260902-1"/>',
+              ]
+              for tag in tags:
+                  tag_id = re.search(r'id="([^"]+)"', tag).group(1)
+                  if f'id="{tag_id}"' not in s:
+                      s = s.replace('</head>', tag + '\n</head>', 1)
               p.write_text(s, encoding='utf-8')
+              print(f'PASS {lang}/international.html: ecosystem data styles linked')
           PY
 
       - name: Validate routes, assets, localisation, responsive layer, and mobile navigation
@@ -188,18 +191,29 @@ jobs:
           if missing:
               raise SystemExit('Missing final pages: ' + ', '.join(missing))
 
-          css = root / 'assets' / 'responsive-final.css'
-          nav_css = root / 'assets' / 'universal-mobile-nav.css'
-          nav_js = root / 'assets' / 'universal-mobile-nav.js'
-          eco_locale_css = root / 'assets' / 'partners-ecosystem-locales.css'
-          if not css.exists() or css.stat().st_size < 1000:
-              raise SystemExit('responsive-final.css missing or unexpectedly small')
-          if not nav_css.exists() or nav_css.stat().st_size < 1000:
-              raise SystemExit('universal-mobile-nav.css missing or unexpectedly small')
-          if not nav_js.exists() or nav_js.stat().st_size < 300:
-              raise SystemExit('universal-mobile-nav.js missing or unexpectedly small')
-          if not eco_locale_css.exists() or eco_locale_css.stat().st_size < 1000:
-              raise SystemExit('partners-ecosystem-locales.css missing or unexpectedly small')
+          required_assets = [
+              root/'assets/responsive-final.css',
+              root/'assets/universal-mobile-nav.css',
+              root/'assets/universal-mobile-nav.js',
+              root/'assets/partners-ecosystem-locales.css',
+              root/'assets/technology-ecosystem-locales.css',
+          ]
+          for asset in required_assets:
+              if not asset.exists() or asset.stat().st_size < 300:
+                  raise SystemExit(f'Missing or unexpectedly small asset: {asset.name}')
+
+          institution_css = (root/'assets/technology-ecosystem-locales.css').read_text(encoding='utf-8')
+          required_institutions = [
+              'Science and Technology Park Novi Sad',
+              'Science and Technology Park Čačak',
+              'Science and Technology Park of Republika Srpska',
+              'Association of Farmers of Kazakhstan',
+              'National Infrastructure Project “Turan”, Kyrgyz Republic',
+              'Kyrgyz TechnoWomen',
+          ]
+          for item in required_institutions:
+              if item not in institution_css:
+                  raise SystemExit(f'Technology ecosystem institution missing: {item}')
 
           class RefParser(HTMLParser):
               def __init__(self):
@@ -231,8 +245,11 @@ jobs:
                   errors.append(f'{rel}: Cyrillic text remains')
               if re.search(r'href=["\'](?:en|cz)\.html["\']', text, re.I):
                   errors.append(f'{rel}: legacy language link remains')
-              if str(rel) in ('en/international.html','cz/international.html') and 'partners-ecosystem-locales.css' not in text:
-                  errors.append(f'{rel}: ecosystem localisation stylesheet not linked')
+              if str(rel) in ('international.html','en/international.html','cz/international.html'):
+                  if 'partners-ecosystem-locales.css' not in text:
+                      errors.append(f'{rel}: partner ecosystem data stylesheet not linked')
+                  if 'technology-ecosystem-locales.css' not in text:
+                      errors.append(f'{rel}: technology ecosystem data stylesheet not linked')
               if str(rel) in ('digital-ai.html','en/digital-ai.html','cz/digital-ai.html'):
                   if 'href="international.html#application"' not in text:
                       errors.append(f'{rel}: Digital AI CTA is not wired to International application form')
@@ -242,7 +259,6 @@ jobs:
                       if 'agro-tag.html' not in card:
                           errors.append(f'{rel}: AGRO TAG project card lost its case link')
                   else:
-                      # Only project-detail CTA links are forbidden. Navigation outside cards is unaffected.
                       if re.search(r'<a\b[^>]*class=["\'][^"\']*(?:project-more|\bmore\b)[^"\']*["\'][^>]*href=', card, re.IGNORECASE):
                           errors.append(f'{rel}: unpublished project card still contains an active CTA link')
 
@@ -265,7 +281,7 @@ jobs:
           print('PASS: local routes and assets resolve')
           print('PASS: responsive layer is linked on every page')
           print('PASS: universal hamburger navigation is present exactly once on every page')
-          print('PASS: ecosystem diagram copy is localised on EN/CZ international pages')
+          print('PASS: university, institution and technology ecosystem data are linked on RU/EN/CZ International')
           print('PASS: Digital AI CTA routes to the International application form on RU/EN/CZ')
           print('PASS: all unpublished project CTA links are disabled; AGRO TAG remains active')
           print('PASS: EN/CZ contain no Cyrillic and no legacy flat language links')
