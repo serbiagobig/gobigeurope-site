@@ -60,7 +60,9 @@ BACK_PAGES = {
 def current_nav_page(page):
     if page in NAV_PAGES:
         return page
-    if page in {'agro-tag.html', 'agro-tag-contact.html', 'readiness.html'}:
+    if page in {'agro-tag.html', 'agro-tag-contact.html'}:
+        return 'projects.html'
+    if page == 'readiness.html':
         return 'international.html'
     return None
 
@@ -171,7 +173,6 @@ def inject_file(path, lang, page):
 
     back = back_markup(lang, page)
     if back:
-        # Insert immediately after the first header so the return path is obvious on desktop and mobile.
         text = re.sub(r'(</header>)', r'\1' + back, text, count=1, flags=re.I)
 
     path.write_text(text, encoding='utf-8')
