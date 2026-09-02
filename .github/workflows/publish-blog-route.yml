@@ -32,7 +32,7 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Unpack, add blog and projects routes, and wire menu
+      - name: Unpack, add final routes, responsive layer, and wire menu
         run: |
           mkdir -p dist
           TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
@@ -45,18 +45,31 @@ jobs:
           cp blog.html dist/blog.html
           cp projects.html dist/projects.html
           cp assets/blog-data.json dist/assets/blog-data.json
+          cp assets/responsive-final.css dist/assets/responsive-final.css
           python - <<'PY'
           from pathlib import Path
           import re
 
-          for name in ['international.html', 'index.html', 'digital-ai.html', 'education-hr.html', 'blog.html', 'projects.html']:
+          pages = [
+              'index.html', 'international.html', 'digital-ai.html', 'education-hr.html',
+              'projects.html', 'blog.html', 'agro-tag.html', 'agro-tag-contact.html',
+              'readiness.html'
+          ]
+          responsive_link = '<link id="responsive-final" rel="stylesheet" href="assets/responsive-final.css?v=20260902-1"/>'
+
+          for name in pages:
               p = Path('dist') / name
               if not p.exists():
-                  continue
+                  raise SystemExit(f'Missing required page before localisation: {name}')
               s = p.read_text(encoding='utf-8')
               s = s.replace('href="#blog">Блог</a>', 'href="blog.html">Блог</a>')
               s = s.replace('href="assets/blog/">Блог</a>', 'href="blog.html">Блог</a>')
               s = s.replace('href="#projects">Проекты</a>', 'href="projects.html">Проекты</a>')
+
+              if 'id="responsive-final"' not in s:
+                  if '</head>' not in s:
+                      raise SystemExit(f'Cannot inject responsive stylesheet: {name} has no </head>')
+                  s = s.replace('</head>', responsive_link + '\n</head>', 1)
 
               if name == 'index.html':
                   labels = ['Обсудить задачу', 'Отправить запрос', 'Назначить встречу']
@@ -80,6 +93,74 @@ jobs:
         run: |
           python scripts/localize_site_v2.py dist
           python scripts/localize_cleanup.py dist
+
+      - name: Validate routes, assets, localisation and responsive layer
+        run: |
+          python - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          from urllib.parse import unquote
+          import re
+
+          root = Path('dist').resolve()
+          pages = [
+              'index.html', 'international.html', 'digital-ai.html', 'education-hr.html',
+              'projects.html', 'blog.html', 'agro-tag.html', 'agro-tag-contact.html',
+              'readiness.html'
+          ]
+          required = []
+          for lang in ['', 'en', 'cz']:
+              for page in pages:
+                  required.append((Path(lang) / page) if lang else Path(page))
+
+          missing = [str(p) for p in required if not (root / p).exists()]
+          if missing:
+              raise SystemExit('Missing final pages: ' + ', '.join(missing))
+
+          css = root / 'assets' / 'responsive-final.css'
+          if not css.exists() or css.stat().st_size < 1000:
+              raise SystemExit('responsive-final.css missing or unexpectedly small')
+
+          class RefParser(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.refs=[]
+              def handle_starttag(self, tag, attrs):
+                  d=dict(attrs)
+                  for key in ('href','src'):
+                      if d.get(key): self.refs.append(d[key])
+
+          errors=[]
+          cyr=re.compile(r'[А-Яа-яЁё]')
+          for rel in required:
+              path=root/rel
+              text=path.read_text(encoding='utf-8')
+              if 'responsive-final.css' not in text:
+                  errors.append(f'{rel}: responsive stylesheet not linked')
+              if str(rel).startswith(('en/','cz/')) and cyr.search(text):
+                  errors.append(f'{rel}: Cyrillic text remains')
+              if re.search(r'href=["\'](?:en|cz)\.html["\']', text, re.I):
+                  errors.append(f'{rel}: legacy language link remains')
+
+              parser=RefParser(); parser.feed(text)
+              for ref in parser.refs:
+                  if ref.startswith(('#','mailto:','tel:','javascript:','data:','http://','https://','//')):
+                      continue
+                  local=ref.split('#',1)[0].split('?',1)[0]
+                  if not local: continue
+                  target=(path.parent / unquote(local)).resolve()
+                  try: target.relative_to(root)
+                  except ValueError: continue
+                  if not target.exists():
+                      errors.append(f'{rel}: missing local reference {ref}')
+
+          if errors:
+              for e in errors: print('ERROR:',e)
+              raise SystemExit(f'Final site validation failed with {len(errors)} error(s)')
+          print(f'PASS: {len(required)} HTML pages validated across RU/EN/CZ')
+          print('PASS: local routes and assets resolve')
+          print('PASS: responsive layer is linked on every page')
+          print('PASS: EN/CZ contain no Cyrillic and no legacy flat language links')
+          PY
 
       - name: Upload final Pages artifact
         uses: actions/upload-pages-artifact@v3
