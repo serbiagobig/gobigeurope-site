@@ -1,5 +1,10 @@
 /* Localised copy for the GO BIG ecosystem visual and CSS-generated International-page labels. */
 
+/* University / expert institutions — RU */
+html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after{
+  content:"Факультет технических наук Университета Нови-Сада\A INSTEM — Институт технологического и экологического менеджмента в Центральной Азии\A Казахский национальный университет имени аль-Фараби (KazNU)" !important;
+}
+
 html[lang="en"] .partners h2::before{content:"Growth through\A the right connections";}
 html[lang="en"] .partners h2::after{content:"GO BIG does not operate as an external consultant,\A but as a gateway to a network of companies, experts\A and institutions in target markets.";}
 html[lang="en"] .partners .partner-grid::after{content:"Right contacts → First conversations → Local partners → Joint projects";}
@@ -11,6 +16,9 @@ html[lang="en"] .partners .partner-card:nth-child(3) h3::before{content:"Investm
 html[lang="en"] .partners .partner-card:nth-child(3) h3::after{content:"funds · private investors\A investment platforms";}
 html[lang="en"] .partners .partner-card:nth-child(3)::before{content:"Specialist funds, private investors and platforms are engaged according to the needs of each project.";}
 html[lang="en"] .partners .partner-card:nth-child(2)>ul::before{content:"Universities and experts\A research · talent · expertise";}
+html[lang="en"] .partners .partner-card:nth-child(2)>ul::after{
+  content:"Faculty of Technical Sciences, University of Novi Sad\A INSTEM — Institute of Technological and Environmental Management in Central Asia\A Al-Farabi Kazakh National University (KazNU)" !important;
+}
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::before{content:"Development institutions and business associations\A chambers · associations · clusters";}
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::after{content:"Chamber of Commerce and Industry of Vojvodina\A Chamber of Commerce and Industry of Republika Srpska\A Osh Regional Chamber of Commerce and Industry of the Kyrgyz Republic\A TESLA Alliance HQ Ambassador\A Namangan Regional Department of the Chamber of Commerce and Industry of the Republic of Uzbekistan\A Andijan Regional Branch of the Chamber of Commerce and Industry of Uzbekistan\A Chamber of Commerce and Industry of the Sughd Region of the Republic of Tajikistan" !important;}
 html[lang="en"] .projects-all::before{content:"View more projects" !important;}
@@ -29,14 +37,18 @@ html[lang="cs"] .partners .partner-card:nth-child(2) h3::before,
 html[lang="cz"] .partners .partner-card:nth-child(2) h3::before{content:"Technologický\A ekosystém";}
 html[lang="cs"] .partners .partner-card:nth-child(2) h3::after,
 html[lang="cz"] .partners .partner-card:nth-child(2) h3::after{content:"IT · AI · automatizace\A integrátoři · vývojáři";}
+html[lang="cs"] .partners .partner-card:nth-child(2)>ul::before,
+html[lang="cz"] .partners .partner-card:nth-child(2)>ul::before{content:"Univerzity a experti\A výzkum · talenty · odborné kompetence";}
+html[lang="cs"] .partners .partner-card:nth-child(2)>ul::after,
+html[lang="cz"] .partners .partner-card:nth-child(2)>ul::after{
+  content:"Fakulta technických věd Univerzity v Novém Sadu\A INSTEM — Institut technologického a environmentálního managementu ve Střední Asii\A Kazašská národní univerzita al-Farabiho (KazNU)" !important;
+}
 html[lang="cs"] .partners .partner-card:nth-child(3) h3::before,
 html[lang="cz"] .partners .partner-card:nth-child(3) h3::before{content:"Investiční\A komunita";}
 html[lang="cs"] .partners .partner-card:nth-child(3) h3::after,
 html[lang="cz"] .partners .partner-card:nth-child(3) h3::after{content:"fondy · soukromí investoři\A investiční platformy";}
 html[lang="cs"] .partners .partner-card:nth-child(3)::before,
 html[lang="cz"] .partners .partner-card:nth-child(3)::before{content:"Specializované fondy, soukromí investoři a platformy se zapojují podle potřeb konkrétního projektu.";}
-html[lang="cs"] .partners .partner-card:nth-child(2)>ul::before,
-html[lang="cz"] .partners .partner-card:nth-child(2)>ul::before{content:"Univerzity a experti\A výzkum · talenty · odborné kompetence";}
 html[lang="cs"] .partners .partner-card:nth-child(3)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(3)>ul::before{content:"Rozvojové instituce a podnikatelská sdružení\A komory · asociace · klastry";}
 html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
@@ -44,8 +56,12 @@ html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{content:"Obchodn�
 html[lang="cs"] .projects-all::before,
 html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !important;}
 
-/* The institutional list is longer than the former single-line tooltip. Keep it readable. */
+/* Longer institution lists need more room than the original one-line tooltips. */
 @media (min-width:901px){
+  html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="en"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="cs"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="cz"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
@@ -55,11 +71,21 @@ html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !impor
   }
 }
 @media (max-width:900px){
+  html[lang="ru"] .partners .partner-card:nth-child(2)>ul,
+  html[lang="en"] .partners .partner-card:nth-child(2)>ul,
+  html[lang="cs"] .partners .partner-card:nth-child(2)>ul,
+  html[lang="cz"] .partners .partner-card:nth-child(2)>ul{
+    padding-bottom:92px !important;
+  }
   html[lang="en"] .partners .partner-card:nth-child(3)>ul,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul{
     padding-bottom:124px !important;
   }
+  html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="en"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="cs"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="cz"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
