@@ -48,6 +48,7 @@ jobs:
           cp assets/responsive-final.css dist/assets/responsive-final.css
           cp assets/universal-mobile-nav.css dist/assets/universal-mobile-nav.css
           cp assets/universal-mobile-nav.js dist/assets/universal-mobile-nav.js
+          cp assets/partners-ecosystem-locales.css dist/assets/partners-ecosystem-locales.css
           python - <<'PY'
           from pathlib import Path
           import re
@@ -96,6 +97,16 @@ jobs:
           python scripts/localize_site_v2.py dist
           python scripts/localize_cleanup.py dist
           python scripts/inject_universal_mobile_nav.py dist
+          python - <<'PY'
+          from pathlib import Path
+          for lang in ('en','cz'):
+              p = Path('dist') / lang / 'international.html'
+              s = p.read_text(encoding='utf-8')
+              tag = '<link id="partners-ecosystem-locales" rel="stylesheet" href="../assets/partners-ecosystem-locales.css?v=20260902-1"/>'
+              if 'id="partners-ecosystem-locales"' not in s:
+                  s = s.replace('</head>', tag + '\n</head>', 1)
+              p.write_text(s, encoding='utf-8')
+          PY
 
       - name: Validate routes, assets, localisation, responsive layer, and mobile navigation
         run: |
@@ -123,12 +134,15 @@ jobs:
           css = root / 'assets' / 'responsive-final.css'
           nav_css = root / 'assets' / 'universal-mobile-nav.css'
           nav_js = root / 'assets' / 'universal-mobile-nav.js'
+          eco_locale_css = root / 'assets' / 'partners-ecosystem-locales.css'
           if not css.exists() or css.stat().st_size < 1000:
               raise SystemExit('responsive-final.css missing or unexpectedly small')
           if not nav_css.exists() or nav_css.stat().st_size < 1000:
               raise SystemExit('universal-mobile-nav.css missing or unexpectedly small')
           if not nav_js.exists() or nav_js.stat().st_size < 300:
               raise SystemExit('universal-mobile-nav.js missing or unexpectedly small')
+          if not eco_locale_css.exists() or eco_locale_css.stat().st_size < 1000:
+              raise SystemExit('partners-ecosystem-locales.css missing or unexpectedly small')
 
           class RefParser(HTMLParser):
               def __init__(self):
@@ -155,6 +169,8 @@ jobs:
                   errors.append(f'{rel}: Cyrillic text remains')
               if re.search(r'href=["\'](?:en|cz)\.html["\']', text, re.I):
                   errors.append(f'{rel}: legacy language link remains')
+              if str(rel) in ('en/international.html','cz/international.html') and 'partners-ecosystem-locales.css' not in text:
+                  errors.append(f'{rel}: ecosystem localisation stylesheet not linked')
 
               parser=RefParser(); parser.feed(text)
               for ref in parser.refs:
@@ -175,6 +191,7 @@ jobs:
           print('PASS: local routes and assets resolve')
           print('PASS: responsive layer is linked on every page')
           print('PASS: universal hamburger navigation is present exactly once on every page')
+          print('PASS: ecosystem diagram copy is localised on EN/CZ international pages')
           print('PASS: EN/CZ contain no Cyrillic and no legacy flat language links')
           PY
 
