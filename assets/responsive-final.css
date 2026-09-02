@@ -46,10 +46,8 @@ p,li,label,
 h1,h2,h3{ text-wrap:balance; }
 p{ text-wrap:pretty; }
 
-/* Anchored sections should not hide below a sticky desktop header. */
 section[id]{scroll-margin-top:110px}
 
-/* Coarse-pointer devices: keep interactive controls comfortably tappable. */
 @media (pointer:coarse){
   button,
   .btn,
@@ -79,12 +77,10 @@ section[id]{scroll-margin-top:110px}
 }
 
 @media (max-width:760px){
-  /* Common content gutter on phones. Existing narrower page rules may still override this. */
   .wrap{
     max-width:calc(100% - 28px);
   }
 
-  /* Homepage directions: force a true mobile stack. */
   .direction-grid{
     grid-template-columns:1fr !important;
     width:100% !important;
@@ -113,7 +109,6 @@ section[id]{scroll-margin-top:110px}
     line-height:1.6 !important;
   }
 
-  /* Homepage geography: prevent the one-column grid from keeping desktop min-content width. */
   .geo,
   .geo .wrap,
   .geopanel,
@@ -183,7 +178,6 @@ section[id]{scroll-margin-top:110px}
     object-fit:contain !important;
   }
 
-  /* Do not let controls or CTA groups overflow translated text. */
   .btns,
   .actions,
   .form-actions,
@@ -202,7 +196,6 @@ section[id]{scroll-margin-top:110px}
     min-width:0;
   }
 
-  /* Pages with a .nav class (AGRO TAG, Projects, Blog): keep navigation accessible. */
   header .head{flex-wrap:wrap}
   header .nav{
     display:flex !important;
@@ -225,7 +218,6 @@ section[id]{scroll-margin-top:110px}
     white-space:nowrap;
   }
 
-  /* Long translated labels must remain inside their cards. */
   .project-copy,
   .project-top,
   .map-tag,
@@ -240,7 +232,6 @@ section[id]{scroll-margin-top:110px}
 }
 
 @media (max-width:520px){
-  /* On narrow phones, multi-option form grids are more readable as a single column. */
   .choice-grid,
   .choice-grid.three,
   .radio-row,
@@ -278,7 +269,6 @@ section[id]{scroll-margin-top:110px}
     width:100%;
   }
 
-  /* Prevent very long words in EN/CZ headings from forcing viewport overflow. */
   h1,h2,h3{
     max-width:100%;
   }
@@ -292,5 +282,152 @@ section[id]{scroll-margin-top:110px}
   .project-top{
     left:16px !important;
     right:16px !important;
+  }
+}
+
+/* Homepage only: modern full-width mobile navigation. */
+@media (max-width:850px){
+  header:has(.menu-toggle){
+    position:sticky !important;
+    top:0;
+    z-index:100;
+    background:#fff;
+    box-shadow:0 1px 0 rgba(10,37,88,.08);
+  }
+  header:has(.menu-toggle) .head{
+    min-height:84px !important;
+    padding:10px 0 !important;
+    flex-direction:row !important;
+    align-items:center !important;
+    flex-wrap:nowrap !important;
+  }
+  header:has(.menu-toggle) .menu-toggle{
+    width:46px !important;
+    height:46px !important;
+    padding:10px !important;
+    border-radius:50%;
+    transition:background .2s ease;
+  }
+  header:has(.menu-toggle) .menu-toggle:active{
+    background:#f1f4f2;
+  }
+  header:has(.menu-toggle) nav#main-nav{
+    position:fixed !important;
+    z-index:98 !important;
+    inset:84px 0 0 0 !important;
+    width:100% !important;
+    max-width:none !important;
+    height:calc(100dvh - 84px) !important;
+    padding:28px 22px 24px !important;
+    display:flex !important;
+    flex-direction:column !important;
+    align-items:stretch !important;
+    justify-content:flex-start !important;
+    gap:4px !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+    background:linear-gradient(180deg,#f8faf8 0%,#f4f7f5 100%) !important;
+    box-shadow:none !important;
+    transform:translateX(100%) !important;
+    opacity:.98;
+    transition:transform .32s cubic-bezier(.22,.75,.24,1) !important;
+  }
+  header:has(.menu-toggle).nav-open nav#main-nav{
+    transform:translateX(0) !important;
+  }
+  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link){
+    width:100% !important;
+    min-height:62px !important;
+    padding:13px 4px !important;
+    display:grid !important;
+    grid-template-columns:minmax(0,1fr) auto !important;
+    align-items:center !important;
+    gap:18px !important;
+    border:0 !important;
+    color:#17304d !important;
+    font-family:var(--font-heading,Georgia,serif) !important;
+    font-size:clamp(22px,6.4vw,28px) !important;
+    font-weight:700 !important;
+    line-height:1.08 !important;
+    letter-spacing:-.02em !important;
+    white-space:normal !important;
+  }
+  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link)::after{
+    content:"→" !important;
+    display:block !important;
+    color:#0b6b45 !important;
+    font-family:Arial,sans-serif !important;
+    font-size:24px !important;
+    font-weight:400 !important;
+    transform:translateX(0);
+    transition:transform .2s ease;
+  }
+  header:has(.menu-toggle) nav#main-nav>a:not(.contact-link):active::after{
+    transform:translateX(4px);
+  }
+  header:has(.menu-toggle) nav#main-nav>a.contact-link{
+    order:20;
+    width:100% !important;
+    min-height:54px !important;
+    margin:22px 0 0 !important;
+    padding:0 22px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border:0 !important;
+    border-radius:999px !important;
+    background:#0b6b45 !important;
+    color:#fff !important;
+    font-size:0 !important;
+    font-weight:800 !important;
+    box-shadow:0 10px 24px rgba(11,107,69,.16);
+  }
+  html[lang="ru"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{
+    content:"Обсудить задачу";
+    font-size:14px;
+  }
+  html[lang="en"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{
+    content:"Discuss your project";
+    font-size:14px;
+  }
+  html[lang="cs"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before,
+  html[lang="cz"] header:has(.menu-toggle) nav#main-nav>a.contact-link::before{
+    content:"Probrat váš záměr";
+    font-size:14px;
+  }
+  header:has(.menu-toggle) nav#main-nav .lang-switch{
+    order:30;
+    width:100% !important;
+    margin:18px 0 0 !important;
+    padding:18px 0 4px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:flex-start !important;
+    gap:8px !important;
+    border-top:1px solid rgba(10,37,88,.09);
+    color:transparent !important;
+    font-size:0 !important;
+    white-space:normal !important;
+  }
+  header:has(.menu-toggle) nav#main-nav .lang-switch a{
+    min-width:44px !important;
+    min-height:38px !important;
+    padding:0 12px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    border:1px solid rgba(10,37,88,.12) !important;
+    border-radius:999px !important;
+    background:#fff !important;
+    color:#536273 !important;
+    font-family:var(--font-body,Arial,sans-serif) !important;
+    font-size:11px !important;
+    font-weight:800 !important;
+    letter-spacing:.06em !important;
+  }
+  header:has(.menu-toggle) nav#main-nav .lang-switch a[aria-current="page"]{
+    border-color:#0b6b45 !important;
+    background:#eaf5ef !important;
+    color:#0b6b45 !important;
   }
 }
