@@ -60,6 +60,44 @@ jobs:
           ]
           responsive_link = '<link id="responsive-final" rel="stylesheet" href="assets/responsive-final.css?v=20260902-1"/>'
 
+          def disable_unpublished_project_links(html, page_name):
+              # Project cards are article.project-card on section pages and article.card on projects.html.
+              card_pattern = re.compile(
+                  r'<article\b(?P<attrs>[^>]*class=["\'][^"\']*(?:project-card|\bcard\b)[^"\']*["\'][^>]*)>(?P<body>.*?)</article>',
+                  re.IGNORECASE | re.DOTALL,
+              )
+
+              def clean_card(match):
+                  attrs = match.group('attrs')
+                  body = match.group('body')
+                  card = '<article' + attrs + '>' + body + '</article>'
+                  if re.search(r'\bAGRO\s+TAG\b', card, re.IGNORECASE):
+                      return card
+
+                  # Turn project CTA anchors into non-interactive spans while preserving appearance/text.
+                  def anchor_to_span(a):
+                      attrs2 = a.group('attrs')
+                      inner = a.group('inner')
+                      cls_match = re.search(r'class=["\']([^"\']*)["\']', attrs2, re.IGNORECASE)
+                      classes = cls_match.group(1) if cls_match else ''
+                      if not re.search(r'(^|\s)(?:project-more|more)(\s|$)', classes):
+                          return a.group(0)
+                      class_attr = f' class="{classes}"' if classes else ''
+                      return f'<span{class_attr} aria-disabled="true" data-project-pending="true">{inner}</span>'
+
+                  body2 = re.sub(
+                      r'<a\b(?P<attrs>[^>]*)>(?P<inner>.*?)</a>',
+                      anchor_to_span,
+                      body,
+                      flags=re.IGNORECASE | re.DOTALL,
+                  )
+                  return '<article' + attrs + '>' + body2 + '</article>'
+
+              updated, count = card_pattern.subn(clean_card, html)
+              if count:
+                  print(f'{page_name}: inspected {count} project card(s); only AGRO TAG may retain a project CTA link')
+              return updated
+
           for name in pages:
               p = Path('dist') / name
               if not p.exists():
@@ -107,6 +145,7 @@ jobs:
                           raise SystemExit('Digital AI bottom CTA not found')
                       print('Digital AI bottom CTA wired by fallback pattern')
 
+              s = disable_unpublished_project_links(s, name)
               p.write_text(s, encoding='utf-8')
           PY
 
@@ -172,6 +211,11 @@ jobs:
 
           errors=[]
           cyr=re.compile(r'[А-Яа-яЁё]')
+          project_card_pattern = re.compile(
+              r'<article\b[^>]*class=["\'][^"\']*(?:project-card|\bcard\b)[^"\']*["\'][^>]*>.*?</article>',
+              re.IGNORECASE | re.DOTALL,
+          )
+
           for rel in required:
               path=root/rel
               text=path.read_text(encoding='utf-8')
@@ -192,6 +236,15 @@ jobs:
               if str(rel) in ('digital-ai.html','en/digital-ai.html','cz/digital-ai.html'):
                   if 'href="international.html#application"' not in text:
                       errors.append(f'{rel}: Digital AI CTA is not wired to International application form')
+
+              for card in project_card_pattern.findall(text):
+                  if re.search(r'\bAGRO\s+TAG\b', card, re.IGNORECASE):
+                      if 'agro-tag.html' not in card:
+                          errors.append(f'{rel}: AGRO TAG project card lost its case link')
+                  else:
+                      # Only project-detail CTA links are forbidden. Navigation outside cards is unaffected.
+                      if re.search(r'<a\b[^>]*class=["\'][^"\']*(?:project-more|\bmore\b)[^"\']*["\'][^>]*href=', card, re.IGNORECASE):
+                          errors.append(f'{rel}: unpublished project card still contains an active CTA link')
 
               parser=RefParser(); parser.feed(text)
               for ref in parser.refs:
@@ -214,6 +267,7 @@ jobs:
           print('PASS: universal hamburger navigation is present exactly once on every page')
           print('PASS: ecosystem diagram copy is localised on EN/CZ international pages')
           print('PASS: Digital AI CTA routes to the International application form on RU/EN/CZ')
+          print('PASS: all unpublished project CTA links are disabled; AGRO TAG remains active')
           print('PASS: EN/CZ contain no Cyrillic and no legacy flat language links')
           PY
 
