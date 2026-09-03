@@ -43,6 +43,7 @@ jobs:
           tar -xf "$TARFILE" -C dist
           cp berry-harvesting.html dist/berry-harvesting.html
           python scripts/localize_berry.py dist
+          python scripts/fix_berry_locales.py dist
 
       - name: Validate berry routes and language links
         run: |
@@ -60,6 +61,8 @@ jobs:
           for p in required[1:]:
               text = p.read_text(encoding='utf-8')
               if re.search(r'[А-Яа-яЁё]', text):
+                  leftovers = sorted(set(re.findall(r'[А-Яа-яЁё][А-Яа-яЁё\s–—,+./%0-9]*', text)))
+                  print('Residual Cyrillic:', leftovers[:30])
                   raise SystemExit(f'Cyrillic remains in localized berry page: {p}')
           ru = required[0].read_text(encoding='utf-8')
           en = required[1].read_text(encoding='utf-8')
