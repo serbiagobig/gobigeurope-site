@@ -1,0 +1,82 @@
+name: Publish AGRO TAG berry harvesting route
+
+on:
+  workflow_run:
+    workflows: ["Publish GO BIG blog route"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-berry-final"
+  cancel-in-progress: true
+
+jobs:
+  add-berry-case-and-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Download multilingual Pages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: downloaded-pages
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Add berry harvesting case in RU EN CZ
+        run: |
+          mkdir -p dist
+          TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
+          if [ -z "$TARFILE" ]; then
+            echo "Pages tar artifact not found"
+            exit 1
+          fi
+          tar -xf "$TARFILE" -C dist
+          cp berry-harvesting.html dist/berry-harvesting.html
+          python scripts/localize_berry.py dist
+
+      - name: Validate berry routes and language links
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          required = [
+              Path('dist/berry-harvesting.html'),
+              Path('dist/en/berry-harvesting.html'),
+              Path('dist/cz/berry-harvesting.html'),
+          ]
+          for p in required:
+              if not p.exists() or p.stat().st_size < 10000:
+                  raise SystemExit(f'Missing or unexpectedly small berry page: {p}')
+          for p in required[1:]:
+              text = p.read_text(encoding='utf-8')
+              if re.search(r'[А-Яа-яЁё]', text):
+                  raise SystemExit(f'Cyrillic remains in localized berry page: {p}')
+          ru = required[0].read_text(encoding='utf-8')
+          en = required[1].read_text(encoding='utf-8')
+          cz = required[2].read_text(encoding='utf-8')
+          if 'en/berry-harvesting.html' not in ru or 'cz/berry-harvesting.html' not in ru:
+              raise SystemExit('RU berry language links are incorrect')
+          if '../cz/berry-harvesting.html' not in en or '../berry-harvesting.html' not in en:
+              raise SystemExit('EN berry language links are incorrect')
+          if '../en/berry-harvesting.html' not in cz or '../berry-harvesting.html' not in cz:
+              raise SystemExit('CZ berry language links are incorrect')
+          print('PASS: berry harvesting case available in RU / EN / CZ')
+          PY
+
+      - name: Upload final Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy final site
+        uses: actions/deploy-pages@v4
