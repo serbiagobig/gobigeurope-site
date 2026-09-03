@@ -45,4 +45,37 @@
       }
     });
   });
+
+  // AGRO TAG product 05 is the entry point to the berry-harvesting solution case.
+  // Keep the whole card clickable while leaving all other product cards unchanged.
+  const path = window.location.pathname.toLowerCase();
+  if (path.endsWith('/agro-tag.html') || path.endsWith('agro-tag.html')) {
+    const productCards = Array.from(document.querySelectorAll('.products .product'));
+    const berryCard = productCards.find((card) => {
+      const number = card.querySelector('.product-num');
+      return number && number.textContent.trim() === '05';
+    });
+
+    if (berryCard) {
+      berryCard.setAttribute('role', 'link');
+      berryCard.setAttribute('tabindex', '0');
+      berryCard.setAttribute('aria-label', `${berryCard.textContent.trim()} — open berry harvesting solution`);
+      berryCard.style.cursor = 'pointer';
+
+      const openBerryCase = () => {
+        window.location.href = 'berry-harvesting.html';
+      };
+
+      berryCard.addEventListener('click', (event) => {
+        if (event.target.closest('a,button,input,select,textarea')) return;
+        openBerryCase();
+      });
+      berryCard.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openBerryCase();
+        }
+      });
+    }
+  }
 })();
