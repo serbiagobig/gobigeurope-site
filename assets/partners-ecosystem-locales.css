@@ -4,6 +4,9 @@
 html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after{
   content:"Факультет технических наук Университета Нови-Сада\A Факультет сельскохозяйственных наук Университета Нови-Сада\A INSTEM — Институт технологического и экологического менеджмента в Центральной Азии\A Казахский национальный университет имени аль-Фараби (KazNU)\A Институт овощных культур, Смедеревска-Паланка" !important;
 }
+html[lang="ru"] .partners .partner-card:nth-child(3)>ul::after{
+  content:"Торгово-промышленная палата Воеводины\A Торгово-промышленная палата Республики Сербской\A Ошское региональное отделение Торгово-промышленной палаты Кыргызской Республики\A Амбассадор TESLA Alliance HQ\A Наманганское региональное управление Торгово-промышленной палаты Республики Узбекистан\A Андижанское региональное отделение Торгово-промышленной палаты Узбекистана\A Торгово-промышленная палата Согдийской области Республики Таджикистан" !important;
+}
 
 html[lang="en"] .partners h2::before{content:"Growth through\A the right connections";}
 html[lang="en"] .partners h2::after{content:"GO BIG does not operate as an external consultant,\A but as a gateway to a network of companies, experts\A and institutions in target markets.";}
@@ -20,7 +23,9 @@ html[lang="en"] .partners .partner-card:nth-child(2)>ul::after{
   content:"Faculty of Technical Sciences, University of Novi Sad\A Faculty of Agriculture, University of Novi Sad\A INSTEM — Institute of Technological and Environmental Management in Central Asia\A Al-Farabi Kazakh National University (KazNU)\A Institute for Vegetable Crops, Smederevska Palanka" !important;
 }
 html[lang="en"] .partners .partner-card:nth-child(3)>ul::before{content:"Development institutions and business associations\A chambers · associations · clusters";}
-html[lang="en"] .partners .partner-card:nth-child(3)>ul::after{content:"Chamber of Commerce and Industry of Vojvodina\A Chamber of Commerce and Industry of Republika Srpska\A Osh Regional Chamber of Commerce and Industry of the Kyrgyz Republic\A TESLA Alliance HQ Ambassador\A Namangan Regional Department of the Chamber of Commerce and Industry of the Republic of Uzbekistan\A Andijan Regional Branch of the Chamber of Commerce and Industry of Uzbekistan\A Chamber of Commerce and Industry of the Sughd Region of the Republic of Tajikistan" !important;}
+html[lang="en"] .partners .partner-card:nth-child(3)>ul::after{
+  content:"Chamber of Commerce and Industry of Vojvodina\A Chamber of Commerce and Industry of Republika Srpska\A Osh Regional Chamber of Commerce and Industry of the Kyrgyz Republic\A TESLA Alliance HQ Ambassador\A Namangan Regional Department of the Chamber of Commerce and Industry of the Republic of Uzbekistan\A Andijan Regional Branch of the Chamber of Commerce and Industry of Uzbekistan\A Chamber of Commerce and Industry of the Sughd Region of the Republic of Tajikistan" !important;
+}
 html[lang="en"] .projects-all::before{content:"View more projects" !important;}
 
 html[lang="cs"] .partners h2::before,
@@ -52,24 +57,32 @@ html[lang="cz"] .partners .partner-card:nth-child(3)::before{content:"Specializo
 html[lang="cs"] .partners .partner-card:nth-child(3)>ul::before,
 html[lang="cz"] .partners .partner-card:nth-child(3)>ul::before{content:"Rozvojové instituce a podnikatelská sdružení\A komory · asociace · klastry";}
 html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
-html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{content:"Obchodní a průmyslová komora Vojvodiny\A Obchodní a průmyslová komora Republiky srbské\A Ošská regionální obchodní a průmyslová komora Kyrgyzské republiky\A Ambasador TESLA Alliance HQ\A Namanganské regionální oddělení Obchodní a průmyslové komory Republiky Uzbekistán\A Andižanská regionální pobočka Obchodní a průmyslové komory Uzbekistánu\A Obchodní a průmyslová komora Sogdijského regionu Republiky Tádžikistán" !important;}
+html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
+  content:"Obchodní a průmyslová komora Vojvodiny\A Obchodní a průmyslová komora Republiky srbské\A Ošská regionální obchodní a průmyslová komora Kyrgyzské republiky\A Ambasador TESLA Alliance HQ\A Namanganské regionální oddělení Obchodní a průmyslové komory Republiky Uzbekistán\A Andižanská regionální pobočka Obchodní a průmyslové komory Uzbekistánu\A Obchodní a průmyslová komora Sogdijského regionu Republiky Tádžikistán" !important;
+}
 html[lang="cs"] .projects-all::before,
 html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !important;}
 
-/* Longer institution lists need more room than the original one-line tooltips. */
+/* All institutional lists must render every item, not collapse into a single-line tooltip. */
 @media (min-width:901px){
   html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="en"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="ru"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
-    width:410px;
-    font-size:11px;
-    line-height:1.5;
+    width:430px !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
+    white-space:pre-line !important;
+    font-size:11px !important;
+    line-height:1.5 !important;
   }
 }
+
 @media (max-width:900px){
   html[lang="ru"] .partners .partner-card:nth-child(2)>ul,
   html[lang="en"] .partners .partner-card:nth-child(2)>ul,
@@ -77,15 +90,17 @@ html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !impor
   html[lang="cz"] .partners .partner-card:nth-child(2)>ul{
     padding-bottom:138px !important;
   }
+  html[lang="ru"] .partners .partner-card:nth-child(3)>ul,
   html[lang="en"] .partners .partner-card:nth-child(3)>ul,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul{
-    padding-bottom:124px !important;
+    padding-bottom:170px !important;
   }
   html[lang="ru"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="en"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(2)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(2)>ul::after,
+  html[lang="ru"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="en"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cs"] .partners .partner-card:nth-child(3)>ul::after,
   html[lang="cz"] .partners .partner-card:nth-child(3)>ul::after{
@@ -97,7 +112,10 @@ html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !impor
     left:12px;
     right:12px;
     bottom:10px;
-    width:auto;
+    width:auto !important;
+    height:auto !important;
+    max-height:none !important;
+    overflow:visible !important;
     padding:0;
     border:0;
     background:none;
@@ -105,6 +123,7 @@ html[lang="cz"] .projects-all::before{content:"Zobrazit další projekty" !impor
     color:#72c99b;
     font-size:9px;
     line-height:1.45;
+    white-space:pre-line !important;
     text-align:center;
   }
 }
