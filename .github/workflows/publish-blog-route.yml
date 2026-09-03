@@ -149,6 +149,8 @@ jobs:
           python scripts/inject_universal_mobile_nav.py dist
           python - <<'PY'
           from pathlib import Path
+          import re
+
           targets = [
               ('ru', Path('dist/international.html'), 'assets'),
               ('en', Path('dist/en/international.html'), '../assets'),
