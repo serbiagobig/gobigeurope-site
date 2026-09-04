@@ -81,10 +81,11 @@ jobs:
           s = s.replace(old_problem, new_problem, 1)
 
           old_benefits = '<section class="section soft" id="benefits"><div class="wrap"><div class="eyebrow">Экономика уборки</div><h2>Производительность, которая меняет экономику</h2><div class="stats">'
-          new_benefits = '''<section class="section soft" id="benefits"><div class="wrap"><div class="eyebrow">Эффективность</div><h2>Мы создаем новую экономику уборки</h2><p class="economy-subtitle">Производительность, которая меняет экономику</p><div class="economy-video"><video autoplay muted loop playsinline preload="metadata" poster="/assets/agro-card-05.png" aria-label="Механизированная уборка ягод"><source src="/berry-harvesting-web.mp4" type="video/mp4"></video></div><div class="stats">'''
+          new_benefits = '''<section class="section soft" id="benefits"><div class="wrap economy-layout"><div class="eyebrow">Эффективность</div><h2>Мы создаем новую экономику уборки</h2><p class="economy-subtitle">Производительность, которая меняет экономику</p><div class="economy-video"><video autoplay muted loop playsinline preload="metadata" poster="/assets/agro-card-05.png" aria-label="Механизированная уборка ягод"><source src="/berry-harvesting-web.mp4" type="video/mp4"></video></div><div class="stats economy-stats">'''
           if old_benefits not in s:
               raise SystemExit('Target economics section heading not found')
           s = s.replace(old_benefits, new_benefits, 1)
+          s = s.replace('Для голубичных плантаций в подходящих условиях.', 'Для ягодных плантаций в подходящих условиях.', 1)
 
           css = '''
           .hero-copy{max-width:930px !important}
@@ -104,12 +105,21 @@ jobs:
           .problem-row:last-child{border-bottom:0}
           .problem-row b{color:var(--green);font-size:23px;font-weight:800;line-height:1}
           .problem-row span{font:700 19px/1.18 var(--serif);color:var(--navy)}
-          .economy-subtitle{margin:18px 0 0;font:600 clamp(22px,2.3vw,30px)/1.25 var(--serif);color:#486985}
-          .economy-video{margin-top:30px;aspect-ratio:16/9;border-radius:28px;overflow:hidden;background:#101f2b;box-shadow:0 18px 38px rgba(16,37,61,.12)}
-          .economy-video video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+          #benefits{padding:62px 0}
+          .economy-layout{display:grid;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);grid-template-rows:auto auto auto 1fr;column-gap:34px;align-items:start}
+          .economy-layout>.eyebrow,.economy-layout>h2,.economy-layout>.economy-subtitle,.economy-layout>.economy-stats{grid-column:1}
+          .economy-layout>.eyebrow{grid-row:1}
+          .economy-layout>h2{grid-row:2;margin-top:10px;font-size:clamp(40px,4vw,58px)}
+          .economy-subtitle{grid-row:3;margin:12px 0 0;font:600 clamp(20px,2vw,27px)/1.2 var(--serif);color:#486985}
+          .economy-stats{grid-row:4;grid-template-columns:1fr;gap:10px;margin-top:22px}
+          .economy-stats .stat{padding:16px 18px;border-radius:18px;display:grid;grid-template-columns:minmax(150px,.72fr) 1fr;gap:16px;align-items:center}
+          .economy-stats .stat strong{font-size:34px;white-space:nowrap}
+          .economy-stats .stat span{margin-top:0;font-size:12px;line-height:1.45}
+          .economy-video{grid-column:2;grid-row:1/5;align-self:stretch;min-height:470px;border-radius:28px;overflow:hidden;background:#101f2b;box-shadow:0 18px 38px rgba(16,37,61,.12)}
+          .economy-video video{display:block;width:100%;height:100%;min-height:470px;object-fit:cover;object-position:center}
           .dark .eyebrow{color:#6ee39f !important;font-size:13px !important;letter-spacing:.16em}
           .tech-card b{font-size:28px !important;line-height:1 !important;letter-spacing:.02em}
-          @media(max-width:900px){.hero h1{font-size:clamp(42px,11vw,62px) !important}.manual-problems{padding:54px 0}.problem-panels{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.problem-panel{padding:20px}.problem-row{grid-template-columns:48px 1fr}.problem-row span{font-size:18px}.economy-video{margin-top:24px;border-radius:22px}.tech-card b{font-size:26px !important}}
+          @media(max-width:900px){.hero h1{font-size:clamp(42px,11vw,62px) !important}.manual-problems{padding:54px 0}.problem-panels{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.problem-panel{padding:20px}.problem-row{grid-template-columns:48px 1fr}.problem-row span{font-size:18px}#benefits{padding:54px 0}.economy-layout{grid-template-columns:1fr;grid-template-rows:auto;row-gap:0}.economy-layout>.eyebrow,.economy-layout>h2,.economy-layout>.economy-subtitle,.economy-layout>.economy-video,.economy-layout>.economy-stats{grid-column:1;grid-row:auto}.economy-video{margin-top:24px;min-height:0;aspect-ratio:16/9;border-radius:22px}.economy-video video{min-height:0}.economy-stats{margin-top:18px}.economy-stats .stat{grid-template-columns:1fr}.economy-stats .stat span{margin-top:6px}.tech-card b{font-size:26px !important}}
           '''
           s = s.replace('</style>', css + '</style>', 1)
           p.write_text(s, encoding='utf-8')
@@ -137,7 +147,7 @@ jobs:
               text = p.read_text(encoding='utf-8')
               if '/berry-harvesting-web.mp4' not in text or '<video' not in text:
                   raise SystemExit(f'Berry video is not linked in {p}')
-              if 'problem-panels' not in text or 'economy-video' not in text:
+              if 'problem-panels' not in text or 'economy-layout' not in text:
                   raise SystemExit(f'Updated berry content blocks missing in {p}')
               if text.count('class="problem-row"') != 8:
                   raise SystemExit(f'Expected 8 compact problem rows in {p}')
@@ -154,13 +164,15 @@ jobs:
               raise SystemExit('RU hero headline was not updated')
           if 'ягоды и фруктов' not in ru:
               raise SystemExit('RU hero description was not updated')
+          if 'Для ягодных плантаций в подходящих условиях.' not in ru:
+              raise SystemExit('RU economics crop wording was not updated')
           if 'en/berry-harvesting.html' not in ru or 'cz/berry-harvesting.html' not in ru:
               raise SystemExit('RU berry language links are incorrect')
           if '../cz/berry-harvesting.html' not in en or '../berry-harvesting.html' not in en:
               raise SystemExit('EN berry language links are incorrect')
           if '../en/berry-harvesting.html' not in cz or '../berry-harvesting.html' not in cz:
               raise SystemExit('CZ berry language links are incorrect')
-          print('PASS: berry harvesting case available in RU / EN / CZ with updated hero copy')
+          print('PASS: berry harvesting case available in RU / EN / CZ with split economics layout')
           PY
 
       - name: Upload final Pages artifact
