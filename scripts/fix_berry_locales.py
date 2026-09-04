@@ -88,9 +88,9 @@ tech_content = {
         'lead': 'Регулируемые импульсы воздуха отделяют зрелую ягоду и фрукты без жёсткого механического воздействия на растение. Затем урожай мягко принимается и направляется в систему сбора.',
         'flow': ('Отделить', 'Принять', 'Адаптировать к культуре'),
         'cards': [
-            ('01', '/Карточка Воздушная уборка.png', 'Воздушно-импульсное воздействие', 'Управляемые импульсы воздуха отделяют зрелые плоды от растения. Скорость и частота воздействия регулируются под культуру и условия уборки.'),
-            ('02', '/Карточка Пневматические подушки.png', 'Мягкая система приёма', 'Эластичные пневматические элементы принимают отделившийся урожай, поглощают энергию падения и помогают снизить риск повреждения.'),
-            ('03', '/карточка Механические пальцы.png', 'Адаптация к культуре', 'Направляющие элементы помогают работать с различной формой куста и ветвей. При необходимости механическое воздействие дополняет воздушный импульс и остаётся под контролем оператора.'),
+            ('01', '/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%92%D0%BE%D0%B7%D0%B4%D1%83%D1%88%D0%BD%D0%B0%D1%8F%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B0.png', 'Воздушно-импульсное воздействие', 'Управляемые импульсы воздуха отделяют зрелые плоды от растения. Скорость и частота воздействия регулируются под культуру и условия уборки.'),
+            ('02', '/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9F%D0%BD%D0%B5%D0%B2%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%BE%D0%B4%D1%83%D1%88%D0%BA%D0%B8.png', 'Мягкая система приёма', 'Эластичные пневматические элементы принимают отделившийся урожай, поглощают энергию падения и помогают снизить риск повреждения.'),
+            ('03', '/%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%B0%D0%BB%D1%8C%D1%86%D1%8B.png', 'Адаптация к культуре', 'Направляющие элементы помогают работать с различной формой куста и ветвей. При необходимости механическое воздействие дополняет воздушный импульс и остаётся под контролем оператора.'),
         ],
     },
     'en': {
@@ -99,9 +99,9 @@ tech_content = {
         'lead': 'Controlled air pulses detach ripe berries and fruit without harsh mechanical impact on the plant. The crop is then received gently and guided into the collection system.',
         'flow': ('Detach', 'Receive', 'Adapt to the crop'),
         'cards': [
-            ('01', '/Карточка Воздушная уборка.png', 'Air-pulse action', 'Controlled air pulses detach ripe fruit from the plant. Air speed and pulse frequency are adjusted to the crop and harvesting conditions.'),
-            ('02', '/Карточка Пневматические подушки.png', 'Gentle receiving system', 'Elastic pneumatic elements receive the detached crop, absorb impact energy and help reduce the risk of damage.'),
-            ('03', '/карточка Механические пальцы.png', 'Adaptation to the crop', 'Guiding elements help the machine work with different bush shapes and branch structures. When needed, controlled mechanical action complements the air pulse.'),
+            ('01', '/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%92%D0%BE%D0%B7%D0%B4%D1%83%D1%88%D0%BD%D0%B0%D1%8F%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B0.png', 'Air-pulse action', 'Controlled air pulses detach ripe fruit from the plant. Air speed and pulse frequency are adjusted to the crop and harvesting conditions.'),
+            ('02', '/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9F%D0%BD%D0%B5%D0%B2%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%BE%D0%B4%D1%83%D1%88%D0%BA%D0%B8.png', 'Gentle receiving system', 'Elastic pneumatic elements receive the detached crop, absorb impact energy and help reduce the risk of damage.'),
+            ('03', '/%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%B0%D0%BB%D1%8C%D1%86%D1%8B.png', 'Adaptation to the crop', 'Guiding elements help the machine work with different bush shapes and branch structures. When needed, controlled mechanical action complements the air pulse.'),
         ],
     },
     'cz': {
@@ -110,9 +110,9 @@ tech_content = {
         'lead': 'Řízené vzduchové impulsy oddělují zralé bobule a ovoce bez tvrdého mechanického působení na rostlinu. Úroda je poté šetrně zachycena a vedena do sběrného systému.',
         'flow': ('Oddělit', 'Zachytit', 'Přizpůsobit plodině'),
         'cards': [
-            ('01', '/Карточка Воздушная уборка.png', 'Vzduchově pulzní působení', 'Řízené vzduchové impulsy oddělují zralé plody od rostliny. Rychlost vzduchu a frekvence impulsů se nastavují podle plodiny a podmínek sklizně.'),
-            ('02', '/Карточка Пневматические подушки.png', 'Šetrný systém zachycení', 'Elastické pneumatické prvky zachycují oddělenou úrodu, absorbují energii pádu a pomáhají snižovat riziko poškození.'),
-            ('03', '/карточка Механические пальцы.png', 'Přizpůsobení plodině', 'Vodicí prvky pomáhají pracovat s různým tvarem keřů a větví. V případě potřeby řízené mechanické působení doplňuje vzduchový impuls.'),
+            ('01', '/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%92%D0%BE%D0%B7%D0%B4%D1%83%D1%88%D0%BD%D0%B0%D1%8F%20%D1%83%D0%B1%D0%BE%D1%80%D0%BA%D0%B0.png', 'Vzduchově pulzní působení', 'Řízené vzduchové impulsy oddělují zralé plody od rostliny. Rychlost vzduchu a frekvence impulsů se nastavují podle plodiny a podmínek sklizně.'),
+            ('02', '/%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9F%D0%BD%D0%B5%D0%B2%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%BE%D0%B4%D1%83%D1%88%D0%BA%D0%B8.png', 'Šetrný systém zachycení', 'Elastické pneumatické prvky zachycují oddělenou úrodu, absorbují energii pádu a pomáhají snižovat riziko poškození.'),
+            ('03', '/%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%B0%D0%BB%D1%8C%D1%86%D1%8B.png', 'Přizpůsobení plodině', 'Vodicí prvky pomáhají pracovat s různým tvarem keřů a větví. V případě potřeby řízené mechanické působení doplňuje vzduchový impuls.'),
         ],
     },
 }
@@ -148,8 +148,6 @@ def render_tech(lang):
         f'<div class="tech-visual-grid">{cards}</div></div></section>'
     )
 
-
-# First clean residual strings in generated localized pages.
 for lang, mapping in fixes.items():
     p = root / lang / 'berry-harvesting.html'
     if not p.exists():
@@ -160,7 +158,6 @@ for lang, mapping in fixes.items():
     p.write_text(s, encoding='utf-8')
     print(f'Cleaned residual berry locale strings: {lang}')
 
-# Replace the technology section in RU, EN and CZ with the visual three-stage module.
 paths = {
     'ru': root / 'berry-harvesting.html',
     'en': root / 'en' / 'berry-harvesting.html',
