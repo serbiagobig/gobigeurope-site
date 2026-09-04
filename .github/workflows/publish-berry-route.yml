@@ -85,6 +85,7 @@ jobs:
           if old_benefits not in s:
               raise SystemExit('Target economics section heading not found')
           s = s.replace(old_benefits, new_benefits, 1)
+          s = s.replace('500+ кг/час', 'до 500+ кг/час', 1)
           s = s.replace('Для голубичных плантаций в подходящих условиях.', 'Для ягодных плантаций в подходящих условиях.', 1)
 
           css = '''
@@ -164,8 +165,8 @@ jobs:
               raise SystemExit('RU hero headline was not updated')
           if 'ягоды и фруктов' not in ru:
               raise SystemExit('RU hero description was not updated')
-          if 'Для ягодных плантаций в подходящих условиях.' not in ru:
-              raise SystemExit('RU economics crop wording was not updated')
+          if 'до 500+ кг/час' not in ru or 'Для ягодных плантаций в подходящих условиях.' not in ru:
+              raise SystemExit('RU economics metrics were not updated')
           if 'en/berry-harvesting.html' not in ru or 'cz/berry-harvesting.html' not in ru:
               raise SystemExit('RU berry language links are incorrect')
           if '../cz/berry-harvesting.html' not in en or '../berry-harvesting.html' not in en:
