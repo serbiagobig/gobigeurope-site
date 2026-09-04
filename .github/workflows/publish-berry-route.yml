@@ -49,19 +49,21 @@ jobs:
           s = p.read_text(encoding='utf-8')
 
           old_problem = '''<section class="section"><div class="wrap problem"><div><div class="eyebrow">Проблема</div><h2>Когда урожай есть, а рабочих не хватает</h2><p class="lead">Ручная уборка ягод требует большого количества сезонного персонала именно в короткий период, когда урожай необходимо собрать быстро и с минимальными потерями.</p><div class="checks"><span>Снижение зависимости от сезонных рабочих</span><span>Более предсказуемые сроки уборки</span><span>Возможность обслуживать большие площади</span><span>Снижение операционных рисков</span></div></div><div class="photo"><img src="assets/project-agriculture.png" alt="Ягодная плантация"/></div></div></section>'''
-          new_problem = '''<section class="section manual-problems"><div class="wrap"><div class="eyebrow">Типичные проблемы ручной уборки</div><h2>Когда урожай есть, а ручной сбор становится ограничением</h2><p class="lead manual-intro">Ручная уборка влияет не только на затраты. Она определяет скорость сбора, качество партии, возможность масштабировать площадь и срок хранения ягоды.</p>
-          <div class="problem-group"><div class="problem-group-head"><span>Операционные ограничения</span><small>Люди · сроки · масштаб</small></div><div class="manual-grid">
-            <article class="manual-card"><b>01</b><h3>Дефицит сезонных рабочих</h3><p>Нужное количество сборщиков трудно найти именно в короткий период пикового созревания.</p></article>
-            <article class="manual-card"><b>02</b><h3>Рост стоимости ручного труда</h3><p>Увеличение стоимости рабочей силы напрямую повышает себестоимость уборки урожая.</p></article>
-            <article class="manual-card"><b>03</b><h3>Непредсказуемые сроки уборки</h3><p>Производительность зависит от количества людей, их опыта, погоды и ежедневной доступности персонала.</p></article>
-            <article class="manual-card"><b>04</b><h3>Ограничение масштаба хозяйства</h3><p>Чем больше площадь плантации, тем сложнее обеспечить достаточное количество сборщиков одновременно.</p></article>
-          </div></div>
-          <div class="problem-group quality-group"><div class="problem-group-head"><span>Риски для качества урожая</span><small>Ягода · зрелость · хранение</small></div><div class="manual-grid">
-            <article class="manual-card"><b>05</b><h3>Повреждение ягод</h3><p>Сдавливание пальцами, падение и давление ягод друг на друга вызывают вмятины и микроповреждения.</p></article>
-            <article class="manual-card"><b>06</b><h3>Удаление защитного воскового налёта</h3><p>Частые прикосновения ухудшают внешний вид ягоды и снижают её естественную защиту.</p></article>
-            <article class="manual-card"><b>07</b><h3>Неоднородная зрелость партии</h3><p>Из-за усталости или недостаточного опыта сборщики могут снимать недозрелые и перезрелые ягоды.</p></article>
-            <article class="manual-card"><b>08</b><h3>Перегрев и задержка охлаждения</h3><p>Низкая скорость сбора увеличивает время нахождения ягод на плантации, что сокращает срок хранения.</p></article>
-          </div></div></div></section>'''
+          new_problem = '''<section class="section manual-problems"><div class="wrap"><div class="eyebrow">Типичные проблемы ручной уборки</div><h2>Когда ручной сбор становится ограничением</h2><p class="lead manual-intro">Ручной сбор ограничивает скорость, масштаб хозяйства и стабильность качества ягоды.</p>
+          <div class="problem-panels">
+            <article class="problem-panel"><div class="panel-head"><span>Операционные ограничения</span><small>Люди · сроки · масштаб</small></div><div class="problem-list">
+              <div class="problem-row"><b>01</b><span>Дефицит сезонных рабочих</span></div>
+              <div class="problem-row"><b>02</b><span>Рост стоимости ручного труда</span></div>
+              <div class="problem-row"><b>03</b><span>Непредсказуемые сроки уборки</span></div>
+              <div class="problem-row"><b>04</b><span>Ограничение масштаба хозяйства</span></div>
+            </div></article>
+            <article class="problem-panel quality-panel"><div class="panel-head"><span>Риски для качества урожая</span><small>Ягода · зрелость · хранение</small></div><div class="problem-list">
+              <div class="problem-row"><b>05</b><span>Повреждение ягод</span></div>
+              <div class="problem-row"><b>06</b><span>Потеря защитного воскового налёта</span></div>
+              <div class="problem-row"><b>07</b><span>Неоднородная зрелость партии</span></div>
+              <div class="problem-row"><b>08</b><span>Перегрев и задержка охлаждения</span></div>
+            </div></article>
+          </div></div></section>'''
           if old_problem not in s:
               raise SystemExit('Original manual harvesting problem section not found')
           s = s.replace(old_problem, new_problem, 1)
@@ -73,26 +75,26 @@ jobs:
           s = s.replace(old_benefits, new_benefits, 1)
 
           css = '''
-          .manual-problems{background:#fff}
-          .manual-problems .manual-intro{max-width:920px}
-          .problem-group{margin-top:38px}
-          .problem-group+.problem-group{margin-top:28px}
-          .problem-group-head{display:flex;align-items:baseline;justify-content:space-between;gap:18px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}
-          .problem-group-head span{font:700 24px/1.1 var(--serif);color:var(--navy)}
-          .problem-group-head small{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--green)}
-          .manual-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-          .manual-card{min-height:240px;padding:24px;border:1px solid var(--line);border-radius:22px;background:#f7f9f9}
-          .quality-group .manual-card{background:#f1f6f3;border-color:#d6e5dd}
-          .manual-card b{display:block;color:var(--green);font-size:28px;font-weight:800;line-height:1;letter-spacing:.02em}
-          .manual-card h3{margin:18px 0 0;font:700 23px/1.08 var(--serif);color:var(--navy)}
-          .manual-card p{margin:14px 0 0;color:var(--muted);font-size:13px;line-height:1.6}
+          .manual-problems{background:#fff;padding:66px 0 72px}
+          .manual-problems h2{max-width:980px;font-size:clamp(42px,4.2vw,62px)}
+          .manual-problems .manual-intro{max-width:850px;margin-top:14px;font-size:16px}
+          .problem-panels{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+          .problem-panel{padding:24px 26px 20px;border:1px solid var(--line);border-radius:24px;background:#f7f9f9}
+          .quality-panel{background:#f1f6f3;border-color:#d6e5dd}
+          .panel-head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;padding-bottom:13px;border-bottom:1px solid #d9e1e4}
+          .panel-head span{font:700 23px/1.1 var(--serif);color:var(--navy)}
+          .panel-head small{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--green);white-space:nowrap}
+          .problem-list{display:grid;margin-top:4px}
+          .problem-row{display:grid;grid-template-columns:54px 1fr;gap:12px;align-items:center;min-height:60px;border-bottom:1px solid #e1e7e9}
+          .problem-row:last-child{border-bottom:0}
+          .problem-row b{color:var(--green);font-size:23px;font-weight:800;line-height:1}
+          .problem-row span{font:700 19px/1.18 var(--serif);color:var(--navy)}
           .economy-subtitle{margin:18px 0 0;font:600 clamp(22px,2.3vw,30px)/1.25 var(--serif);color:#486985}
           .economy-video{margin-top:30px;aspect-ratio:16/9;border-radius:28px;overflow:hidden;background:#101f2b;box-shadow:0 18px 38px rgba(16,37,61,.12)}
           .economy-video video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
           .dark .eyebrow{color:#6ee39f !important;font-size:13px !important;letter-spacing:.16em}
           .tech-card b{font-size:28px !important;line-height:1 !important;letter-spacing:.02em}
-          @media(max-width:1100px){.manual-grid{grid-template-columns:repeat(2,1fr)}}
-          @media(max-width:900px){.problem-group-head{align-items:flex-start;flex-direction:column}.manual-grid{grid-template-columns:1fr}.manual-card{min-height:0;padding:20px}.manual-card h3{font-size:21px}.economy-video{margin-top:24px;border-radius:22px}.tech-card b{font-size:26px !important}}
+          @media(max-width:900px){.manual-problems{padding:54px 0}.problem-panels{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.problem-panel{padding:20px}.problem-row{grid-template-columns:48px 1fr}.problem-row span{font-size:18px}.economy-video{margin-top:24px;border-radius:22px}.tech-card b{font-size:26px !important}}
           '''
           s = s.replace('</style>', css + '</style>', 1)
           p.write_text(s, encoding='utf-8')
@@ -120,10 +122,10 @@ jobs:
               text = p.read_text(encoding='utf-8')
               if '/berry-harvesting-web.mp4' not in text or '<video' not in text:
                   raise SystemExit(f'Berry video is not linked in {p}')
-              if 'manual-grid' not in text or 'economy-video' not in text:
+              if 'problem-panels' not in text or 'economy-video' not in text:
                   raise SystemExit(f'Updated berry content blocks missing in {p}')
-              if text.count('class="manual-card"') != 8:
-                  raise SystemExit(f'Expected 8 manual-harvest problem cards in {p}')
+              if text.count('class="problem-row"') != 8:
+                  raise SystemExit(f'Expected 8 compact problem rows in {p}')
           for p in required[1:]:
               text = p.read_text(encoding='utf-8')
               if re.search(r'[А-Яа-яЁё]', text):
@@ -139,7 +141,7 @@ jobs:
               raise SystemExit('EN berry language links are incorrect')
           if '../en/berry-harvesting.html' not in cz or '../berry-harvesting.html' not in cz:
               raise SystemExit('CZ berry language links are incorrect')
-          print('PASS: berry harvesting case available in RU / EN / CZ with 8 manual-harvest problem cards')
+          print('PASS: berry harvesting case available in RU / EN / CZ with compact problem panels')
           PY
 
       - name: Upload final Pages artifact
