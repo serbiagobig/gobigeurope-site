@@ -42,6 +42,20 @@ jobs:
           fi
           tar -xf "$TARFILE" -C dist
           cp berry-harvesting.html dist/berry-harvesting.html
+          cp berry-harvesting-web.mp4 dist/berry-harvesting-web.mp4
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('dist/berry-harvesting.html')
+          s = p.read_text(encoding='utf-8')
+          old = '<div class="photo"><img src="assets/project-agriculture.png" alt="Ягодная плантация"/></div>'
+          new = '<div class="photo berry-video"><video autoplay muted loop playsinline preload="metadata" poster="/assets/agro-card-05.png" aria-label="Механизированная уборка ягод"><source src="/berry-harvesting-web.mp4" type="video/mp4"></video></div>'
+          if old not in s:
+              raise SystemExit('Target berry plantation image block not found')
+          s = s.replace(old, new, 1)
+          css = '.photo.berry-video{aspect-ratio:16/9;min-height:0}.photo.berry-video video{display:block;width:100%;height:100%;object-fit:cover;object-position:center;background:#101f2b}'
+          s = s.replace('</style>', css + '</style>', 1)
+          p.write_text(s, encoding='utf-8')
+          PY
           python scripts/localize_berry.py dist
           python scripts/fix_berry_locales.py dist
 
@@ -58,6 +72,13 @@ jobs:
           for p in required:
               if not p.exists() or p.stat().st_size < 10000:
                   raise SystemExit(f'Missing or unexpectedly small berry page: {p}')
+          video = Path('dist/berry-harvesting-web.mp4')
+          if not video.exists() or video.stat().st_size < 1000000:
+              raise SystemExit('Berry harvesting video missing or unexpectedly small')
+          for p in required:
+              text = p.read_text(encoding='utf-8')
+              if '/berry-harvesting-web.mp4' not in text or '<video' not in text:
+                  raise SystemExit(f'Berry video is not linked in {p}')
           for p in required[1:]:
               text = p.read_text(encoding='utf-8')
               if re.search(r'[А-Яа-яЁё]', text):
@@ -73,7 +94,7 @@ jobs:
               raise SystemExit('EN berry language links are incorrect')
           if '../en/berry-harvesting.html' not in cz or '../berry-harvesting.html' not in cz:
               raise SystemExit('CZ berry language links are incorrect')
-          print('PASS: berry harvesting case available in RU / EN / CZ')
+          print('PASS: berry harvesting case available in RU / EN / CZ with repository video')
           PY
 
       - name: Upload final Pages artifact
