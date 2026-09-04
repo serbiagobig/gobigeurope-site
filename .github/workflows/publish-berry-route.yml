@@ -48,6 +48,12 @@ jobs:
           p = Path('dist/berry-harvesting.html')
           s = p.read_text(encoding='utf-8')
 
+          old_hero = '<div class="hero-copy"><div class="kicker">AGRO TAG SELECTED TECHNOLOGY</div><h1>Механизированная уборка ягод для свежего рынка</h1>'
+          new_hero = '<div class="hero-copy"><h1><span>Инновационная технология</span><span>Воздушно-импульсная</span><span>уборка</span></h1>'
+          if old_hero not in s:
+              raise SystemExit('Original berry hero heading not found')
+          s = s.replace(old_hero, new_hero, 1)
+
           old_problem = '''<section class="section"><div class="wrap problem"><div><div class="eyebrow">Проблема</div><h2>Когда урожай есть, а рабочих не хватает</h2><p class="lead">Ручная уборка ягод требует большого количества сезонного персонала именно в короткий период, когда урожай необходимо собрать быстро и с минимальными потерями.</p><div class="checks"><span>Снижение зависимости от сезонных рабочих</span><span>Более предсказуемые сроки уборки</span><span>Возможность обслуживать большие площади</span><span>Снижение операционных рисков</span></div></div><div class="photo"><img src="assets/project-agriculture.png" alt="Ягодная плантация"/></div></div></section>'''
           new_problem = '''<section class="section manual-problems"><div class="wrap"><div class="eyebrow">Типичные проблемы ручной уборки</div><h2>Когда ручной сбор становится ограничением</h2><p class="lead manual-intro">Ручной сбор ограничивает скорость, масштаб хозяйства и стабильность качества ягоды.</p>
           <div class="problem-panels">
@@ -75,6 +81,9 @@ jobs:
           s = s.replace(old_benefits, new_benefits, 1)
 
           css = '''
+          .hero-copy{max-width:930px !important}
+          .hero h1{margin:0 !important;font-size:clamp(48px,5.2vw,76px) !important;line-height:.96 !important;text-transform:uppercase}
+          .hero h1 span{display:block}
           .manual-problems{background:#fff;padding:66px 0 72px}
           .manual-problems h2{max-width:980px;font-size:clamp(42px,4.2vw,62px)}
           .manual-problems .manual-intro{max-width:850px;margin-top:14px;font-size:16px}
@@ -94,7 +103,7 @@ jobs:
           .economy-video video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
           .dark .eyebrow{color:#6ee39f !important;font-size:13px !important;letter-spacing:.16em}
           .tech-card b{font-size:28px !important;line-height:1 !important;letter-spacing:.02em}
-          @media(max-width:900px){.manual-problems{padding:54px 0}.problem-panels{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.problem-panel{padding:20px}.problem-row{grid-template-columns:48px 1fr}.problem-row span{font-size:18px}.economy-video{margin-top:24px;border-radius:22px}.tech-card b{font-size:26px !important}}
+          @media(max-width:900px){.hero h1{font-size:clamp(40px,11vw,58px) !important}.manual-problems{padding:54px 0}.problem-panels{grid-template-columns:1fr}.panel-head{align-items:flex-start;flex-direction:column}.problem-panel{padding:20px}.problem-row{grid-template-columns:48px 1fr}.problem-row span{font-size:18px}.economy-video{margin-top:24px;border-radius:22px}.tech-card b{font-size:26px !important}}
           '''
           s = s.replace('</style>', css + '</style>', 1)
           p.write_text(s, encoding='utf-8')
@@ -135,13 +144,15 @@ jobs:
           ru = required[0].read_text(encoding='utf-8')
           en = required[1].read_text(encoding='utf-8')
           cz = required[2].read_text(encoding='utf-8')
+          if 'Инновационная технология' not in ru or 'Воздушно-импульсная' not in ru:
+              raise SystemExit('RU hero headline was not updated')
           if 'en/berry-harvesting.html' not in ru or 'cz/berry-harvesting.html' not in ru:
               raise SystemExit('RU berry language links are incorrect')
           if '../cz/berry-harvesting.html' not in en or '../berry-harvesting.html' not in en:
               raise SystemExit('EN berry language links are incorrect')
           if '../en/berry-harvesting.html' not in cz or '../berry-harvesting.html' not in cz:
               raise SystemExit('CZ berry language links are incorrect')
-          print('PASS: berry harvesting case available in RU / EN / CZ with compact problem panels')
+          print('PASS: berry harvesting case available in RU / EN / CZ with updated hero and compact problem panels')
           PY
 
       - name: Upload final Pages artifact
