@@ -6,6 +6,7 @@ root = Path(sys.argv[1] if len(sys.argv) > 1 else 'dist')
 fixes = {
     'en': {
         'Механизированная уборка ягод': 'Mechanized berry harvesting',
+        'до 500+ кг/час': 'up to 500+ kg/hour',
         '500+ кг/час': '500+ kg/hour',
         'до 4 га/день': 'up to 4 ha/day',
         '20+ лет': '20+ years',
@@ -20,6 +21,7 @@ fixes = {
         'Эффективность': 'Efficiency',
         'Мы создаем новую экономику уборки': 'We create a new economics of harvesting',
         'Производительность, которая меняет экономику': 'Productivity that changes the economics',
+        'Для ягодных плантаций в подходящих условиях.': 'For berry plantations under suitable conditions.',
         'Типичные проблемы ручной уборки': 'Typical challenges of manual harvesting',
         'Когда ручной сбор становится ограничением': 'When manual harvesting becomes the bottleneck',
         'Ручной сбор ограничивает скорость, масштаб хозяйства и стабильность качества ягоды.': 'Manual harvesting limits speed, farm scale and consistency of berry quality.',
@@ -38,6 +40,7 @@ fixes = {
     },
     'cz': {
         'Механизированная уборка ягод': 'Mechanizovaná sklizeň bobulovin',
+        'до 500+ кг/час': 'až 500+ kg/h',
         '500+ кг/час': '500+ kg/h',
         'до 4 га/день': 'až 4 ha/den',
         '20+ лет': '20+ let',
@@ -52,6 +55,7 @@ fixes = {
         'Эффективность': 'Efektivita',
         'Мы создаем новую экономику уборки': 'Vytváříme novou ekonomiku sklizně',
         'Производительность, которая меняет экономику': 'Produktivita, která mění ekonomiku sklizně',
+        'Для ягодных плантаций в подходящих условиях.': 'Pro plantáže bobulovin ve vhodných podmínkách.',
         'Типичные проблемы ручной уборки': 'Typické problémy ruční sklizně',
         'Когда ручной сбор становится ограничением': 'Když se ruční sklizeň stává omezením',
         'Ручной сбор ограничивает скорость, масштаб хозяйства и стабильность качества ягоды.': 'Ruční sklizeň omezuje rychlost, rozsah hospodářství a stabilitu kvality bobulí.',
