@@ -1,0 +1,96 @@
+name: Fix berry image visibility
+
+on:
+  workflow_run:
+    workflows: ["Publish AGRO TAG berry harvesting route"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages-berry-images-final"
+  cancel-in-progress: true
+
+jobs:
+  patch-and-deploy:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download berry Pages artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: downloaded-pages
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Patch berry image visibility
+        run: |
+          mkdir -p dist
+          TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
+          if [ -z "$TARFILE" ]; then
+            echo "Pages tar artifact not found"
+            exit 1
+          fi
+          tar -xf "$TARFILE" -C dist
+          python - <<'PY'
+          from pathlib import Path
+
+          pages = [
+              Path('dist/berry-harvesting.html'),
+              Path('dist/en/berry-harvesting.html'),
+              Path('dist/cz/berry-harvesting.html'),
+          ]
+
+          css = r'''
+          /* Final visibility override for floating berry PNGs */
+          .gentle-crops .crop-gallery{overflow:visible!important}
+          .gentle-crops .crop-tile{
+            overflow:visible!important;
+            border-radius:0!important;
+            height:auto!important;
+          }
+          .gentle-crops .crop-tile img{
+            position:static!important;
+            inset:auto!important;
+            width:100%!important;
+            height:auto!important;
+            max-width:none!important;
+            max-height:none!important;
+            object-fit:contain!important;
+            display:block!important;
+          }
+          @media(max-width:900px){
+            .gentle-crops .crop-tile img{
+              width:auto!important;
+              height:auto!important;
+              max-width:100%!important;
+              max-height:100%!important;
+            }
+          }
+          '''
+
+          for p in pages:
+              if not p.exists():
+                  raise SystemExit(f'Missing page: {p}')
+              s = p.read_text(encoding='utf-8')
+              if 'class="crop-gallery"' not in s:
+                  raise SystemExit(f'Crop gallery missing in {p}')
+              if 'Final visibility override for floating berry PNGs' not in s:
+                  s = s.replace('</style>', css + '</style>', 1)
+              p.write_text(s, encoding='utf-8')
+              print(f'Patched berry visibility: {p}')
+          PY
+
+      - name: Upload patched Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+      - name: Deploy patched site
+        uses: actions/deploy-pages@v4
