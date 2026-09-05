@@ -87,6 +87,12 @@ IMG_AIR = RAW + '%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%92%D0%BE
 IMG_SOFT = RAW + '%D0%9A%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9F%D0%BD%D0%B5%D0%B2%D0%BC%D0%B0%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%BE%D0%B4%D1%83%D1%88%D0%BA%D0%B8.png'
 IMG_GUIDE = RAW + '%D0%BA%D0%B0%D1%80%D1%82%D0%BE%D1%87%D0%BA%D0%B0%20%D0%9C%D0%B5%D1%85%D0%B0%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5%20%D0%BF%D0%B0%D0%BB%D1%8C%D1%86%D1%8B.png'
 
+# Public-domain / CC0 crop images from Wikimedia Commons.
+CROP_BLUEBERRY = 'https://commons.wikimedia.org/wiki/Special:FilePath/Blueberry%20blueberries.jpg'
+CROP_RASPBERRY = 'https://commons.wikimedia.org/wiki/Special:FilePath/Framboise.jpg'
+CROP_BLACKBERRY = 'https://commons.wikimedia.org/wiki/Special:FilePath/Blackberries%20fruit.jpg'
+CROP_CURRANT = 'https://commons.wikimedia.org/wiki/Special:FilePath/Black%20currant%20fruit.jpg'
+
 tech_content = {
     'ru': {
         'eyebrow': 'Технология',
@@ -120,6 +126,42 @@ tech_content = {
     },
 }
 
+gentle_content = {
+    'ru': {
+        'eyebrow': 'Бережный принцип',
+        'title': 'Механизированная уборка без жёсткого контакта',
+        'lead': 'Созревшая ягода удерживается растением слабее, чем незрелая. Правильно настроенное воздушное воздействие использует это различие.',
+        'ripe': 'Спелая ягода → отделяется',
+        'ripe_text': 'Настройки подбираются под культуру, зрелость и состояние насаждений.',
+        'unripe': 'Незрелая ягода → остаётся',
+        'unripe_text': 'Цель — сохранить незрелые плоды на растении и снизить нежелательное воздействие.',
+        'crop_title': 'Один принцип. Разные культуры.',
+        'crops': [('Голубика', CROP_BLUEBERRY), ('Малина', CROP_RASPBERRY), ('Ежевика', CROP_BLACKBERRY), ('Чёрная смородина', CROP_CURRANT)],
+    },
+    'en': {
+        'eyebrow': 'Gentle harvesting principle',
+        'title': 'Mechanized harvesting without hard contact',
+        'lead': 'Ripe fruit is held less firmly by the plant than unripe fruit. Properly tuned air action uses this difference.',
+        'ripe': 'Ripe berry → detaches',
+        'ripe_text': 'Settings are adapted to crop, ripeness and plantation condition.',
+        'unripe': 'Unripe berry → remains',
+        'unripe_text': 'The objective is to keep unripe fruit on the plant and minimize unwanted impact.',
+        'crop_title': 'One principle. Different crops.',
+        'crops': [('Blueberry', CROP_BLUEBERRY), ('Raspberry', CROP_RASPBERRY), ('Blackberry', CROP_BLACKBERRY), ('Blackcurrant', CROP_CURRANT)],
+    },
+    'cz': {
+        'eyebrow': 'Šetrný princip',
+        'title': 'Mechanizovaná sklizeň bez tvrdého kontaktu',
+        'lead': 'Zralé plody drží na rostlině slaběji než nezralé. Správně nastavené působení vzduchu tento rozdíl využívá.',
+        'ripe': 'Zralá bobule → oddělí se',
+        'ripe_text': 'Nastavení se přizpůsobuje plodině, zralosti a stavu porostu.',
+        'unripe': 'Nezralá bobule → zůstává',
+        'unripe_text': 'Cílem je ponechat nezralé plody na rostlině a omezit nežádoucí působení.',
+        'crop_title': 'Jeden princip. Různé plodiny.',
+        'crops': [('Borůvka', CROP_BLUEBERRY), ('Malina', CROP_RASPBERRY), ('Ostružina', CROP_BLACKBERRY), ('Černý rybíz', CROP_CURRANT)],
+    },
+}
+
 tech_css = '''
 .technology-visual{padding:72px 0 76px}
 .technology-visual .lead{max-width:900px}
@@ -134,6 +176,20 @@ tech_css = '''
 @media(max-width:900px){.technology-visual{padding:56px 0}.tech-visual-grid{grid-template-columns:1fr}.tech-visual-media{height:230px}}
 '''
 
+gentle_css = '''
+.gentle-crops{padding:78px 0 82px}
+.gentle-crops .lead{max-width:920px}
+.gentle-crops .ripeness{margin-top:28px}
+.crop-bridge{margin-top:34px;font:700 clamp(26px,2.7vw,36px)/1.05 var(--serif);color:var(--navy)}
+.crop-gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:20px}
+.crop-tile{position:relative;min-height:205px;border-radius:22px;overflow:hidden;background:#dfe6e5}
+.crop-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.crop-tile:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,25,37,.02) 35%,rgba(10,25,37,.76) 100%)}
+.crop-tile b{position:absolute;z-index:2;left:18px;right:18px;bottom:17px;color:#fff;font:700 23px/1 var(--serif)}
+@media(max-width:900px){.gentle-crops{padding:56px 0}.crop-gallery{grid-template-columns:1fr 1fr}.crop-tile{min-height:180px}.crop-tile b{font-size:20px}}
+@media(max-width:560px){.crop-gallery{grid-template-columns:1fr}.crop-tile{min-height:210px}}
+'''
+
 
 def render_tech(lang):
     t = tech_content[lang]
@@ -145,6 +201,24 @@ def render_tech(lang):
         '<section class="section dark technology-visual" id="technology"><div class="wrap">'
         f'<div class="eyebrow">{t["eyebrow"]}</div><h2>{t["title"]}</h2><p class="lead">{t["lead"]}</p>'
         f'<div class="tech-visual-grid">{cards}</div></div></section>'
+    )
+
+
+def render_gentle(lang):
+    g = gentle_content[lang]
+    crops = ''.join(
+        f'<article class="crop-tile"><img src="{img}" alt="{name}" loading="lazy"/><b>{name}</b></article>'
+        for name, img in g['crops']
+    )
+    return (
+        '<section class="section soft gentle-crops"><div class="wrap">'
+        f'<div class="eyebrow">{g["eyebrow"]}</div><h2>{g["title"]}</h2><p class="lead">{g["lead"]}</p>'
+        '<div class="ripeness">'
+        f'<article class="ripe"><strong>{g["ripe"]}</strong><p class="lead">{g["ripe_text"]}</p></article>'
+        f'<article><strong>{g["unripe"]}</strong><p class="lead">{g["unripe_text"]}</p></article>'
+        '</div>'
+        f'<h3 class="crop-bridge">{g["crop_title"]}</h3><div class="crop-gallery">{crops}</div>'
+        '</div></section>'
     )
 
 for lang, mapping in fixes.items():
@@ -162,16 +236,31 @@ paths = {
     'en': root / 'en' / 'berry-harvesting.html',
     'cz': root / 'cz' / 'berry-harvesting.html',
 }
-pattern = re.compile(r'<section class="section dark(?: technology-visual)?" id="technology">.*?</section>', re.S)
+tech_pattern = re.compile(r'<section class="section dark(?: technology-visual)?" id="technology">.*?</section>', re.S)
+ripeness_pattern = re.compile(r'<section class="section soft"><div class="wrap">(?:(?!</section>).)*?<div class="ripeness">.*?</section>', re.S)
+culture_pattern = re.compile(r'<section class="section"><div class="wrap">(?:(?!</section>).)*?<div class="culture-grid">.*?</section>', re.S)
+
 for lang, p in paths.items():
     if not p.exists():
-        raise SystemExit(f'Missing berry page for technology replacement: {p}')
+        raise SystemExit(f'Missing berry page for module replacement: {p}')
     s = p.read_text(encoding='utf-8')
-    s2, count = pattern.subn(render_tech(lang), s, count=1)
+
+    s, count = tech_pattern.subn(render_tech(lang), s, count=1)
     if count != 1:
         raise SystemExit(f'Could not replace technology section in {p}')
-    s2 = re.sub(r'\.tech-flow\{.*?\}\n\.tech-flow i\{.*?\}\n', '', s2, flags=re.S)
-    if tech_css not in s2:
-        s2 = s2.replace('</style>', tech_css + '</style>', 1)
-    p.write_text(s2, encoding='utf-8')
-    print(f'Rebuilt berry technology module without flow labels: {lang}')
+
+    s, count = ripeness_pattern.subn(render_gentle(lang), s, count=1)
+    if count != 1:
+        raise SystemExit(f'Could not rebuild gentle harvesting section in {p}')
+
+    s, count = culture_pattern.subn('', s, count=1)
+    if count != 1:
+        raise SystemExit(f'Could not remove standalone culture section in {p}')
+
+    s = re.sub(r'\.tech-flow\{.*?\}\n\.tech-flow i\{.*?\}\n', '', s, flags=re.S)
+    if tech_css not in s:
+        s = s.replace('</style>', tech_css + '</style>', 1)
+    if gentle_css not in s:
+        s = s.replace('</style>', gentle_css + '</style>', 1)
+    p.write_text(s, encoding='utf-8')
+    print(f'Rebuilt berry technology and merged crop gallery into gentle module: {lang}')
