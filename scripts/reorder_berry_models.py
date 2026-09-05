@@ -13,6 +13,7 @@ paths = {
 gentle_re = re.compile(r'<section class="section soft gentle-crops">.*?</section>', re.S)
 models_re = re.compile(r'<section class="section(?: dark)?(?: models-showcase)?" id="models">.*?</section>', re.S)
 gallery_re = re.compile(r'<div class="crop-gallery">.*?</div>', re.S)
+preassessment_re = re.compile(r'<section class="section[^"]*"[^>]*>(?:(?!<section ).)*?<div class="geometry">.*?</section>', re.S)
 
 RAW = 'https://raw.githubusercontent.com/serbiagobig/gobigeurope-site/main/'
 IMAGES = {
@@ -127,8 +128,15 @@ for lang, p in paths.items():
     gentle = gentle_re.search(s)
     s = s[:gentle.end()] + models_block + s[gentle.end():]
 
+    # Remove the entire preliminary plantation-fit / geometry module.
+    s, removed = preassessment_re.subn('', s, count=1)
+    if removed != 1:
+        raise SystemExit(f'Plantation pre-assessment geometry module not found in {p}')
+
     s = s.replace('</style>', css + '</style>', 1)
     if 'Посмотреть характеристики' in s or 'View specifications' in s:
         raise SystemExit(f'Old model CTA remains in {p}')
+    if 'class="geometry"' in s:
+        raise SystemExit(f'Plantation pre-assessment geometry remains in {p}')
     p.write_text(s, encoding='utf-8')
-    print(f'Rebuilt berry gallery and Air Harvester lineup: {p}')
+    print(f'Rebuilt berry gallery/model lineup and removed plantation pre-assessment: {p}')
