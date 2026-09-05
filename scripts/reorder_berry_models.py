@@ -48,14 +48,14 @@ layout_css = r'''
 .gentle-crops .crop-tile:nth-child(2){width:118px!important;right:238px!important;top:205px!important;left:auto!important;bottom:auto!important}
 /* 3 Blackcurrant: right-middle */
 .gentle-crops .crop-tile:nth-child(3){width:150px!important;right:38px!important;top:195px!important;left:auto!important;bottom:auto!important}
-/* 4 Blackberry: lower-right */
-.gentle-crops .crop-tile:nth-child(4){width:124px!important;right:28px!important;bottom:8px!important;left:auto!important;top:auto!important}
+/* 4 Blackberry: pushed farther right, close to module edge */
+.gentle-crops .crop-tile:nth-child(4){width:124px!important;right:-96px!important;bottom:2px!important;left:auto!important;top:auto!important}
 @media(max-width:1180px){
   .gentle-crops>.wrap{min-height:600px}
   .gentle-crops .crop-tile:nth-child(1){width:118px!important;right:10px!important;top:48px!important}
   .gentle-crops .crop-tile:nth-child(2){width:100px!important;right:175px!important;top:225px!important}
   .gentle-crops .crop-tile:nth-child(3){width:128px!important;right:8px!important;top:218px!important}
-  .gentle-crops .crop-tile:nth-child(4){width:108px!important;right:8px!important;bottom:8px!important}
+  .gentle-crops .crop-tile:nth-child(4){width:108px!important;right:-72px!important;bottom:6px!important}
 }
 @media(max-width:900px){
   .gentle-crops{padding:52px 0 64px!important}
@@ -94,19 +94,16 @@ for lang, p in paths.items():
     if not models:
         raise SystemExit(f'Models module not found in {p}')
 
-    # Keep the configuration block directly after the gentle/crops module.
     models_html = models.group(0)
     s = s[:models.start()] + s[models.end():]
     gentle = gentle_re.search(s)
     insert_at = gentle.end()
     s = s[:insert_at] + models_html + s[insert_at:]
 
-    # Replace the previous crop photos with the four exact removebg PNGs from this repository.
     s, count = gallery_re.subn(gallery_html(lang), s, count=1)
     if count != 1:
         raise SystemExit(f'Crop gallery not found in {p}')
 
-    # This style is injected last and intentionally overrides earlier experimental crop layouts.
     s = s.replace('</style>', layout_css + '</style>', 1)
 
     if s.find('gentle-crops') > s.find('id="models"'):
