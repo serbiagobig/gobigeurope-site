@@ -29,7 +29,7 @@ jobs:
           repository: ${{ github.repository }}
           run-id: ${{ github.event.workflow_run.id }}
 
-      - name: Patch berry image visibility
+      - name: Patch final berry design
         run: |
           mkdir -p dist
           TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
@@ -40,51 +40,95 @@ jobs:
           tar -xf "$TARFILE" -C dist
           python - <<'PY'
           from pathlib import Path
+          import re
 
-          pages = [
-              Path('dist/berry-harvesting.html'),
-              Path('dist/en/berry-harvesting.html'),
-              Path('dist/cz/berry-harvesting.html'),
-          ]
+          pages = {
+              'ru': Path('dist/berry-harvesting.html'),
+              'en': Path('dist/en/berry-harvesting.html'),
+              'cz': Path('dist/cz/berry-harvesting.html'),
+          }
+
+          copy = {
+              'ru': {
+                  'eyebrow': 'Система внедрения',
+                  'title': 'Не просто оборудование. Система внедрения.',
+                  'lead': 'Поставщик сопровождает внедрение технологии от первичной оценки хозяйства до запуска оборудования и последующей сервисной поддержки.',
+                  'items': ['Анализ хозяйства','Подбор технологии','Оценка участка','Поставка','Запуск','Обучение','Сервис','Запасные части'],
+              },
+              'en': {
+                  'eyebrow': 'Implementation system',
+                  'title': 'More than equipment. An implementation system.',
+                  'lead': 'The supplier supports technology implementation from the initial farm assessment through equipment commissioning and ongoing service support.',
+                  'items': ['Farm analysis','Technology selection','Site assessment','Delivery','Commissioning','Training','Service','Spare parts'],
+              },
+              'cz': {
+                  'eyebrow': 'Systém zavedení',
+                  'title': 'Více než zařízení. Systém zavedení.',
+                  'lead': 'Dodavatel provází zavedení technologie od prvotního posouzení hospodářství přes uvedení zařízení do provozu až po následnou servisní podporu.',
+                  'items': ['Analýza hospodářství','Výběr technologie','Posouzení lokality','Dodávka','Uvedení do provozu','Školení','Servis','Náhradní díly'],
+              },
+          }
 
           css = r'''
           /* Final visibility override for floating berry PNGs */
           .gentle-crops .crop-gallery{overflow:visible!important}
-          .gentle-crops .crop-tile{
-            overflow:visible!important;
-            border-radius:0!important;
-            height:auto!important;
-          }
-          .gentle-crops .crop-tile img{
-            position:static!important;
-            inset:auto!important;
-            width:100%!important;
-            height:auto!important;
-            max-width:none!important;
-            max-height:none!important;
-            object-fit:contain!important;
-            display:block!important;
-          }
-          @media(max-width:900px){
-            .gentle-crops .crop-tile img{
-              width:auto!important;
-              height:auto!important;
-              max-width:100%!important;
-              max-height:100%!important;
-            }
-          }
+          .gentle-crops .crop-tile{overflow:visible!important;border-radius:0!important;height:auto!important}
+          .gentle-crops .crop-tile img{position:static!important;inset:auto!important;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:contain!important;display:block!important}
+
+          /* Full-screen implementation system */
+          .implementation-system{background:#fff!important;min-height:calc(100vh - 82px);display:flex;align-items:center;padding:72px 0 76px!important}
+          .implementation-system .wrap{width:min(1320px,calc(100% - 64px))}
+          .implementation-system .eyebrow{font-size:13px!important;letter-spacing:.16em!important;margin-bottom:14px}
+          .implementation-system h2{max-width:1050px;font-size:clamp(50px,5.4vw,78px)!important;line-height:.96!important;margin-top:0!important}
+          .implementation-system .implementation-lead{max-width:980px;margin:24px 0 0;font-size:clamp(18px,1.55vw,23px);line-height:1.55;color:#63778a}
+          .implementation-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:42px}
+          .implementation-card{min-height:190px;padding:26px 26px 28px;border:1px solid #e0e7e7;border-radius:22px;background:#fbfcfc;box-shadow:0 12px 30px rgba(16,37,61,.045);display:flex;flex-direction:column;justify-content:space-between}
+          .implementation-card b{font:800 46px/1 var(--sans);color:#0b6b45;letter-spacing:-.045em}
+          .implementation-card span{display:block;margin-top:28px;font:700 clamp(22px,1.75vw,28px)/1.08 var(--serif);color:#10253d}
+          @media(max-width:1000px){.implementation-system{min-height:auto}.implementation-grid{grid-template-columns:repeat(2,1fr)}.implementation-card{min-height:170px}.implementation-system .wrap{width:calc(100% - 36px)}}
+          @media(max-width:900px){.gentle-crops .crop-tile img{width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important}}
+          @media(max-width:560px){.implementation-system{padding:54px 0 60px!important}.implementation-grid{grid-template-columns:1fr;gap:12px;margin-top:30px}.implementation-card{min-height:132px;padding:22px}.implementation-card b{font-size:38px}.implementation-card span{margin-top:20px;font-size:24px}.implementation-system h2{font-size:clamp(42px,12vw,58px)!important}}
           '''
 
-          for p in pages:
+          section_re = re.compile(r'<section class="section soft"><div class="wrap"><div class="eyebrow">(?:AGRO TAG SOLUTION|[^<]+)</div><h2>[^<]*(?:Система внедрения|implementation system|Systém zavedení)[^<]*</h2>.*?</section>', re.S | re.I)
+
+          for lang, p in pages.items():
               if not p.exists():
                   raise SystemExit(f'Missing page: {p}')
               s = p.read_text(encoding='utf-8')
               if 'class="crop-gallery"' not in s:
                   raise SystemExit(f'Crop gallery missing in {p}')
-              if 'Final visibility override for floating berry PNGs' not in s:
-                  s = s.replace('</style>', css + '</style>', 1)
-              p.write_text(s, encoding='utf-8')
-              print(f'Patched berry visibility: {p}')
+
+              c = copy[lang]
+              cards = ''.join(
+                  f'<article class="implementation-card"><b>{i:02d}</b><span>{label}</span></article>'
+                  for i, label in enumerate(c['items'], 1)
+              )
+              replacement = (
+                  '<section class="section implementation-system">'
+                  '<div class="wrap">'
+                  f'<div class="eyebrow">{c["eyebrow"]}</div>'
+                  f'<h2>{c["title"]}</h2>'
+                  f'<p class="implementation-lead">{c["lead"]}</p>'
+                  f'<div class="implementation-grid">{cards}</div>'
+                  '</div></section>'
+              )
+
+              s2, count = section_re.subn(replacement, s, count=1)
+              if count != 1:
+                  # fallback for older localized markup: identify the section by the legacy solution grid
+                  legacy = re.compile(r'<section class="section soft"><div class="wrap">(?:(?!</section>).)*?<div class="solution">.*?</section>', re.S)
+                  s2, count = legacy.subn(replacement, s, count=1)
+              if count != 1:
+                  raise SystemExit(f'Implementation solution section not found in {p}')
+
+              s2 = s2.replace('</style>', css + '</style>', 1)
+              if 'class="solution"' in s2:
+                  raise SystemExit(f'Legacy solution grid remains in {p}')
+              if lang == 'ru' and 'Поставщик сопровождает внедрение технологии' not in s2:
+                  raise SystemExit('RU supplier wording missing')
+              p.write_text(s2, encoding='utf-8')
+              print(f'Rebuilt full-screen implementation system: {p}')
           PY
 
       - name: Upload patched Pages artifact
