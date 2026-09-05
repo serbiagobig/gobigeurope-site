@@ -14,6 +14,7 @@ gentle_re = re.compile(r'<section class="section soft gentle-crops">.*?</section
 models_re = re.compile(r'<section class="section(?: dark)?(?: models-showcase)?" id="models">.*?</section>', re.S)
 gallery_re = re.compile(r'<div class="crop-gallery">.*?</div>', re.S)
 preassessment_re = re.compile(r'<section class="section[^"]*"[^>]*>(?:(?!<section ).)*?<div class="geometry">.*?</section>', re.S)
+transition_re = re.compile(r'<section class="section[^"]*"[^>]*>(?:(?!<section ).)*?<div class="path">.*?</section>', re.S)
 
 RAW = 'https://raw.githubusercontent.com/serbiagobig/gobigeurope-site/main/'
 IMAGES = {
@@ -111,32 +112,34 @@ for lang, p in paths.items():
     if not gentle or not models:
         raise SystemExit(f'Required module missing in {p}')
 
-    # First rebuild berry gallery with exact repo PNGs.
     s, count = gallery_re.subn(gallery_html(lang), s, count=1)
     if count != 1:
         raise SystemExit(f'Crop gallery not found in {p}')
 
-    # Replace old model cards with image-led white model showcase.
     s, count = models_re.subn(models_html(lang), s, count=1)
     if count != 1:
         raise SystemExit(f'Model section not found in {p}')
 
-    # Keep models directly after gentle-crops.
     models = models_re.search(s)
     models_block = models.group(0)
     s = s[:models.start()] + s[models.end():]
     gentle = gentle_re.search(s)
     s = s[:gentle.end()] + models_block + s[gentle.end():]
 
-    # Remove the entire preliminary plantation-fit / geometry module.
     s, removed = preassessment_re.subn('', s, count=1)
     if removed != 1:
         raise SystemExit(f'Plantation pre-assessment geometry module not found in {p}')
+
+    s, removed_transition = transition_re.subn('', s, count=1)
+    if removed_transition != 1:
+        raise SystemExit(f'Mechanization transition module not found in {p}')
 
     s = s.replace('</style>', css + '</style>', 1)
     if 'Посмотреть характеристики' in s or 'View specifications' in s:
         raise SystemExit(f'Old model CTA remains in {p}')
     if 'class="geometry"' in s:
         raise SystemExit(f'Plantation pre-assessment geometry remains in {p}')
+    if 'class="path"' in s:
+        raise SystemExit(f'Mechanization transition module remains in {p}')
     p.write_text(s, encoding='utf-8')
-    print(f'Rebuilt berry gallery/model lineup and removed plantation pre-assessment: {p}')
+    print(f'Rebuilt berry modules and removed geometry/transition sections: {p}')
