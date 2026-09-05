@@ -4,48 +4,85 @@ import re
 import sys
 
 root = Path(sys.argv[1] if len(sys.argv) > 1 else 'dist')
-paths = [
-    root / 'berry-harvesting.html',
-    root / 'en' / 'berry-harvesting.html',
-    root / 'cz' / 'berry-harvesting.html',
-]
+paths = {
+    'ru': root / 'berry-harvesting.html',
+    'en': root / 'en' / 'berry-harvesting.html',
+    'cz': root / 'cz' / 'berry-harvesting.html',
+}
 
 gentle_re = re.compile(r'<section class="section soft gentle-crops">.*?</section>', re.S)
 models_re = re.compile(r'<section class="section dark" id="models">.*?</section>', re.S)
+gallery_re = re.compile(r'<div class="crop-gallery">.*?</div>', re.S)
+
+RAW = 'https://raw.githubusercontent.com/serbiagobig/gobigeurope-site/main/'
+IMAGES = {
+    'raspberry': RAW + '%D0%9C%D0%B0%D0%BB%D0%B8%D0%BD%D0%B0-removebg-preview.png',
+    'blueberry': RAW + '%D0%93%D0%BE%D0%BB%D1%83%D0%B1%D0%B8%D0%BA%D0%B0-removebg-preview.png',
+    'currant': RAW + '%D0%A1%D0%BC%D0%BE%D1%80%D0%BE%D0%B4%D0%B8%D0%BD%D0%B0-removebg-preview.png',
+    'blackberry': RAW + '%D0%95%D0%B6%D0%B5%D0%B2%D0%B8%D0%BA%D0%B0-removebg-preview.png',
+}
+LABELS = {
+    'ru': ('Малина', 'Голубика', 'Смородина', 'Ежевика'),
+    'en': ('Raspberry', 'Blueberry', 'Blackcurrant', 'Blackberry'),
+    'cz': ('Malina', 'Borůvka', 'Černý rybíz', 'Ostružina'),
+}
 
 layout_css = r'''
-/* Floating berry composition for gentle harvesting module */
-.gentle-crops{position:relative!important;overflow:hidden!important;padding:72px 0 86px!important}
-.gentle-crops>.wrap{position:relative!important;z-index:1!important;display:flex!important;flex-direction:column!important}
+/* Exact floating berry composition from repository removebg PNGs */
+.gentle-crops{position:relative!important;overflow:hidden!important;padding:58px 0 74px!important}
+.gentle-crops>.wrap{position:relative!important;z-index:1!important;display:flex!important;flex-direction:column!important;min-height:560px}
 .gentle-crops>.wrap>.eyebrow{order:1}
-.gentle-crops>.wrap>h2{order:2}
-.gentle-crops>.wrap>.lead{order:3;max-width:900px!important}
-.gentle-crops .crop-bridge{order:4;margin:28px 0 0!important;font:700 clamp(30px,3vw,42px)/1.05 var(--serif)!important;color:var(--navy)!important;position:relative;z-index:3}
-.gentle-crops .ripeness{order:5;margin-top:28px!important;position:relative!important;z-index:3!important}
-.gentle-crops .ripeness article{background:rgba(255,255,255,.96)!important;backdrop-filter:blur(3px)}
+.gentle-crops>.wrap>h2{order:2;max-width:980px!important}
+.gentle-crops>.wrap>.lead{order:3;max-width:880px!important}
+.gentle-crops .crop-bridge{order:4;margin:28px 0 0!important;font:700 clamp(30px,3vw,42px)/1.05 var(--serif)!important;color:var(--navy)!important;position:relative;z-index:4;max-width:760px}
+.gentle-crops .ripeness{order:5;margin-top:26px!important;position:relative!important;z-index:4!important;max-width:100%!important}
+.gentle-crops .ripeness article{background:rgba(255,255,255,.96)!important;backdrop-filter:blur(2px)}
 .gentle-crops .crop-gallery{display:block!important;position:absolute!important;inset:0!important;margin:0!important;pointer-events:none!important;z-index:2!important}
-.gentle-crops .crop-tile{position:absolute!important;min-height:0!important;width:auto!important;height:auto!important;border:0!important;border-radius:0!important;overflow:visible!important;background:transparent!important;box-shadow:none!important}
+.gentle-crops .crop-tile{position:absolute!important;display:block!important;min-height:0!important;width:auto!important;height:auto!important;border:0!important;border-radius:0!important;overflow:visible!important;background:transparent!important;box-shadow:none!important}
 .gentle-crops .crop-tile:after{display:none!important}
 .gentle-crops .crop-tile b{display:none!important}
-.gentle-crops .crop-tile img{position:static!important;display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;filter:saturate(1.08) contrast(1.04)}
-/* Blueberry — top right */
-.gentle-crops .crop-tile:nth-child(1){display:block!important;width:175px!important;right:-8px!important;top:72px!important;left:auto!important;bottom:auto!important}
-/* Raspberry — bottom left */
-.gentle-crops .crop-tile:nth-child(2){display:block!important;width:215px!important;left:-38px!important;bottom:-18px!important;right:auto!important;top:auto!important}
-/* Blackberry hidden: keep the composition light */
-.gentle-crops .crop-tile:nth-child(3){display:none!important}
-/* Blackcurrant — bottom right */
-.gentle-crops .crop-tile:nth-child(4){display:block!important;width:190px!important;right:-22px!important;bottom:-16px!important;left:auto!important;top:auto!important}
+.gentle-crops .crop-tile img{position:static!important;display:block!important;width:100%!important;height:auto!important;object-fit:contain!important;filter:none!important}
+/* 1 Raspberry: upper-right */
+.gentle-crops .crop-tile:nth-child(1){width:138px!important;right:38px!important;top:38px!important;left:auto!important;bottom:auto!important}
+/* 2 Blueberry: center-right, between intro and cards */
+.gentle-crops .crop-tile:nth-child(2){width:118px!important;right:238px!important;top:205px!important;left:auto!important;bottom:auto!important}
+/* 3 Blackcurrant: right-middle */
+.gentle-crops .crop-tile:nth-child(3){width:150px!important;right:38px!important;top:195px!important;left:auto!important;bottom:auto!important}
+/* 4 Blackberry: lower-right */
+.gentle-crops .crop-tile:nth-child(4){width:124px!important;right:28px!important;bottom:8px!important;left:auto!important;top:auto!important}
+@media(max-width:1180px){
+  .gentle-crops>.wrap{min-height:600px}
+  .gentle-crops .crop-tile:nth-child(1){width:118px!important;right:10px!important;top:48px!important}
+  .gentle-crops .crop-tile:nth-child(2){width:100px!important;right:175px!important;top:225px!important}
+  .gentle-crops .crop-tile:nth-child(3){width:128px!important;right:8px!important;top:218px!important}
+  .gentle-crops .crop-tile:nth-child(4){width:108px!important;right:8px!important;bottom:8px!important}
+}
 @media(max-width:900px){
-  .gentle-crops{padding:56px 0 72px!important}
-  .gentle-crops .crop-tile:nth-child(1){width:110px!important;right:-38px!important;top:135px!important}
-  .gentle-crops .crop-tile:nth-child(2){width:140px!important;left:-48px!important;bottom:-5px!important}
-  .gentle-crops .crop-tile:nth-child(4){width:125px!important;right:-42px!important;bottom:10px!important}
-  .gentle-crops .ripeness article{background:rgba(255,255,255,.98)!important}
+  .gentle-crops{padding:52px 0 64px!important}
+  .gentle-crops>.wrap{min-height:0}
+  .gentle-crops .crop-gallery{position:relative!important;inset:auto!important;order:5!important;display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:12px!important;margin:22px 0 8px!important;z-index:2!important}
+  .gentle-crops .crop-tile,.gentle-crops .crop-tile:nth-child(n){position:relative!important;inset:auto!important;width:auto!important;height:110px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+  .gentle-crops .crop-tile img{max-width:100%!important;max-height:100%!important;width:auto!important;height:auto!important}
+  .gentle-crops .ripeness{order:6!important;margin-top:18px!important}
+}
+@media(max-width:560px){
+  .gentle-crops .crop-gallery{grid-template-columns:repeat(2,1fr)!important}
+  .gentle-crops .crop-tile,.gentle-crops .crop-tile:nth-child(n){height:96px!important}
 }
 '''
 
-for p in paths:
+def gallery_html(lang):
+    raspberry, blueberry, currant, blackberry = LABELS[lang]
+    return (
+        '<div class="crop-gallery">'
+        f'<article class="crop-tile"><img src="{IMAGES["raspberry"]}" alt="{raspberry}"/></article>'
+        f'<article class="crop-tile"><img src="{IMAGES["blueberry"]}" alt="{blueberry}"/></article>'
+        f'<article class="crop-tile"><img src="{IMAGES["currant"]}" alt="{currant}"/></article>'
+        f'<article class="crop-tile"><img src="{IMAGES["blackberry"]}" alt="{blackberry}"/></article>'
+        '</div>'
+    )
+
+for lang, p in paths.items():
     if not p.exists():
         raise SystemExit(f'Missing berry page: {p}')
     s = p.read_text(encoding='utf-8')
@@ -64,12 +101,19 @@ for p in paths:
     insert_at = gentle.end()
     s = s[:insert_at] + models_html + s[insert_at:]
 
-    # Apply the approved floating-berry composition to the existing crop images.
-    if 'Floating berry composition for gentle harvesting module' not in s:
-        s = s.replace('</style>', layout_css + '</style>', 1)
+    # Replace the previous crop photos with the four exact removebg PNGs from this repository.
+    s, count = gallery_re.subn(gallery_html(lang), s, count=1)
+    if count != 1:
+        raise SystemExit(f'Crop gallery not found in {p}')
+
+    # This style is injected last and intentionally overrides earlier experimental crop layouts.
+    s = s.replace('</style>', layout_css + '</style>', 1)
 
     if s.find('gentle-crops') > s.find('id="models"'):
         raise SystemExit(f'Models section order validation failed in {p}')
+    for url in IMAGES.values():
+        if url not in s:
+            raise SystemExit(f'Expected repository berry image missing in {p}')
 
     p.write_text(s, encoding='utf-8')
-    print(f'Applied floating berry composition and model order: {p}')
+    print(f'Applied exact repository berry PNG composition: {p}')
