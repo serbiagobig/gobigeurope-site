@@ -127,6 +127,7 @@ jobs:
           PY
           python scripts/localize_berry.py dist
           python scripts/fix_berry_locales.py dist
+          python scripts/reorder_berry_models.py dist
 
       - name: Validate berry routes and language links
         run: |
@@ -173,7 +174,7 @@ jobs:
               raise SystemExit('EN berry language links are incorrect')
           if '../en/berry-harvesting.html' not in cz or '../berry-harvesting.html' not in cz:
               raise SystemExit('CZ berry language links are incorrect')
-          print('PASS: berry harvesting case available in RU / EN / CZ with improved economics card readability')
+          print('PASS: berry harvesting case available in RU / EN / CZ with models moved directly after gentle crop module')
           PY
 
       - name: Upload final Pages artifact
