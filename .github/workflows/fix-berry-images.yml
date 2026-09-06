@@ -70,6 +70,36 @@ jobs:
               },
           }
 
+          nav_copy = {
+              'ru': [
+                  ('benefits', 'Эффективность'),
+                  ('technology', 'Технология'),
+                  ('gentle', 'Бережный принцип'),
+                  ('models', 'Модели'),
+                  ('plantation', 'Подготовка плантации'),
+                  ('implementation', 'Система внедрения'),
+                  ('contact', 'Консультация'),
+              ],
+              'en': [
+                  ('benefits', 'Efficiency'),
+                  ('technology', 'Technology'),
+                  ('gentle', 'Gentle harvesting'),
+                  ('models', 'Models'),
+                  ('plantation', 'Plantation readiness'),
+                  ('implementation', 'Implementation'),
+                  ('contact', 'Consultation'),
+              ],
+              'cz': [
+                  ('benefits', 'Efektivita'),
+                  ('technology', 'Technologie'),
+                  ('gentle', 'Šetrná sklizeň'),
+                  ('models', 'Modely'),
+                  ('plantation', 'Příprava plantáže'),
+                  ('implementation', 'Zavedení'),
+                  ('contact', 'Konzultace'),
+              ],
+          }
+
           css = r'''
           /* Final visibility override for floating berry PNGs */
           .gentle-crops .crop-gallery{overflow:visible!important}
@@ -97,6 +127,7 @@ jobs:
               re.S | re.I
           )
           fit_re = re.compile(r'<section class="section[^\"]*"[^>]*id="fit"[^>]*>.*?</section>', re.S | re.I)
+          nav_re = re.compile(r'<nav class="subnav"><div class="wrap">.*?</div></nav>', re.S)
 
           for lang, p in pages.items():
               if not p.exists():
@@ -111,7 +142,7 @@ jobs:
                   for i, label in enumerate(c['items'], 1)
               )
               replacement = (
-                  '<section class="section implementation-system">'
+                  '<section class="section implementation-system" id="implementation">'
                   '<div class="wrap">'
                   f'<div class="eyebrow">{c["eyebrow"]}</div>'
                   f'<h2>{c["title"]}</h2>'
@@ -135,17 +166,27 @@ jobs:
               if removed_fit != 1:
                   raise SystemExit(f'Farm suitability module not found in {p}')
 
+              s2 = s2.replace('<section class="section soft gentle-crops">', '<section class="section soft gentle-crops" id="gentle">', 1)
+              nav_html = '<nav class="subnav"><div class="wrap">' + ''.join(
+                  f'<a href="#{anchor}">{label}</a>' for anchor, label in nav_copy[lang]
+              ) + '</div></nav>'
+              s2, nav_count = nav_re.subn(nav_html, s2, count=1)
+              if nav_count != 1:
+                  raise SystemExit(f'Subnavigation not found in {p}')
+
               s2 = s2.replace('</style>', css + '</style>', 1)
               if 'class="solution"' in s2:
                   raise SystemExit(f'Legacy solution grid remains in {p}')
               if lang == 'ru' and 'Поставщик сопровождает внедрение технологии' not in s2:
                   raise SystemExit('RU supplier wording missing')
-              if 'id="fit"' in s2:
-                  raise SystemExit(f'Farm suitability module remains in {p}')
+              if 'id="fit"' in s2 or 'href="#fit"' in s2:
+                  raise SystemExit(f'Old farm suitability navigation remains in {p}')
+              if 'id="gentle"' not in s2 or 'id="implementation"' not in s2:
+                  raise SystemExit(f'New subnavigation anchors missing in {p}')
               if any(marker in s2 for marker in ('НОВЫЕ ПРОЕКТЫ','NEW PROJECTS','NOVÉ PROJEKTY','Планируете новую ягодную плантацию?')):
                   raise SystemExit(f'New plantation project module remains in {p}')
               p.write_text(s2, encoding='utf-8')
-              print(f'Rebuilt implementation system and removed optional modules: {p}')
+              print(f'Rebuilt implementation system and updated subnavigation: {p}')
           PY
 
       - name: Upload patched Pages artifact
