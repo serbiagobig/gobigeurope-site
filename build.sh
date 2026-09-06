@@ -18,3 +18,4 @@ python scripts/fix_agro_tag_links.py
 python scripts/force_agro_direct_link.py
 python scripts/restore_berry_final.py
 python scripts/mobile_guardrails.py
+python scripts/restore_partner_ecosystem.py
