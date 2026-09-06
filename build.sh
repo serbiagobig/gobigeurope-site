@@ -6,6 +6,7 @@ cp projects.html dist/projects.html
 cp berry-harvesting.html dist/berry-harvesting.html
 cp berry-harvesting-web.mp4 dist/berry-harvesting-web.mp4
 cp blog.html dist/blog.html
+cp assets/agro-tag-contact.html dist/agro-tag-contact.html
 if [ -f assets/blog-data.json ]; then
   cp assets/blog-data.json dist/assets/blog-data.json
 fi
