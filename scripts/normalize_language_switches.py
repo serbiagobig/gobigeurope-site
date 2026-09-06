@@ -15,24 +15,42 @@ def switch(filename,locale,kind='span'):
     else:
         links=[('EN',f'../en/{filename}',False),('CZ',filename,True),('RU',f'../{filename}',False)]
     if kind=='nav':
-        return '<nav class="langs">'+''.join(f'<a href="{href}"'+(' class="active"' if active else '')+f'>{label}</a>' for label,href,active in links)+'</nav>'
+        return '<nav class="langs">' + ''.join(
+            f'<a href="{href}"'+(' class="active" aria-current="page"' if active else '')+f'>{label}</a>'
+            for label,href,active in links
+        ) + '</nav>'
     parts=[]
     for i,(label,href,active) in enumerate(links):
-        if i: parts.append('<span class="lang-sep">/</span>')
+        if i: parts.append(' <span class="lang-sep">/</span> ')
         parts.append(f'<a href="{href}"'+(' class="current" aria-current="page"' if active else '')+f'>{label}</a>')
     return '<span class="lang-switch">'+''.join(parts)+'</span>'
+
+# The switch contains nested separator spans, so match through the third language anchor,
+# not the first closing </span>.
+SWITCH_RE=re.compile(
+    r'<span class="lang-switch"[^>]*>.*?<a\b[^>]*>\s*RU\s*</a>\s*</span>',
+    re.S|re.I,
+)
 
 for locale,folder in [('ru',ROOT),('en',ROOT/'en'),('cz',ROOT/'cz')]:
     for filename in PAGES:
         p=folder/filename
-        if not p.exists(): continue
+        if not p.exists():
+            continue
         s=p.read_text(encoding='utf-8')
-        # Main GO BIG headers.
+        if locale=='cz':
+            s=re.sub(r'<html\b([^>]*?)\blang=["\'](?:ru|cz|cs)["\']',r'<html\1lang="cs"',s,count=1,flags=re.I)
+        elif locale=='en':
+            s=re.sub(r'<html\b([^>]*?)\blang=["\'](?:ru|en)["\']',r'<html\1lang="en"',s,count=1,flags=re.I)
+
         if 'class="lang-switch"' in s:
-            s=re.sub(r'<span class="lang-switch"[^>]*>.*?</span>',switch(filename,locale,'span'),s,count=1,flags=re.S)
-        # AGRO TAG berry header.
+            s,n=SWITCH_RE.subn(switch(filename,locale,'span'),s,count=1)
+            if n!=1:
+                raise SystemExit(f'Could not normalize language switch in {p}')
         if 'class="langs"' in s:
-            s=re.sub(r'<nav class="langs">.*?</nav>',switch(filename,locale,'nav'),s,count=1,flags=re.S)
+            s,n=re.subn(r'<nav class="langs">.*?</nav>',switch(filename,locale,'nav'),s,count=1,flags=re.S)
+            if n!=1:
+                raise SystemExit(f'Could not normalize berry language switch in {p}')
         p.write_text(s,encoding='utf-8')
 
-print('Normalized language order and routing to EN / CZ / RU')
+print('Normalized language order/routing to EN / CZ / RU and standardized Czech lang=cs')
