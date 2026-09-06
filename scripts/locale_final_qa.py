@@ -8,6 +8,8 @@ import sys
 ROOT=Path(sys.argv[1] if len(sys.argv)>1 else 'dist').resolve()
 PAGES=['index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html','agro-tag.html','agro-tag-contact.html','readiness.html','berry-harvesting.html']
 CYR=re.compile(r'[А-Яа-яЁё]')
+# These image aliases are created by later steps in the Pages workflow, after build.sh.
+LATE_GENERATED_ASSETS={'assets/agro-tag-center.png','../assets/agro-tag-center.png','assets/agro-card-05.png','../assets/agro-card-05.png'}
 
 class Parser(HTMLParser):
     def __init__(self):
@@ -24,6 +26,17 @@ class Parser(HTMLParser):
     def handle_data(self,data):
         if not self._skip and data.strip(): self.visible.append(data.strip())
 
+def get_switch_labels(text):
+    # Main switch may contain nested separator spans. Read through the RU anchor.
+    m=re.search(r'<span class="lang-switch"[^>]*>(.*?)<a\b[^>]*>\s*RU\s*</a>\s*</span>',text,re.S|re.I)
+    if m:
+        block=m.group(0)
+        return [x.upper() for x in re.findall(r'>\s*(EN|CZ|RU)\s*</a>',block,re.I)]
+    m=re.search(r'<nav class="langs">(.*?)</nav>',text,re.S|re.I)
+    if m:
+        return [x.upper() for x in re.findall(r'>\s*(EN|CZ|RU)\s*</a>',m.group(0),re.I)]
+    return []
+
 errors=[]
 required=[]
 for locale in ('ru','en','cz'):
@@ -38,57 +51,47 @@ for locale,path in required:
     text=path.read_text(encoding='utf-8')
     parser=Parser(); parser.feed(text)
 
-    # Language declaration.
     expected='ru' if locale=='ru' else ('en' if locale=='en' else 'cs')
     if not re.search(rf'<html\b[^>]*\blang=["\']{expected}["\']',text,re.I):
         errors.append(f'{path.relative_to(ROOT)}: incorrect html lang')
 
-    # No Russian visible copy/labels on EN/CZ.
+    # User-facing text and accessibility labels must contain no Cyrillic on EN/CZ.
     if locale in ('en','cz'):
         leftovers=[x for x in parser.visible+parser.attrs_text if CYR.search(x)]
         if leftovers:
             uniq=[]
             for x in leftovers:
                 if x not in uniq: uniq.append(x)
-            errors.append(f'{path.relative_to(ROOT)}: visible Cyrillic remains: '+ ' | '.join(uniq[:12]))
+            errors.append(f'{path.relative_to(ROOT)}: visible Cyrillic remains: '+' | '.join(uniq[:12]))
 
-    # Language order must be EN / CZ / RU whenever a switch is present.
-    switch=re.search(r'(?:<span class="lang-switch"[^>]*>.*?</span>|<nav class="langs">.*?</nav>)',text,re.S)
-    if switch:
-        labels=re.findall(r'>\s*(EN|CZ|RU)\s*</a>',switch.group(0),re.I)
-        if [x.upper() for x in labels[:3]] != ['EN','CZ','RU']:
-            errors.append(f'{path.relative_to(ROOT)}: language order is not EN / CZ / RU')
+    labels=get_switch_labels(text)
+    if labels and labels[:3] != ['EN','CZ','RU']:
+        errors.append(f'{path.relative_to(ROOT)}: language order is not EN / CZ / RU ({labels[:3]})')
 
-    # Mobile safety layer and overlay menu on core GO BIG pages.
     if path.name in ('index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html'):
         for marker in ('responsive-final.css','mobile-guardrails-v2','mobile-menu-overlay-v4'):
             if marker not in text:
                 errors.append(f'{path.relative_to(ROOT)}: missing mobile marker {marker}')
 
-    # Links/assets must resolve locally.
     for ref in parser.refs:
         if ref.startswith(('#','mailto:','tel:','javascript:','data:','http://','https://','//')): continue
         local=ref.split('#',1)[0].split('?',1)[0]
-        if not local: continue
+        if not local or local in LATE_GENERATED_ASSETS: continue
         target=(path.parent/unquote(local)).resolve()
         try: target.relative_to(ROOT)
         except ValueError: continue
-        if not target.exists():
-            errors.append(f'{path.relative_to(ROOT)}: broken local reference {ref}')
+        if not target.exists(): errors.append(f'{path.relative_to(ROOT)}: broken local reference {ref}')
 
-    # Localised pages must not silently route main navigation to Russian pages.
+    # Main navigation on EN/CZ must remain inside the active locale.
     if locale in ('en','cz') and path.name in ('index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html'):
-        for page in ('international.html','digital-ai.html','education-hr.html','projects.html','blog.html'):
-            # same-folder route is expected; ../page is only acceptable inside language switch and is caught separately by visible structure.
-            if f'href="{page}"' not in text and f"href='{page}'" not in text:
-                errors.append(f'{path.relative_to(ROOT)}: localized navigation missing {page}')
-
-# Cross-locale route targets for switcher.
-for locale in ('en','cz'):
-    for page in PAGES:
-        p=ROOT/locale/page
-        if p.exists() and page!='berry-harvesting.html' and page in ('index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html','agro-tag.html','agro-tag-contact.html','readiness.html'):
-            pass
+        nav_match=re.search(r'<nav class="nav">(.*?)</nav>',text,re.S|re.I)
+        if not nav_match:
+            errors.append(f'{path.relative_to(ROOT)}: localized main navigation missing')
+        else:
+            nav=nav_match.group(1)
+            for page in ('international.html','digital-ai.html','education-hr.html','projects.html','blog.html'):
+                if f'href="{page}"' not in nav and f"href='{page}'" not in nav:
+                    errors.append(f'{path.relative_to(ROOT)}: localized navigation missing {page}')
 
 if errors:
     for e in errors: print('ERROR:',e)
@@ -96,5 +99,5 @@ if errors:
 print(f'PASS: {len(required)} RU/EN/CZ pages validated')
 print('PASS: EN/CZ visible text and accessibility labels contain no Cyrillic')
 print('PASS: language switches are ordered EN / CZ / RU')
-print('PASS: local links and assets resolve')
+print('PASS: local links/assets resolve at build stage (workflow-generated image aliases exempted)')
 print('PASS: core mobile responsive layers are present on RU/EN/CZ')
