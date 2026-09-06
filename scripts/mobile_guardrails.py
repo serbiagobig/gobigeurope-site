@@ -5,6 +5,9 @@ ROOT = Path('dist')
 
 STYLE = r'''
 <style id="mobile-guardrails-v1">
+/* Mobile trigger must never be visible on desktop. */
+header.gobig-unified-header .mobile-menu-toggle{display:none!important}
+
 @media(max-width:850px){
   html,body{max-width:100%!important;overflow-x:hidden!important}
   body{min-width:0!important}
@@ -114,6 +117,13 @@ JS = r'''
       };
       nav.addEventListener('click',function(e){
         if(e.target.closest('a')){
+          nav.classList.remove('mobile-open');
+          btn.setAttribute('aria-expanded','false');
+          btn.textContent='☰';
+        }
+      });
+      window.addEventListener('resize',function(){
+        if(window.innerWidth>850){
           nav.classList.remove('mobile-open');
           btn.setAttribute('aria-expanded','false');
           btn.textContent='☰';
