@@ -8,12 +8,17 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap');
 :root{--green:#0B6B45;--navy:#0B2C63;--ink:#1F2A3D;--muted:#657283;--soft:#F3F5F7;--line:#DDE3E7;--serif:"Source Serif 4",Georgia,serif;--sans:"Manrope",Arial,sans-serif;--shadow:0 18px 42px rgba(17,29,47,.09)}
-*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans)}a{text-decoration:none;color:inherit}img{display:block;max-width:100%}.wrap{width:min(1200px,calc(100% - 48px));margin:auto}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font-family:var(--sans)}a{text-decoration:none;color:inherit}button{font:inherit}img{display:block;max-width:100%}.wrap{width:min(1200px,calc(100% - 48px));margin:auto}
 header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.97);border-bottom:1px solid rgba(11,44,99,.1);backdrop-filter:blur(10px)}.head{min-height:92px;display:flex;align-items:center;justify-content:space-between;gap:24px}.brand{display:flex;align-items:center;gap:15px}.mark{width:46px;height:58px;background:var(--green)}.brand strong{display:block;color:var(--green);font:700 29px/1 var(--serif)}.brand small{display:block;margin-top:4px;color:var(--green);font-size:11px}.nav{display:flex;gap:22px;align-items:center;font-size:14px;font-weight:700}.nav a:hover,.nav .active{color:var(--green)}
 .hero{padding:92px 0 66px;background:linear-gradient(135deg,#f7f9f8,#eef2f3)}.kicker{font-size:12px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--green)}.hero h1{margin:15px 0 0;color:var(--navy);font:700 clamp(54px,6vw,84px)/.94 var(--serif);letter-spacing:-.04em}.filters{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.chip{padding:10px 15px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:12px;font-weight:800;color:#4d5d70}
-.projects{padding:56px 0 92px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.card{position:relative;min-height:500px;overflow:hidden;border-radius:28px;background:#1d2630;box-shadow:var(--shadow);isolation:isolate}.card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}.card:hover>img{transform:scale(1.03)}.shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,27,53,.03) 18%,rgba(7,27,53,.28) 52%,rgba(7,27,53,.92) 100%)}.copy{position:absolute;z-index:2;left:24px;right:24px;bottom:25px;color:#fff}.label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#78d3a3;margin-bottom:10px}.copy h3{margin:0;color:#fff;font:700 31px/1.02 var(--serif);letter-spacing:-.03em}.copy p{margin:12px 0 0;color:rgba(255,255,255,.87);font-size:13px;line-height:1.55}.more{display:inline-flex;margin-top:18px;padding-bottom:4px;border-bottom:1px solid rgba(120,211,163,.55);color:#78d3a3;font-size:12px;font-weight:800}.source{position:absolute;z-index:2;top:20px;right:20px;padding:8px 10px;border-radius:999px;background:rgba(17,31,44,.58);backdrop-filter:blur(8px);color:#fff;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.projects{padding:56px 0 92px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.card{position:relative;min-height:500px;overflow:hidden;border-radius:28px;background:#1d2630;box-shadow:var(--shadow);isolation:isolate}.card>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}.card:hover>img{transform:scale(1.03)}.shade{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(7,27,53,.03) 18%,rgba(7,27,53,.28) 52%,rgba(7,27,53,.92) 100%)}.copy{position:absolute;z-index:2;left:24px;right:24px;bottom:25px;color:#fff}.label{font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#78d3a3;margin-bottom:10px}.copy h3{margin:0;color:#fff;font:700 31px/1.02 var(--serif);letter-spacing:-.03em}.copy p{margin:12px 0 0;color:rgba(255,255,255,.87);font-size:13px;line-height:1.55}.more{display:inline-flex;margin-top:18px;padding:0 0 4px;border:0;border-bottom:1px solid rgba(120,211,163,.55);background:none;color:#78d3a3;font-size:12px;font-weight:800;cursor:pointer}.source{position:absolute;z-index:2;top:20px;right:20px;padding:8px 10px;border-radius:999px;background:rgba(17,31,44,.58);backdrop-filter:blur(8px);color:#fff;font-size:9px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+
+/* Flip project card */
+.flip-card{overflow:visible;background:transparent;box-shadow:none;perspective:1400px;isolation:auto}.flip-card .flip-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .68s cubic-bezier(.2,.72,.2,1);border-radius:28px;box-shadow:var(--shadow)}.flip-card.is-flipped .flip-inner{transform:rotateY(180deg)}.flip-face{position:absolute;inset:0;overflow:hidden;border-radius:28px;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#1d2630}.flip-front>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .45s ease}.flip-card:not(.is-flipped):hover .flip-front>img{transform:scale(1.03)}.flip-back{transform:rotateY(180deg);display:flex;flex-direction:column;justify-content:space-between;padding:28px;background:linear-gradient(145deg,#0b2c63 0%,#10253d 56%,#0b6b45 145%);color:#fff}.flip-back .label{margin:0}.flip-back h3{margin:18px 0 0;max-width:310px;font:700 34px/1.02 var(--serif);letter-spacing:-.03em;color:#fff}.case-text{margin:22px 0 0;color:rgba(255,255,255,.9);font-size:15px;line-height:1.65}.case-status{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.16);font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#78d3a3}.flip-back .more{align-self:flex-start;color:#fff;border-bottom-color:rgba(255,255,255,.35)}
+
 footer{padding:38px 0;background:#2C3138;color:#fff}.foot{display:flex;justify-content:space-between;gap:30px}.foot small{color:rgba(255,255,255,.65)}
-@media(max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav{gap:13px;font-size:12px}}@media(max-width:700px){.wrap{width:calc(100% - 28px)}.head{padding:14px 0;align-items:flex-start;flex-direction:column}.nav{width:100%;overflow-x:auto;white-space:nowrap;padding-bottom:5px}.hero{padding:65px 0 50px}.hero h1{font-size:52px}.grid{grid-template-columns:1fr}.card{min-height:440px}.foot{flex-direction:column}}
+@media(max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nav{gap:13px;font-size:12px}}@media(max-width:700px){.wrap{width:calc(100% - 28px)}.head{padding:14px 0;align-items:flex-start;flex-direction:column}.nav{width:100%;overflow-x:auto;white-space:nowrap;padding-bottom:5px}.hero{padding:65px 0 50px}.hero h1{font-size:52px}.grid{grid-template-columns:1fr}.card{min-height:440px}.flip-back{padding:24px}.flip-back h3{font-size:31px}.case-text{font-size:14px;line-height:1.6}.foot{flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.flip-card .flip-inner{transition:none}}
 </style>
 </head>
 <body>
@@ -22,7 +27,27 @@ footer{padding:38px 0;background:#2C3138;color:#fff}.foot{display:flex;justify-c
 <section class="hero"><div class="wrap"><div class="kicker">GO BIG · проекты и кейсы</div><h1>Проекты</h1><div class="filters"><span class="chip">International</span><span class="chip">Digital & AI</span><span class="chip">Agro</span><span class="chip">Technology Transfer</span><span class="chip">Market Entry</span><span class="chip">R&D</span></div></div></section>
 <section class="projects"><div class="wrap"><div class="grid">
 <article class="card"><img src="assets/project-agriculture.png" alt="AGRO TAG"/><div class="shade"></div><span class="source">International · Digital</span><div class="copy"><div class="label">AGRO / TECHNOLOGY TRANSFER</div><h3>AGRO TAG</h3><p>Стратегия · партнёрство · трансфер технологий.</p><a class="more" href="agro-tag.html">Подробнее →</a></div></article>
-<article class="card"><img src="assets/projects-serbia.png" alt="Выход на рынок Сербии"/><div class="shade"></div><span class="source">International</span><div class="copy"><div class="label">MARKET ENTRY</div><h3>Выход на рынок Сербии</h3><p>Стратегия · локальные партнёры · переговоры.</p><a class="more" href="international.html#application">Подробнее →</a></div></article>
+
+<article class="card flip-card" id="serbia-market-card">
+  <div class="flip-inner">
+    <div class="flip-face flip-front">
+      <img src="assets/projects-serbia.png" alt="Выход на рынок Сербии"/>
+      <div class="shade"></div>
+      <span class="source">International</span>
+      <div class="copy"><div class="label">MARKET ENTRY</div><h3>Выход на рынок Сербии</h3><p>Стратегия · локальные партнёры · переговоры.</p><button class="more flip-trigger" type="button" aria-expanded="false">Подробнее →</button></div>
+    </div>
+    <div class="flip-face flip-back">
+      <div>
+        <div class="label">ENTERING THE SERBIAN MARKET</div>
+        <h3>Выход технологического стартапа на рынок Сербии</h3>
+        <p class="case-text">Вывод компании-стартапа из Узбекистана на рынок Сербии. Специализированное ПО для управления BMS-системами зданий. Проведена экспертиза решения, найден локальный партнёр. Проект масштабируется на рынки Балкан.</p>
+        <div class="case-status">Экспертиза · партнёр · масштабирование</div>
+      </div>
+      <button class="more flip-trigger" type="button" aria-expanded="true">← Назад</button>
+    </div>
+  </div>
+</article>
+
 <article class="card"><img src="assets/projects-tech.png" alt="Международная технологическая кооперация"/><div class="shade"></div><span class="source">International</span><div class="copy"><div class="label">TECH PARTNERSHIP</div><h3>Международная технологическая кооперация</h3><p>Партнёры · пилот · локализация.</p><a class="more" href="international.html#application">Подробнее →</a></div></article>
 <article class="card"><img src="assets/projects-publishing.png" alt="Международные издательские проекты"/><div class="shade"></div><span class="source">International</span><div class="copy"><div class="label">CULTURE / PUBLISHING</div><h3>Международные издательские проекты</h3><p>Партнёры · локализация · продвижение.</p><a class="more" href="international.html#application">Подробнее →</a></div></article>
 <article class="card"><img src="assets/project-plum-sum.png" alt="AGRO HOLDING"/><div class="shade"></div><span class="source">Digital & AI</span><div class="copy"><div class="label">AGRO / INDUSTRIAL PARTNERSHIP</div><h3>AGRO HOLDING</h3><p>Инфраструктура, переработка и развитие агробизнеса.</p><a class="more" href="digital-ai.html#contact">Подробнее →</a></div></article>
@@ -31,5 +56,18 @@ footer{padding:38px 0;background:#2C3138;color:#fff}.foot{display:flex;justify-c
 </div></div></section>
 </main>
 <footer><div class="wrap foot"><div><strong>GO BIG</strong><br><small>Think Global. Grow Smart.</small></div><small>Международное развитие · технологии · цифровизация</small></div></footer>
+<script>
+(function(){
+  const card=document.getElementById('serbia-market-card');
+  if(!card)return;
+  const triggers=card.querySelectorAll('.flip-trigger');
+  function setFlipped(next){
+    card.classList.toggle('is-flipped',next);
+    triggers.forEach(function(btn){btn.setAttribute('aria-expanded',next?'true':'false')});
+  }
+  triggers.forEach(function(btn){btn.addEventListener('click',function(){setFlipped(!card.classList.contains('is-flipped'))})});
+  card.addEventListener('keydown',function(e){if(e.key==='Escape')setFlipped(false)});
+})();
+</script>
 </body>
 </html>
