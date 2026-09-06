@@ -21,8 +21,8 @@ NAV_STYLE = r'''
 .flip-card .flip-back{pointer-events:none}
 .flip-card.is-flipped .flip-front{pointer-events:none}
 .flip-card.is-flipped .flip-back{pointer-events:auto}
-.agro-berry-overlay{position:absolute!important;inset:0!important;z-index:20!important;display:block!important;border-radius:inherit!important;text-indent:-9999px!important;overflow:hidden!important}
 .products .product.has-berry-link{cursor:pointer!important}
+.products .product.has-berry-link .berry-detail-link{display:inline-flex!important;margin-top:14px!important;padding-bottom:3px!important;border-bottom:1px solid rgba(11,107,69,.38)!important;color:#0B6B45!important;font-size:12px!important;font-weight:800!important;position:relative!important;z-index:3!important}
 </style>
 '''
 
@@ -92,8 +92,25 @@ RUNTIME_JS = r'''
     },true);
   }
 
+  function initBerryCard(){
+    const berry=document.querySelector('.products .product.has-berry-link');
+    if(!berry) return;
+    berry.setAttribute('role','link');
+    berry.setAttribute('tabindex','0');
+    berry.setAttribute('aria-label','Открыть страницу механизированной уборки ягод');
+    const open=function(){ window.location.href='berry-harvesting.html'; };
+    berry.addEventListener('click',function(e){
+      if(e.target.closest('a,button,input,select,textarea')) return;
+      open();
+    });
+    berry.addEventListener('keydown',function(e){
+      if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); }
+    });
+  }
+
   initMenu();
   initFlipCards();
+  initBerryCard();
 })();
 </script>
 '''
@@ -110,22 +127,31 @@ def inject_runtime(path: Path):
 
 def patch_agro(path: Path):
     s = path.read_text(encoding='utf-8')
-    if 'agro-berry-overlay' in s:
-        return
-
-    # Match product card 05 in either the compact source markup or the visual build markup.
     card_re = re.compile(
-        r'(<article class="product[^\"]*"[^>]*>(?:(?!</article>).)*?(?:class="product-num"[^>]*>05<|<span>05</span>)(?:(?!</article>).)*?)(</article>)',
+        r'<article class="product[^\"]*"[^>]*>(?:(?!</article>).)*?(?:class="product-num"[^>]*>05<|<span>05</span>)(?:(?!</article>).)*?</article>',
         re.S,
     )
     m = card_re.search(s)
     if not m:
         raise SystemExit('AGRO TAG product 05 card not found after build')
 
-    overlay = '<a class="agro-berry-overlay" href="berry-harvesting.html" aria-label="Открыть страницу оборудования для механизированной уборки ягод">Оборудование для уборки ягод</a>'
-    replacement = m.group(1) + overlay + m.group(2)
-    s = s[:m.start()] + replacement + s[m.end():]
-    s = s.replace(m.group(1).split('>',1)[0] + '>', m.group(1).split('>',1)[0] + ' has-berry-link">', 1) if False else s
+    card = m.group(0)
+    if 'has-berry-link' not in card:
+        card = card.replace('<article class="product', '<article class="product has-berry-link', 1)
+
+    if 'berry-detail-link' not in card:
+        link = '<a class="berry-detail-link" href="berry-harvesting.html">Подробнее →</a>'
+        # Put the link inside the card content, immediately before the final content wrapper closes.
+        if '<div class="product-body">' in card:
+            pos = card.rfind('</div></article>')
+            if pos != -1:
+                card = card[:pos] + link + card[pos:]
+            else:
+                card = card.replace('</article>', link + '</article>', 1)
+        else:
+            card = card.replace('</article>', link + '</article>', 1)
+
+    s = s[:m.start()] + card + s[m.end():]
     path.write_text(s, encoding='utf-8')
 
 
@@ -136,7 +162,6 @@ for page in html_files:
 agro = ROOT / 'agro-tag.html'
 if agro.exists():
     patch_agro(agro)
-    # patch_agro writes after runtime injection, so preserve runtime already present.
 
 projects = ROOT / 'projects.html'
 if projects.exists():
@@ -145,6 +170,7 @@ if projects.exists():
         raise SystemExit('Projects flip controls missing after build')
 
 berry = ROOT / 'berry-harvesting.html'
-# Berry route may be added by later workflows, so no hard failure here.
+if not berry.exists():
+    raise SystemExit('Berry harvesting page missing from final site artifact')
 
 print('Applied final site fixes to', len(html_files), 'HTML files')
