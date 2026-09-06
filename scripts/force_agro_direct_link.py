@@ -3,17 +3,11 @@ from pathlib import Path
 
 STYLE = r'''
 <style id="agro-tag-link-style-fix">
-/* AGRO TAG direct link must look exactly like the other project CTAs. */
+/* Keep only link semantics; typography comes from the page's native CTA class. */
 .project-card a.project-more,
 .projects .card a.more{
-  font:inherit!important;
-  font-size:12px!important;
-  font-weight:800!important;
-  line-height:1!important;
-  color:#78d3a3!important;
   text-decoration:none!important;
 }
-.project-card a.project-more:after{content:"→"!important;font-size:20px!important;line-height:1!important}
 </style>
 '''
 
@@ -62,4 +56,4 @@ for name in ('international.html','projects.html'):
         s=s.replace('</body>',JS+'\n</body>',1)
     p.write_text(s,encoding='utf-8')
 
-print('Forced AGRO TAG direct links with unified CTA styling')
+print('Forced AGRO TAG direct links with native CTA typography')
