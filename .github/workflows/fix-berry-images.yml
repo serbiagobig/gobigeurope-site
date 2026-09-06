@@ -1,5 +1,4 @@
 name: Fix berry image visibility
-# Republish marker after custom-domain DNS validation
 
 on:
   workflow_run:
@@ -9,150 +8,13 @@ on:
 permissions:
   contents: read
   actions: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages-berry-images-final"
-  cancel-in-progress: true
 
 jobs:
-  patch-and-deploy:
+  verify-main-publish:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - name: Download berry Pages artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: downloaded-pages
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          repository: ${{ github.repository }}
-          run-id: ${{ github.event.workflow_run.id }}
-
-      - name: Patch final berry design
+      - name: Main artifact owns berry images
         run: |
-          mkdir -p dist
-          TARFILE=$(find downloaded-pages -type f -name '*.tar' | head -n 1)
-          if [ -z "$TARFILE" ]; then
-            echo "Pages tar artifact not found"
-            exit 1
-          fi
-          tar -xf "$TARFILE" -C dist
-          python - <<'PY'
-          from pathlib import Path
-          import re
-
-          pages = {
-              'ru': Path('dist/berry-harvesting.html'),
-              'en': Path('dist/en/berry-harvesting.html'),
-              'cz': Path('dist/cz/berry-harvesting.html'),
-          }
-
-          copy = {
-              'ru': {
-                  'eyebrow': 'Система внедрения',
-                  'title': 'Не просто оборудование. Система внедрения.',
-                  'lead': 'Поставщик сопровождает внедрение технологии от первичной оценки хозяйства до запуска оборудования и последующей сервисной поддержки.',
-                  'items': ['Анализ хозяйства','Подбор технологии','Оценка участка','Поставка','Запуск','Обучение','Сервис','Запасные части'],
-              },
-              'en': {
-                  'eyebrow': 'Implementation system',
-                  'title': 'More than equipment. An implementation system.',
-                  'lead': 'The supplier supports technology implementation from the initial farm assessment through equipment commissioning and ongoing service support.',
-                  'items': ['Farm analysis','Technology selection','Site assessment','Delivery','Commissioning','Training','Service','Spare parts'],
-              },
-              'cz': {
-                  'eyebrow': 'Systém zavedení',
-                  'title': 'Více než zařízení. Systém zavedení.',
-                  'lead': 'Dodavatel provází zavedení technologie od prvotního posouzení hospodářství přes uvedení zařízení do provozu až po následnou servisní podporu.',
-                  'items': ['Analýza hospodářství','Výběr technologie','Posouzení lokality','Dodávka','Uvedení do provozu','Školení','Servis','Náhradní díly'],
-              },
-          }
-
-          nav_copy = {
-              'ru': [('benefits','Эффективность'),('technology','Технология'),('gentle','Бережный принцип'),('models','Модели'),('plantation','Подготовка плантации'),('implementation','Система внедрения'),('contact','Консультация')],
-              'en': [('benefits','Efficiency'),('technology','Technology'),('gentle','Gentle harvesting'),('models','Models'),('plantation','Plantation readiness'),('implementation','Implementation'),('contact','Consultation')],
-              'cz': [('benefits','Efektivita'),('technology','Technologie'),('gentle','Šetrná sklizeň'),('models','Modely'),('plantation','Příprava plantáže'),('implementation','Zavedení'),('contact','Konzultace')],
-          }
-
-          css = r'''
-          /* Final visibility override for floating berry PNGs */
-          .gentle-crops .crop-gallery{overflow:visible!important}
-          .gentle-crops .crop-tile{overflow:visible!important;border-radius:0!important;height:auto!important}
-          .gentle-crops .crop-tile img{position:static!important;inset:auto!important;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;object-fit:contain!important;display:block!important}
-
-          /* Implementation system aligned to the scale and rhythm of the rest of the page */
-          .implementation-system{background:#fff!important;min-height:0!important;display:block!important;padding:78px 0!important}
-          .implementation-system .wrap{width:min(1200px,calc(100% - 48px))!important}
-          .implementation-system .eyebrow{font-size:11px!important;letter-spacing:.14em!important;margin-bottom:0!important}
-          .implementation-system h2{max-width:980px!important;font-size:clamp(38px,4.4vw,60px)!important;line-height:1!important;margin-top:12px!important}
-          .implementation-system .implementation-lead{max-width:760px!important;margin:20px 0 0!important;font-size:17px!important;line-height:1.7!important;color:var(--muted)!important}
-          .implementation-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:30px}
-          .implementation-card{min-height:148px;padding:20px 20px 21px;border:1px solid #e0e7e7;border-radius:18px;background:#fbfcfc;box-shadow:0 8px 20px rgba(16,37,61,.035);display:flex;flex-direction:column;justify-content:space-between}
-          .implementation-card b{font:800 36px/1 var(--sans);color:#0b6b45;letter-spacing:-.045em}
-          .implementation-card span{display:block;margin-top:20px;font:700 clamp(19px,1.45vw,23px)/1.1 var(--serif);color:#10253d}
-          @media(max-width:1000px){.implementation-grid{grid-template-columns:repeat(2,1fr)}.implementation-card{min-height:138px}.implementation-system .wrap{width:calc(100% - 36px)!important}}
-          @media(max-width:900px){.gentle-crops .crop-tile img{width:auto!important;height:auto!important;max-width:100%!important;max-height:100%!important}}
-          @media(max-width:560px){.implementation-system{padding:56px 0!important}.implementation-grid{grid-template-columns:1fr;gap:10px;margin-top:26px}.implementation-card{min-height:108px;padding:18px}.implementation-card b{font-size:32px}.implementation-card span{margin-top:15px;font-size:20px}.implementation-system h2{font-size:clamp(38px,11vw,52px)!important}}
-          '''
-
-          section_re = re.compile(r'<section class="section soft"><div class="wrap"><div class="eyebrow">(?:AGRO TAG SOLUTION|[^<]+)</div><h2>[^<]*(?:Система внедрения|implementation system|Systém zavedení)[^<]*</h2>.*?</section>', re.S | re.I)
-          new_projects_re = re.compile(r'<section class="section[^\"]*"[^>]*>(?:(?!<section ).)*?(?:НОВЫЕ ПРОЕКТЫ|NEW PROJECTS|NOVÉ PROJEKTY|Планируете новую ягодную плантацию\?|Planning a new berry plantation\?|Plánujete novou.*?plantáž\?).*?</section>', re.S | re.I)
-          fit_re = re.compile(r'<section class="section[^\"]*"[^>]*id="fit"[^>]*>.*?</section>', re.S | re.I)
-          nav_re = re.compile(r'<nav class="subnav"><div class="wrap">.*?</div></nav>', re.S)
-
-          for lang, p in pages.items():
-              if not p.exists():
-                  raise SystemExit(f'Missing page: {p}')
-              s = p.read_text(encoding='utf-8')
-              if 'class="crop-gallery"' not in s:
-                  raise SystemExit(f'Crop gallery missing in {p}')
-
-              c = copy[lang]
-              cards = ''.join(f'<article class="implementation-card"><b>{i:02d}</b><span>{label}</span></article>' for i, label in enumerate(c['items'], 1))
-              replacement = '<section class="section implementation-system" id="implementation"><div class="wrap">' + f'<div class="eyebrow">{c["eyebrow"]}</div><h2>{c["title"]}</h2><p class="implementation-lead">{c["lead"]}</p><div class="implementation-grid">{cards}</div></div></section>'
-
-              s2, count = section_re.subn(replacement, s, count=1)
-              if count != 1:
-                  legacy = re.compile(r'<section class="section soft"><div class="wrap">(?:(?!</section>).)*?<div class="solution">.*?</section>', re.S)
-                  s2, count = legacy.subn(replacement, s, count=1)
-              if count != 1:
-                  raise SystemExit(f'Implementation solution section not found in {p}')
-
-              s2, removed = new_projects_re.subn('', s2, count=1)
-              if removed != 1:
-                  raise SystemExit(f'New plantation project module not found in {p}')
-
-              s2, removed_fit = fit_re.subn('', s2, count=1)
-              if removed_fit != 1:
-                  raise SystemExit(f'Farm suitability module not found in {p}')
-
-              s2 = s2.replace('<section class="section soft gentle-crops">', '<section class="section soft gentle-crops" id="gentle">', 1)
-              nav_html = '<nav class="subnav"><div class="wrap">' + ''.join(f'<a href="#{anchor}">{label}</a>' for anchor, label in nav_copy[lang]) + '</div></nav>'
-              s2, nav_count = nav_re.subn(nav_html, s2, count=1)
-              if nav_count != 1:
-                  raise SystemExit(f'Subnavigation not found in {p}')
-
-              s2 = s2.replace('</style>', css + '</style>', 1)
-              if 'class="solution"' in s2:
-                  raise SystemExit(f'Legacy solution grid remains in {p}')
-              if lang == 'ru' and 'Поставщик сопровождает внедрение технологии' not in s2:
-                  raise SystemExit('RU supplier wording missing')
-              if 'id="fit"' in s2 or 'href="#fit"' in s2:
-                  raise SystemExit(f'Old farm suitability navigation remains in {p}')
-              if 'id="gentle"' not in s2 or 'id="implementation"' not in s2:
-                  raise SystemExit(f'New subnavigation anchors missing in {p}')
-              if any(marker in s2 for marker in ('НОВЫЕ ПРОЕКТЫ','NEW PROJECTS','NOVÉ PROJEKTY','Планируете новую ягодную плантацию?')):
-                  raise SystemExit(f'New plantation project module remains in {p}')
-              p.write_text(s2, encoding='utf-8')
-              print(f'Rebalanced implementation system and updated subnavigation: {p}')
-          PY
-
-      - name: Upload patched Pages artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
-      - name: Deploy patched site
-        uses: actions/deploy-pages@v4
+          echo "Berry images, design and RU/EN/CZ routes are already part of the validated main Pages artifact."
+          echo "No secondary Pages deployment is performed."
