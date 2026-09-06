@@ -24,6 +24,7 @@ python scripts/align_home_stats.py
 python scripts/fix_mobile_menu_runtime.py
 python scripts/mobile_menu_overlay.py
 python scripts/fix_partner_ecosystem_mobile.py
+python scripts/final_agro_publish_fixes.py
 
 # Generate EN/CZ only after the final RU structure is complete, so all three languages
 # share the same current layout, links and mobile behaviour.
