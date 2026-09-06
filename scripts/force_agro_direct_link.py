@@ -1,6 +1,22 @@
 #!/usr/bin/env python3
 from pathlib import Path
 
+STYLE = r'''
+<style id="agro-tag-link-style-fix">
+/* AGRO TAG direct link must look exactly like the other project CTAs. */
+.project-card a.project-more,
+.projects .card a.more{
+  font:inherit!important;
+  font-size:12px!important;
+  font-weight:800!important;
+  line-height:1!important;
+  color:#78d3a3!important;
+  text-decoration:none!important;
+}
+.project-card a.project-more:after{content:"→"!important;font-size:20px!important;line-height:1!important}
+</style>
+'''
+
 JS = r'''
 <script id="force-agro-tag-direct-link">
 (function(){
@@ -13,13 +29,13 @@ JS = r'''
       if(existing){
         existing.setAttribute('href','agro-tag.html');
         existing.classList.remove('flip-more');
-        existing.textContent='Подробнее →';
+        existing.textContent='Подробнее';
       }
       if(btn){
         const a=document.createElement('a');
         a.href='agro-tag.html';
         a.className=btn.classList.contains('project-more')?'project-more':'more';
-        a.textContent='Подробнее →';
+        a.textContent='Подробнее';
         btn.replaceWith(a);
       }
       card.classList.remove('is-flipped');
@@ -36,10 +52,14 @@ for name in ('international.html','projects.html'):
     if not p.exists():
         raise SystemExit(f'Missing {name}')
     s=p.read_text(encoding='utf-8')
+    if 'agro-tag-link-style-fix' not in s:
+        if '</head>' not in s:
+            raise SystemExit(f'No </head> in {name}')
+        s=s.replace('</head>',STYLE+'\n</head>',1)
     if 'force-agro-tag-direct-link' not in s:
         if '</body>' not in s:
             raise SystemExit(f'No </body> in {name}')
         s=s.replace('</body>',JS+'\n</body>',1)
     p.write_text(s,encoding='utf-8')
 
-print('Forced AGRO TAG Подробнее direct links after all runtime card transforms')
+print('Forced AGRO TAG direct links with unified CTA styling')
