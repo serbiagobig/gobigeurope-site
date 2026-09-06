@@ -23,6 +23,25 @@ NAV_STYLE = r'''
 .flip-card.is-flipped .flip-back{pointer-events:auto}
 .products .product.has-berry-link{cursor:pointer!important}
 .products .product.has-berry-link .berry-detail-link{display:inline-flex!important;margin-top:14px!important;padding-bottom:3px!important;border-bottom:1px solid rgba(11,107,69,.38)!important;color:#0B6B45!important;font-size:12px!important;font-weight:800!important;position:relative!important;z-index:3!important}
+
+/* Homepage project cards: restore the approved flip-card behaviour. */
+.project-card.home-project-flip{position:relative!important;overflow:visible!important;background:transparent!important;perspective:1400px!important;isolation:auto!important}
+.project-card.home-project-flip .home-project-inner{position:absolute!important;inset:0!important;border-radius:inherit!important;transform-style:preserve-3d!important;transition:transform .68s cubic-bezier(.2,.72,.2,1)!important;box-shadow:0 18px 42px rgba(17,29,47,.10)!important}
+.project-card.home-project-flip.is-flipped .home-project-inner{transform:rotateY(180deg)!important}
+.project-card.home-project-flip .home-project-face{position:absolute!important;inset:0!important;overflow:hidden!important;border-radius:inherit!important;backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important;background:#1d2630!important}
+.project-card.home-project-flip .home-project-front>img{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;z-index:0!important}
+.project-card.home-project-flip .home-project-back{transform:rotateY(180deg)!important;display:flex!important;flex-direction:column!important;justify-content:space-between!important;padding:26px!important;background:linear-gradient(145deg,#0b2c63 0%,#10253d 58%,#0b6b45 145%)!important;color:#fff!important}
+.project-card.home-project-flip .home-project-back .home-back-kicker{font-size:10px!important;font-weight:800!important;letter-spacing:.12em!important;text-transform:uppercase!important;color:#78d3a3!important}
+.project-card.home-project-flip .home-project-back h3{margin:18px 0 0!important;color:#fff!important;font-family:var(--font-heading,Georgia,serif)!important;font-size:clamp(25px,1.85vw,32px)!important;line-height:1.03!important;letter-spacing:-.025em!important}
+.project-card.home-project-flip .home-project-back p{margin:20px 0 0!important;color:rgba(255,255,255,.90)!important;font-size:13px!important;line-height:1.62!important}
+.project-card.home-project-flip .home-project-status{margin-top:20px!important;padding-top:16px!important;border-top:1px solid rgba(255,255,255,.16)!important;color:#78d3a3!important;font-size:10px!important;font-weight:800!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+.project-card.home-project-flip button.project-more{border-left:0!important;border-right:0!important;border-top:0!important;background:none!important;cursor:pointer!important;font:inherit!important}
+.project-card.home-project-flip .home-back{align-self:flex-start!important;margin-top:18px!important;padding:0 0 5px!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.38)!important;background:none!important;color:#fff!important;font-size:12px!important;font-weight:800!important;cursor:pointer!important}
+.project-card.home-project-flip .home-project-front{pointer-events:auto!important}
+.project-card.home-project-flip .home-project-back{pointer-events:none!important}
+.project-card.home-project-flip.is-flipped .home-project-front{pointer-events:none!important}
+.project-card.home-project-flip.is-flipped .home-project-back{pointer-events:auto!important}
+@media(prefers-reduced-motion:reduce){.project-card.home-project-flip .home-project-inner{transition:none!important}}
 </style>
 '''
 
@@ -64,6 +83,55 @@ RUNTIME_JS = r'''
           btn.textContent='☰';
         }
       });
+    });
+  }
+
+  function homeFront(image,alt,type,no,title,teaser){
+    return '<div class="home-project-face home-project-front flip-front">'+
+      '<img src="'+image+'" alt="'+alt+'"/>'+ 
+      '<div class="project-shade"></div>'+ 
+      '<div class="project-top"><span class="project-type">'+type+'</span><span class="project-no">'+no+'</span></div>'+ 
+      '<div class="project-copy"><h3>'+title+'</h3><p>'+teaser+'</p><button class="project-more flip-more" type="button" aria-expanded="false">Подробнее</button></div>'+ 
+      '</div>';
+  }
+
+  function homeBack(kicker,title,text,status){
+    return '<div class="home-project-face home-project-back flip-back"><div>'+ 
+      '<div class="home-back-kicker">'+kicker+'</div><h3>'+title+'</h3><p>'+text+'</p><div class="home-project-status">'+status+'</div>'+ 
+      '</div><button class="home-back flip-back-btn" type="button">← Назад</button></div>';
+  }
+
+  function initHomeProjectCards(){
+    const cards=Array.from(document.querySelectorAll('.project-card'));
+    if(cards.length<4) return;
+    const defs=[
+      {
+        index:1,
+        image:'assets/projects-serbia.png', alt:'Выход на рынок Сербии', type:'MARKET ENTRY', no:'02', title:'Выход на рынок Сербии', teaser:'Стратегия · локальные партнёры · переговоры',
+        kicker:'ENTERING THE SERBIAN MARKET', backTitle:'Выход технологического стартапа на рынок Сербии',
+        text:'Вывод компании-стартапа из Узбекистана на рынок Сербии. Специализированное ПО для управления BMS-системами зданий. Проведена экспертиза решения, найден локальный партнёр. Проект масштабируется на рынки Балкан.',
+        status:'Экспертиза · партнёр · масштабирование'
+      },
+      {
+        index:2,
+        image:'assets/projects-tech.png', alt:'Открытая лаборатория', type:'RESEARCH INFRASTRUCTURE', no:'03', title:'Открытая лаборатория', teaser:'Наука · инфраструктура · удалённый доступ',
+        kicker:'OPEN LABORATORY', backTitle:'Удалённый доступ к исследовательской инфраструктуре',
+        text:'Поиск инвестора для проекта организации удалённого доступа к лабораторному оборудованию исследовательских организаций. Цель проекта — расширить возможности европейских учёных в проведении научных исследований.',
+        status:'Инвестиции · наука · инфраструктура · доступ'
+      },
+      {
+        index:3,
+        image:'assets/projects-publishing.png', alt:'Международные издательские проекты', type:'CULTURE / PUBLISHING', no:'04', title:'Международные издательские проекты', teaser:'Партнёры · локализация · продвижение',
+        kicker:'INTERNATIONAL PUBLISHING PROJECT', backTitle:'Международный книгоиздательский проект',
+        text:'Организация международного издательского проекта по запросу сербского издательства. Международная команда экспертов и авторов готовит исторические книги для сербских читателей.',
+        status:'Эксперты · авторы · локализация · издание'
+      }
+    ];
+    defs.forEach(function(d){
+      const card=cards[d.index];
+      if(!card) return;
+      card.classList.add('flip-card','home-project-flip');
+      card.innerHTML='<div class="home-project-inner">'+homeFront(d.image,d.alt,d.type,d.no,d.title,d.teaser)+homeBack(d.kicker,d.backTitle,d.text,d.status)+'</div>';
     });
   }
 
@@ -109,6 +177,7 @@ RUNTIME_JS = r'''
   }
 
   initMenu();
+  initHomeProjectCards();
   initFlipCards();
   initBerryCard();
 })();
@@ -141,7 +210,6 @@ def patch_agro(path: Path):
 
     if 'berry-detail-link' not in card:
         link = '<a class="berry-detail-link" href="berry-harvesting.html">Подробнее →</a>'
-        # Put the link inside the card content, immediately before the final content wrapper closes.
         if '<div class="product-body">' in card:
             pos = card.rfind('</div></article>')
             if pos != -1:
@@ -166,8 +234,19 @@ if agro.exists():
 projects = ROOT / 'projects.html'
 if projects.exists():
     s = projects.read_text(encoding='utf-8')
-    if 'flip-back-btn' not in s or 'flip-more' not in s:
-        raise SystemExit('Projects flip controls missing after build')
+    required_projects = [
+        'Открытая лаборатория',
+        'Международные издательские проекты',
+        'Applied Research',
+        'Banking Transformation',
+        'Оптимизация работы ИИ-агентов',
+        'Цифровая трансформация банков Казахстана',
+        'flip-back-btn',
+        'flip-more',
+    ]
+    missing = [marker for marker in required_projects if marker not in s]
+    if missing:
+        raise SystemExit('Latest Projects page was not published; missing markers: ' + ', '.join(missing))
 
 berry = ROOT / 'berry-harvesting.html'
 if not berry.exists():
