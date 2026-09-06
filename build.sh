@@ -4,6 +4,7 @@ set -eu
 sh build-base.sh
 cp projects.html dist/projects.html
 cp berry-harvesting.html dist/berry-harvesting.html
+cp berry-harvesting-web.mp4 dist/berry-harvesting-web.mp4
 cp blog.html dist/blog.html
 if [ -f assets/blog-data.json ]; then
   cp assets/blog-data.json dist/assets/blog-data.json
@@ -15,3 +16,4 @@ python scripts/stabilize_projects_hub.py
 python scripts/normalize_main_header.py
 python scripts/fix_agro_tag_links.py
 python scripts/force_agro_direct_link.py
+python scripts/restore_berry_final.py
