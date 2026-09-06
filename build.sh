@@ -21,3 +21,4 @@ python scripts/mobile_guardrails.py
 python scripts/restore_partner_ecosystem.py
 python scripts/align_home_stats.py
 python scripts/fix_mobile_menu_runtime.py
+python scripts/mobile_menu_overlay.py
