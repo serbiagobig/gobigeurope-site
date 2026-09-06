@@ -13,8 +13,8 @@ paths = {
 gentle_re = re.compile(r'<section class="section soft gentle-crops">.*?</section>', re.S)
 models_re = re.compile(r'<section class="section(?: dark)?(?: models-showcase)?" id="models">.*?</section>', re.S)
 gallery_re = re.compile(r'<div class="crop-gallery">.*?</div>', re.S)
-preassessment_re = re.compile(r'<section class="section[^"]*"[^>]*>(?:(?!<section ).)*?<div class="geometry">.*?</section>', re.S)
-transition_re = re.compile(r'<section class="section[^"]*"[^>]*>(?:(?!<section ).)*?<div class="path">.*?</section>', re.S)
+preassessment_re = re.compile(r'<section class="section[^\"]*"[^>]*>(?:(?!<section ).)*?<div class="geometry">.*?</section>', re.S)
+transition_re = re.compile(r'<section class="section[^\"]*"[^>]*>(?:(?!<section ).)*?<div class="path">.*?</section>', re.S)
 
 RAW = 'https://raw.githubusercontent.com/serbiagobig/gobigeurope-site/main/'
 IMAGES = {
@@ -68,21 +68,54 @@ MODEL_COPY = {
 
 css = r'''
 /* Exact floating berry composition from repository removebg PNGs */
-.gentle-crops{position:relative!important;overflow:hidden!important;padding:58px 0 74px!important}
+.gentle-crops{position:relative!important;overflow:hidden!important;padding:72px 0 78px!important}
 .gentle-crops>.wrap{position:relative!important;z-index:1!important;display:flex!important;flex-direction:column!important;min-height:560px}
-.gentle-crops>.wrap>.eyebrow{order:1}.gentle-crops>.wrap>h2{order:2;max-width:980px!important}.gentle-crops>.wrap>.lead{order:3;max-width:880px!important}
-.gentle-crops .crop-bridge{order:4;margin:28px 0 0!important;font:700 clamp(30px,3vw,42px)/1.05 var(--serif)!important;color:var(--navy)!important;position:relative;z-index:4;max-width:760px}
-.gentle-crops .ripeness{order:5;margin-top:26px!important;position:relative!important;z-index:4!important}.gentle-crops .ripeness article{background:rgba(255,255,255,.96)!important}
+.gentle-crops>.wrap>.eyebrow{order:1}.gentle-crops>.wrap>h2{order:2;max-width:980px!important}.gentle-crops>.wrap>.lead{order:3;max-width:800px!important}
+.gentle-crops .crop-bridge{order:4;margin:26px 0 0!important;font:700 clamp(28px,2.7vw,40px)/1.05 var(--serif)!important;color:var(--navy)!important;position:relative;z-index:4;max-width:760px}
+.gentle-crops .ripeness{order:5;margin-top:24px!important;position:relative!important;z-index:4!important}.gentle-crops .ripeness article{background:rgba(255,255,255,.96)!important}
 .gentle-crops .crop-gallery{display:block!important;position:absolute!important;inset:0!important;margin:0!important;pointer-events:none!important;z-index:2!important}
 .gentle-crops .crop-tile{position:absolute!important;display:block!important;min-height:0!important;border:0!important;background:transparent!important;box-shadow:none!important}.gentle-crops .crop-tile:after,.gentle-crops .crop-tile b{display:none!important}.gentle-crops .crop-tile img{display:block!important;width:100%!important;height:auto!important;object-fit:contain!important}
 .gentle-crops .crop-tile:nth-child(1){width:138px!important;right:38px!important;top:38px!important}.gentle-crops .crop-tile:nth-child(2){width:118px!important;right:238px!important;top:205px!important}.gentle-crops .crop-tile:nth-child(3){width:150px!important;right:38px!important;top:195px!important}.gentle-crops .crop-tile:nth-child(4){width:124px!important;right:-96px!important;bottom:2px!important}
+
 /* White image-led Air Harvester lineup */
-#models.models-showcase{background:#fff!important;color:var(--navy)!important;padding:72px 0 78px!important}
-#models.models-showcase .eyebrow{color:var(--green)!important;font-size:13px!important;letter-spacing:.16em!important;text-transform:uppercase}
-#models.models-showcase h2{color:var(--navy)!important;margin-top:12px!important;font-size:clamp(48px,5vw,72px)!important;line-height:.98!important}
-.model-lineup{display:grid;grid-template-columns:repeat(3,1fr);gap:44px;margin-top:36px;align-items:start}.model-item{min-width:0}.model-visual{height:250px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}.model-visual img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}.model-code{display:block;font:800 clamp(36px,3vw,48px)/1 var(--sans);letter-spacing:-.03em;color:var(--green);margin-bottom:12px}.model-name{margin:0;font:700 28px/1.08 var(--serif);color:var(--navy)}.model-copy{margin:12px 0 0;color:#667c91;font-size:15px;line-height:1.55;max-width:360px}.models-note{margin:30px 0 0;padding-top:18px;border-top:1px solid #dfe6e9;color:#536d82;font-size:15px;font-weight:600}
-@media(max-width:900px){.gentle-crops>.wrap{min-height:0}.gentle-crops .crop-gallery{position:relative!important;inset:auto!important;order:5!important;display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:12px!important;margin:22px 0 8px!important}.gentle-crops .crop-tile,.gentle-crops .crop-tile:nth-child(n){position:relative!important;inset:auto!important;width:auto!important;height:110px!important;display:flex!important;align-items:center!important;justify-content:center!important}.gentle-crops .crop-tile img{max-width:100%!important;max-height:100%!important;width:auto!important;height:auto!important}.gentle-crops .ripeness{order:6!important}.model-lineup{grid-template-columns:1fr;gap:34px}.model-item{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(0,1.2fr);column-gap:22px;align-items:center}.model-visual{grid-row:1/4;margin:0;height:190px}.model-code,.model-name,.model-copy{grid-column:2}}
-@media(max-width:560px){.gentle-crops .crop-gallery{grid-template-columns:repeat(2,1fr)!important}.model-item{display:block}.model-visual{height:190px;margin-bottom:10px}}
+#models.models-showcase{background:#fff!important;color:var(--navy)!important;padding:78px 0 82px!important}
+#models.models-showcase .eyebrow{color:var(--green)!important}
+#models.models-showcase h2{color:var(--navy)!important;margin-top:12px!important;font-size:clamp(40px,4.4vw,60px)!important;line-height:1!important}
+.model-lineup{display:grid;grid-template-columns:repeat(3,1fr);gap:42px;margin-top:34px;align-items:start}.model-item{min-width:0}.model-visual{height:240px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}.model-visual img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}.model-code{display:block;font:800 clamp(34px,2.8vw,46px)/1 var(--sans);letter-spacing:-.03em;color:var(--green);margin-bottom:12px}.model-name{margin:0;font:700 26px/1.1 var(--serif);color:var(--navy)}.model-copy{margin:11px 0 0;color:#667786;font-size:15px;line-height:1.6;max-width:360px}.models-note{margin:28px 0 0;padding-top:18px;border-top:1px solid var(--line);color:#536d82;font-size:15px;font-weight:600}
+
+/* Global visual harmonization: one scale, one rhythm, one palette */
+:root{--soft:#f3f6f5!important;--line:#dce4e6!important;--muted:#667786!important}
+body{color:#1b2937!important;background:#fff!important}
+.wrap{width:min(1200px,calc(100% - 48px))!important}
+.section{padding:78px 0!important}
+.section.soft{background:var(--soft)!important}
+.section.dark{background:#112332!important}
+.eyebrow{font-size:11px!important;line-height:1.2!important;font-weight:800!important;letter-spacing:.15em!important;text-transform:uppercase!important;color:var(--green)!important}
+h2{margin-top:12px!important;font-size:clamp(38px,4.4vw,60px)!important;line-height:1!important;letter-spacing:-.035em!important;color:var(--navy)!important}
+.dark h2{color:#fff!important}.dark .eyebrow{color:#71d0a0!important}
+.lead,.manual-intro,.implementation-lead{font-size:17px!important;line-height:1.7!important;color:var(--muted)!important}
+.dark .lead{color:rgba(255,255,255,.72)!important}
+
+.hero{min-height:650px!important}.hero-copy{padding:74px 0!important;max-width:900px!important}.hero h1{font-size:clamp(52px,5.6vw,80px)!important;line-height:.96!important;letter-spacing:-.04em!important}.hero p{margin-top:22px!important;font-size:18px!important;line-height:1.65!important;max-width:760px!important}.buttons{margin-top:28px!important}.btn{min-height:50px!important;padding:0 22px!important;font-size:12px!important}
+.subnav .wrap{gap:22px!important;padding:11px 0!important}.subnav a{font-size:11px!important;letter-spacing:.01em!important}
+
+.manual-problems{padding:72px 0 76px!important}.manual-problems h2{max-width:950px!important}.manual-problems .manual-intro{max-width:800px!important;margin-top:16px!important}.problem-panels{gap:16px!important;margin-top:28px!important}.problem-panel{padding:22px 24px 18px!important;border-radius:20px!important;background:#fafbfb!important;box-shadow:none!important}.quality-panel{background:#f4f8f5!important}.panel-head span{font-size:22px!important}.problem-row{min-height:56px!important}.problem-row b{font-size:21px!important}.problem-row span{font-size:18px!important}
+
+#benefits{padding:72px 0 76px!important}.economy-layout{column-gap:38px!important}.economy-layout>h2{font-size:clamp(38px,4.4vw,60px)!important}.economy-subtitle{font-size:clamp(19px,1.8vw,25px)!important;color:#536d82!important}.economy-stats{gap:10px!important}.economy-stats .stat{padding:16px 18px!important;border-radius:18px!important;box-shadow:none!important}.economy-stats .stat strong{font-size:32px!important}.economy-stats .stat span{font-size:14px!important}.economy-video{border-radius:24px!important;box-shadow:0 16px 34px rgba(16,37,61,.10)!important}
+
+#technology{padding:78px 0!important}.tech-grid{gap:16px!important;margin-top:30px!important}.tech-card{border-radius:20px!important;padding:22px!important}.tech-card h3{font-size:24px!important}.tech-card p{font-size:14px!important;line-height:1.62!important}.tech-card b{font-size:24px!important}
+
+.ripeness{gap:14px!important;margin-top:26px!important}.ripeness article{padding:24px!important;border-radius:20px!important;box-shadow:none!important}.ripeness strong{font-size:24px!important}
+
+#plantation{padding:78px 0!important}.plant-grid{gap:16px!important;margin-top:30px!important}.plant-card{border-radius:20px!important;padding:22px!important}.plant-card h3{font-size:24px!important}.plant-card p{font-size:14px!important;line-height:1.62!important}
+
+.world,.form-wrap{gap:36px!important}.world-map{border-radius:24px!important}.trust{gap:8px!important}.trust span{border-radius:999px!important}.form input,.form select,.form textarea{border-radius:10px!important}.form{gap:12px!important}
+
+footer{padding:30px 0!important}
+
+@media(max-width:1000px){.wrap{width:calc(100% - 36px)!important}}
+@media(max-width:900px){.section{padding:62px 0!important}.hero{min-height:590px!important}.hero-copy{padding:58px 0!important}.gentle-crops{padding:62px 0!important}.gentle-crops>.wrap{min-height:0}.gentle-crops .crop-gallery{position:relative!important;inset:auto!important;order:5!important;display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:12px!important;margin:22px 0 8px!important}.gentle-crops .crop-tile,.gentle-crops .crop-tile:nth-child(n){position:relative!important;inset:auto!important;width:auto!important;height:110px!important;display:flex!important;align-items:center!important;justify-content:center!important}.gentle-crops .crop-tile img{max-width:100%!important;max-height:100%!important;width:auto!important;height:auto!important}.gentle-crops .ripeness{order:6!important}.model-lineup{grid-template-columns:1fr;gap:32px}.model-item{display:grid;grid-template-columns:minmax(150px,.8fr) minmax(0,1.2fr);column-gap:22px;align-items:center}.model-visual{grid-row:1/4;margin:0;height:185px}.model-code,.model-name,.model-copy{grid-column:2}.manual-problems,#benefits,#technology,#plantation,#models.models-showcase{padding:62px 0!important}}
+@media(max-width:560px){.wrap{width:calc(100% - 28px)!important}.section{padding:54px 0!important}.hero{min-height:560px!important}.hero h1{font-size:clamp(40px,11vw,56px)!important}.hero p{font-size:16px!important}.gentle-crops .crop-gallery{grid-template-columns:repeat(2,1fr)!important}.model-item{display:block}.model-visual{height:180px;margin-bottom:10px}.problem-panel{padding:18px!important}.panel-head span{font-size:20px!important}.problem-row span{font-size:17px!important}}
 '''
 
 def gallery_html(lang):
@@ -142,4 +175,4 @@ for lang, p in paths.items():
     if 'class="path"' in s:
         raise SystemExit(f'Mechanization transition module remains in {p}')
     p.write_text(s, encoding='utf-8')
-    print(f'Rebuilt berry modules and removed geometry/transition sections: {p}')
+    print(f'Rebuilt and visually harmonized berry modules: {p}')
