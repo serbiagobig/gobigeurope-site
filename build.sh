@@ -14,3 +14,4 @@ python scripts/restore_projects_hub.py
 python scripts/stabilize_projects_hub.py
 python scripts/normalize_main_header.py
 python scripts/fix_agro_tag_links.py
+python scripts/force_agro_direct_link.py
