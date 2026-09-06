@@ -91,6 +91,10 @@ jobs:
           '''
 
           section_re = re.compile(r'<section class="section soft"><div class="wrap"><div class="eyebrow">(?:AGRO TAG SOLUTION|[^<]+)</div><h2>[^<]*(?:Система внедрения|implementation system|Systém zavedení)[^<]*</h2>.*?</section>', re.S | re.I)
+          new_projects_re = re.compile(
+              r'<section class="section[^\"]*"[^>]*>(?:(?!<section ).)*?(?:НОВЫЕ ПРОЕКТЫ|NEW PROJECTS|NOVÉ PROJEKTY|Планируете новую ягодную плантацию\?|Planning a new berry plantation\?|Plánujete novou.*?plantáž\?).*?</section>',
+              re.S | re.I
+          )
 
           for lang, p in pages.items():
               if not p.exists():
@@ -116,19 +120,24 @@ jobs:
 
               s2, count = section_re.subn(replacement, s, count=1)
               if count != 1:
-                  # fallback for older localized markup: identify the section by the legacy solution grid
                   legacy = re.compile(r'<section class="section soft"><div class="wrap">(?:(?!</section>).)*?<div class="solution">.*?</section>', re.S)
                   s2, count = legacy.subn(replacement, s, count=1)
               if count != 1:
                   raise SystemExit(f'Implementation solution section not found in {p}')
+
+              s2, removed = new_projects_re.subn('', s2, count=1)
+              if removed != 1:
+                  raise SystemExit(f'New plantation project module not found in {p}')
 
               s2 = s2.replace('</style>', css + '</style>', 1)
               if 'class="solution"' in s2:
                   raise SystemExit(f'Legacy solution grid remains in {p}')
               if lang == 'ru' and 'Поставщик сопровождает внедрение технологии' not in s2:
                   raise SystemExit('RU supplier wording missing')
+              if any(marker in s2 for marker in ('НОВЫЕ ПРОЕКТЫ','NEW PROJECTS','NOVÉ PROJEKTY','Планируете новую ягодную плантацию?')):
+                  raise SystemExit(f'New plantation project module remains in {p}')
               p.write_text(s2, encoding='utf-8')
-              print(f'Rebuilt full-screen implementation system: {p}')
+              print(f'Rebuilt implementation system and removed new plantation project module: {p}')
           PY
 
       - name: Upload patched Pages artifact
