@@ -22,3 +22,4 @@ python scripts/restore_partner_ecosystem.py
 python scripts/align_home_stats.py
 python scripts/fix_mobile_menu_runtime.py
 python scripts/mobile_menu_overlay.py
+python scripts/fix_partner_ecosystem_mobile.py
