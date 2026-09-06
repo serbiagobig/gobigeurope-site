@@ -1,4 +1,5 @@
 name: Fix berry image visibility
+# Republish marker after custom-domain DNS validation
 
 on:
   workflow_run:
