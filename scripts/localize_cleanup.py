@@ -9,12 +9,14 @@ SCRIPT=Path(__file__).resolve().parent
 def run(name):
     subprocess.run([sys.executable,str(SCRIPT/name),str(ROOT)],check=True)
 
-# localize_site_v2.py is expected to have created the standard EN/CZ pages first.
-# Apply all content introduced by later project-card/mobile/runtime work, then create
-# the Berry page locales, normalize language switches and run strict final QA.
+# localize_site_v2.py creates the standard EN/CZ pages from the final RU build.
+# These post-passes deliberately run afterwards to repair late runtime/project content,
+# generate the Berry routes, rebuild locale navigation, and only then run strict QA.
 run('localize_current_overrides.py')
 run('localize_runtime_residuals.py')
 run('localize_berry_final.py')
+run('finalize_locale_details.py')
+run('normalize_localized_headers.py')
 run('normalize_language_switches.py')
 run('locale_final_qa.py')
 
