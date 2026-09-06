@@ -11,6 +11,15 @@ for name in ('international.html','digital-ai.html'):
     # Top navigation: Projects must always open the shared projects hub.
     s=s.replace('href="#projects">Проекты</a>','href="projects.html">Проекты</a>')
 
+    # Digital & AI: add the same shared-projects CTA under the project cards if it is absent.
+    if name == 'digital-ai.html' and 'Показать другие проекты' not in s:
+        cta = '''<div class="projects-foot" style="display:flex;justify-content:center;margin-top:30px"><a class="projects-all" href="projects.html" style="display:inline-flex;align-items:center;gap:13px;min-height:52px;padding:0 28px;border:1px solid rgba(11,107,69,.45);border-radius:999px;color:#0B6B45;font-size:14px;font-weight:800;text-decoration:none">Показать другие проекты <span aria-hidden="true" style="font-size:20px;line-height:1">→</span></a></div>'''
+        section_re = re.compile(r'(<section[^>]*id="projects"[^>]*>.*?)(</section>)', re.S)
+        m = section_re.search(s)
+        if not m:
+            raise SystemExit('Projects section not found in digital-ai.html')
+        s = s[:m.start()] + m.group(1) + cta + m.group(2) + s[m.end():]
+
     # Bottom CTA "Показать другие проекты": force the target regardless of whatever
     # href an earlier build/post-processing step may have written.
     s=re.sub(
@@ -31,10 +40,12 @@ for name in ('international.html','digital-ai.html'):
     s=s.replace('class="projects-all" href="#projects"','class="projects-all" href="projects.html"')
 
     if 'projects-all' in s:
-        # Verify the actual CTA now points to the shared hub.
         m=re.search(r'<a[^>]*class="[^"]*projects-all[^"]*"[^>]*>',s)
         if m and 'href="projects.html"' not in m.group(0):
             raise SystemExit(f'Projects CTA target not fixed in {name}')
+
+    if name == 'digital-ai.html' and 'Показать другие проекты' not in s:
+        raise SystemExit('Projects CTA missing in digital-ai.html')
 
     p.write_text(s,encoding='utf-8')
 
