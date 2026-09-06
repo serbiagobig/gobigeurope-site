@@ -12,3 +12,4 @@ python scripts/final_site_fixes.py
 python scripts/compact_project_cards.py
 python scripts/restore_projects_hub.py
 python scripts/stabilize_projects_hub.py
+python scripts/normalize_main_header.py
