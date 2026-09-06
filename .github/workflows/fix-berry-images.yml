@@ -95,6 +95,7 @@ jobs:
               r'<section class="section[^\"]*"[^>]*>(?:(?!<section ).)*?(?:НОВЫЕ ПРОЕКТЫ|NEW PROJECTS|NOVÉ PROJEKTY|Планируете новую ягодную плантацию\?|Planning a new berry plantation\?|Plánujete novou.*?plantáž\?).*?</section>',
               re.S | re.I
           )
+          fit_re = re.compile(r'<section class="section[^\"]*"[^>]*id="fit"[^>]*>.*?</section>', re.S | re.I)
 
           for lang, p in pages.items():
               if not p.exists():
@@ -129,15 +130,21 @@ jobs:
               if removed != 1:
                   raise SystemExit(f'New plantation project module not found in {p}')
 
+              s2, removed_fit = fit_re.subn('', s2, count=1)
+              if removed_fit != 1:
+                  raise SystemExit(f'Farm suitability module not found in {p}')
+
               s2 = s2.replace('</style>', css + '</style>', 1)
               if 'class="solution"' in s2:
                   raise SystemExit(f'Legacy solution grid remains in {p}')
               if lang == 'ru' and 'Поставщик сопровождает внедрение технологии' not in s2:
                   raise SystemExit('RU supplier wording missing')
+              if 'id="fit"' in s2:
+                  raise SystemExit(f'Farm suitability module remains in {p}')
               if any(marker in s2 for marker in ('НОВЫЕ ПРОЕКТЫ','NEW PROJECTS','NOVÉ PROJEKTY','Планируете новую ягодную плантацию?')):
                   raise SystemExit(f'New plantation project module remains in {p}')
               p.write_text(s2, encoding='utf-8')
-              print(f'Rebuilt implementation system and removed new plantation project module: {p}')
+              print(f'Rebuilt implementation system and removed optional modules: {p}')
           PY
 
       - name: Upload patched Pages artifact
