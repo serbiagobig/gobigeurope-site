@@ -2,7 +2,7 @@ name: Publish AGRO TAG berry harvesting route
 
 on:
   workflow_run:
-    workflows: ["Publish GO BIG blog route"]
+    workflows: ["Deploy GO BIG to GitHub Pages"]
     types: [completed]
 
 permissions:
