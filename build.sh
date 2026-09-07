@@ -63,6 +63,11 @@ python scripts/berry_final_lock.py dist
 python scripts/mobile_final_audit.py dist
 python scripts/berry_final_lock.py dist
 python scripts/berry_locale_postfix.py dist
+
+# localize_berry_final rebuilds late berry modules from RU. Reapply the authoritative
+# translated technology/crop module after the final lock so no Cyrillic can leak back
+# into the EN/CZ production pages. Then restore the approved gentle composition.
+python scripts/fix_berry_locales.py dist
 python scripts/match_gentle_reference.py dist
 
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
