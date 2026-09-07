@@ -56,23 +56,49 @@ for p in pages:
             errors.append(f'{rel}: unified header missing')
 
 # Berry route is intentional and must exist in all three languages.
-for rel in ('berry-harvesting.html','en/berry-harvesting.html','cz/berry-harvesting.html'):
-    if not (ROOT/rel).exists(): errors.append(f'Approved berry page missing: {rel}')
+berry_pages={
+    'berry-harvesting.html':{
+        'must':['Инновационная технология','Воздушно-импульсная уборка','Типичные проблемы ручной уборки','Когда ручной сбор становится ограничением','Мы создаем новую экономику уборки','до 500+ кг/час','до 4 га/день','Не просто оборудование. Система внедрения.','Анализ хозяйства','Запасные части','berry-harvesting-web.mp4'],
+        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины.','Планируете новую ягодную плантацию?','id="fit"']
+    },
+    'en/berry-harvesting.html':{
+        'must':['Innovative technology','Air-pulse harvesting','Typical challenges of manual harvesting','Creating new harvesting economics','up to 500+ kg/hour','More than equipment. An implementation system.'],
+        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины.','Планируете новую ягодную плантацию?','id="fit"']
+    },
+    'cz/berry-harvesting.html':{
+        'must':['Inovativní technologie','Sklizeň vzduchovými impulsy'],
+        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины.','Планируете новую ягодную плантацию?','id="fit"']
+    }
+}
+for rel,cfg in berry_pages.items():
+    p=ROOT/rel
+    if not p.exists():
+        errors.append(f'Approved berry page missing: {rel}')
+        continue
+    text=p.read_text(encoding='utf-8')
+    for marker in cfg['must']:
+        if marker not in text: errors.append(f'{rel}: approved berry marker missing: {marker}')
+    for marker in cfg['forbid']:
+        if marker in text: errors.append(f'{rel}: rejected berry block returned: {marker}')
 
 # AGRO TAG must retain a path to the berry case without putting it in the main menu.
 for rel in ('agro-tag.html','en/agro-tag.html','cz/agro-tag.html'):
     p=ROOT/rel
     if not p.exists(): continue
     text=p.read_text(encoding='utf-8')
-    if 'berry-harvesting.html' not in text and 'product-num' not in text:
-        errors.append(f'{rel}: no berry-case entry point detected')
+    if 'berry-harvesting.html' not in text:
+        errors.append(f'{rel}: berry-case entry point missing')
+    nav_match=re.search(r'<nav class="nav">(.*?)</nav>',text,re.S|re.I)
+    if nav_match and 'berry-harvesting.html' in nav_match.group(1):
+        errors.append(f'{rel}: berry page was incorrectly added to main navigation')
 
 if errors:
     for e in errors[:100]: print('ERROR:',e)
     raise SystemExit(f'FINAL SITE INTEGRITY AUDIT FAILED: {len(errors)} error(s)')
 
 print(f'PASS: full-site integrity audit validated {len(pages)} published HTML pages')
-print('PASS: approved berry route exists in RU/EN/CZ')
+print('PASS: exact approved berry state exists in RU/EN/CZ and rejected blocks are absent')
+print('PASS: AGRO TAG links to berry case without adding it to main navigation')
 print('PASS: all local page/assets references resolve')
 print('PASS: EN/CZ visible text contains no Cyrillic')
 print('PASS: final mobile/header layer present on all core RU/EN/CZ pages')
