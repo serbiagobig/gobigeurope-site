@@ -57,5 +57,9 @@ python scripts/berry_locale_postfix.py dist
 # introduced by localisation or other post-build passes and validate exact EN/CZ/RU order.
 python scripts/final_language_switch_fix.py dist
 
+# Final authority for the homepage primary CTA: it opens the application form
+# on the International page in the matching language.
+python scripts/fix_home_cta_links.py dist
+
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
