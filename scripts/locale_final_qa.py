@@ -6,10 +6,9 @@ import re
 import sys
 
 ROOT=Path(sys.argv[1] if len(sys.argv)>1 else 'dist').resolve()
-PAGES=['index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html','agro-tag.html','agro-tag-contact.html','readiness.html']
+PAGES=['index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html','agro-tag.html','agro-tag-contact.html','readiness.html','berry-harvesting.html']
 CYR=re.compile(r'[А-Яа-яЁё]')
 LATE_GENERATED_ASSETS={'assets/agro-tag-center.png','../assets/agro-tag-center.png','assets/agro-card-05.png','../assets/agro-card-05.png'}
-RETIRED='berry-harvesting.html'
 
 class Parser(HTMLParser):
     def __init__(self):
@@ -42,19 +41,12 @@ for locale in ('ru','en','cz'):
     for page in PAGES:
         required.append((locale,folder/page))
 
-# Removed route must stay removed in every locale.
-for rel in (RETIRED,'en/'+RETIRED,'cz/'+RETIRED):
-    if (ROOT/rel).exists(): errors.append(f'retired route was republished: {rel}')
-
 for locale,path in required:
     if not path.exists():
         errors.append(f'{locale}: missing page {path.relative_to(ROOT)}')
         continue
     text=path.read_text(encoding='utf-8')
     parser=Parser(); parser.feed(text)
-
-    if RETIRED.lower() in text.lower():
-        errors.append(f'{path.relative_to(ROOT)}: retired berry route reference remains')
 
     expected='ru' if locale=='ru' else ('en' if locale=='en' else 'cs')
     if not re.search(rf'<html\b[^>]*\blang=["\']{expected}["\']',text,re.I):
@@ -100,7 +92,7 @@ if errors:
     for e in errors: print('ERROR:',e)
     raise SystemExit(f'Multilingual QA failed with {len(errors)} error(s)')
 print(f'PASS: {len(required)} RU/EN/CZ pages validated')
-print('PASS: retired berry harvesting route is absent in RU/EN/CZ and unreferenced')
+print('PASS: approved berry harvesting page exists in RU/EN/CZ')
 print('PASS: EN/CZ visible text and accessibility labels contain no Cyrillic')
 print('PASS: language switches are ordered EN / CZ / RU')
 print('PASS: local links/assets resolve at build stage')
