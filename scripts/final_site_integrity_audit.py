@@ -55,19 +55,18 @@ for p in pages:
         if 'gobig-unified-header' not in text:
             errors.append(f'{rel}: unified header missing')
 
-# Berry route is intentional and must exist in all three languages.
 berry_pages={
     'berry-harvesting.html':{
         'must':['Инновационная технология','Воздушно-импульсная уборка','Типичные проблемы ручной уборки','Когда ручной сбор становится ограничением','Мы создаем новую экономику уборки','до 500+ кг/час','до 4 га/день','Не просто оборудование. Система внедрения.','Анализ хозяйства','Запасные части','berry-harvesting-web.mp4'],
-        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины.','Планируете новую ягодную плантацию?','id="fit"']
+        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины','Планируете новую ягодную плантацию?','Когда стоит рассматривать механизированную уборку','id="fit"','до до 500+ кг/час']
     },
     'en/berry-harvesting.html':{
         'must':['Innovative technology','Air-pulse harvesting','Typical challenges of manual harvesting','Creating new harvesting economics','up to 500+ kg/hour','More than equipment. An implementation system.'],
-        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины.','Планируете новую ягодную плантацию?','id="fit"']
+        'forbid':['Check whether your plantation is suitable','Mechanisation is a process, not simply a machine purchase','When to consider mechanised harvesting','id="fit"','до up to 500+ kg/hour']
     },
     'cz/berry-harvesting.html':{
-        'must':['Inovativní technologie','Sklizeň vzduchovými impulsy'],
-        'forbid':['Проверьте, подходит ли ваша плантация','Механизация — это процесс, а не покупка одной машины.','Планируете новую ягодную плантацию?','id="fit"']
+        'must':['Inovativní technologie','Sklizeň pomocí vzduchových impulzů','až 500+ kg/h'],
+        'forbid':['Ověřte vhodnost vaší plantáže','id="fit"','до až 500+ kg/h']
     }
 }
 for rel,cfg in berry_pages.items():
@@ -81,7 +80,6 @@ for rel,cfg in berry_pages.items():
     for marker in cfg['forbid']:
         if marker in text: errors.append(f'{rel}: rejected berry block returned: {marker}')
 
-# AGRO TAG must retain a path to the berry case without putting it in the main menu.
 for rel in ('agro-tag.html','en/agro-tag.html','cz/agro-tag.html'):
     p=ROOT/rel
     if not p.exists(): continue
