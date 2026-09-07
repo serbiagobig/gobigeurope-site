@@ -53,5 +53,9 @@ python scripts/berry_locale_postfix.py dist
 python scripts/match_gentle_reference.py dist
 python scripts/berry_locale_postfix.py dist
 
+# Final authority for language switches: remove any late duplicate CZ/RU fragments
+# introduced by localisation or other post-build passes and validate exact EN/CZ/RU order.
+python scripts/final_language_switch_fix.py dist
+
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
