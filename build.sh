@@ -50,7 +50,6 @@ python scripts/localize_berry_final.py dist
 # three technology cards, the four repository berry PNGs inside the gentle-harvesting
 # module, and the white 500L / 500S / 600T model showcase.
 python scripts/fix_berry_locales.py dist
-python scripts/reorder_berry_models.py dist
 python scripts/rebuild_berry_models.py dist
 
 python scripts/berry_final_lock.py dist
