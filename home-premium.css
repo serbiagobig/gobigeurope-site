@@ -50,6 +50,13 @@
   color:#fff !important;
   text-shadow:0 2px 14px rgba(0,0,0,.18) !important;
 }
+html[lang="en"] .direction-media-copy h3::before{
+  content:"Markets\ATechnology\APeople" !important;
+}
+html[lang="cs"] .direction-media-copy h3::before,
+html[lang="cz"] .direction-media-copy h3::before{
+  content:"Trhy\ATechnologie\ALidé" !important;
+}
 .direction-media-copy p{
   max-width:760px !important;
   margin:16px auto 0 !important;
