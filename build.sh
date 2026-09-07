@@ -45,6 +45,14 @@ python scripts/mobile_final_audit.py dist
 # This step is idempotent and removes the exact legacy fragments that caused repeated regressions.
 python scripts/berry_final_lock.py dist
 python scripts/localize_berry_final.py dist
+
+# Restore the approved visual berry modules on all three locales after localisation:
+# three technology cards, the four repository berry PNGs inside the gentle-harvesting
+# module, and the white 500L / 500S / 600T model showcase.
+python scripts/fix_berry_locales.py dist
+python scripts/reorder_berry_models.py dist
+python scripts/rebuild_berry_models.py dist
+
 python scripts/berry_final_lock.py dist
 python scripts/mobile_final_audit.py dist
 python scripts/berry_final_lock.py dist
