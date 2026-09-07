@@ -3,26 +3,13 @@ set -eu
 
 sh build-base.sh
 cp projects.html dist/projects.html
+cp berry-harvesting.html dist/berry-harvesting.html
+cp berry-harvesting-web.mp4 dist/berry-harvesting-web.mp4
 cp blog.html dist/blog.html
 cp assets/agro-tag-contact.html dist/agro-tag-contact.html
 if [ -f assets/blog-data.json ]; then
   cp assets/blog-data.json dist/assets/blog-data.json
 fi
-
-# Some legacy pre-localisation fixers still expect the old berry route to exist.
-# Keep a valid build-only HTML stub so those historical checks can finish. The stub is
-# deleted by retire_berry_route.py before the Pages artifact is audited and uploaded.
-cat > dist/berry-harvesting.html <<'EOF'
-<!doctype html>
-<html lang="ru">
-<head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Retired route</title>
-</head>
-<body></body>
-</html>
-EOF
 
 python scripts/final_site_fixes.py
 python scripts/compact_project_cards.py
@@ -31,6 +18,7 @@ python scripts/stabilize_projects_hub.py
 python scripts/normalize_main_header.py
 python scripts/fix_agro_tag_links.py
 python scripts/force_agro_direct_link.py
+python scripts/restore_berry_final.py
 python scripts/mobile_guardrails.py
 python scripts/restore_partner_ecosystem.py
 python scripts/align_home_stats.py
@@ -50,7 +38,5 @@ python scripts/locale_final_qa.py dist
 # legacy/post-build fixer so earlier responsive rules cannot re-break the published site.
 python scripts/mobile_final_audit.py dist
 
-# The berry-equipment route is retired. Remove any stale copies/references and then run
-# a full-site audit over every published RU/EN/CZ HTML page and local asset reference.
-python scripts/retire_berry_route.py dist
+# Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
