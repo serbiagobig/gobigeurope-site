@@ -8,6 +8,12 @@ cp assets/agro-tag-contact.html dist/agro-tag-contact.html
 if [ -f assets/blog-data.json ]; then
   cp assets/blog-data.json dist/assets/blog-data.json
 fi
+
+# final_site_fixes.py is an older shared fixer that still asserts that this route exists.
+# Give it an empty build-only compatibility stub; retire_berry_route.py removes the stub
+# and every link/reference before the Pages artifact is audited and uploaded.
+: > dist/berry-harvesting.html
+
 python scripts/final_site_fixes.py
 python scripts/compact_project_cards.py
 python scripts/restore_projects_hub.py
