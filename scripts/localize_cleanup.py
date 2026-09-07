@@ -10,11 +10,12 @@ def run(name):
     subprocess.run([sys.executable,str(SCRIPT/name),str(ROOT)],check=True)
 
 # localize_site_v2.py creates the standard EN/CZ pages from the final RU build.
-# These post-passes repair late runtime/project content, rebuild locale navigation,
-# repair known runtime language contamination and visual regressions, normalize shared
-# asset paths, retire removed routes, and only then run strict QA.
+# These post-passes repair late runtime/project content, generate the approved Berry
+# locales, rebuild locale navigation, repair known runtime language contamination and
+# visual regressions, normalize shared asset paths, and only then run strict QA.
 run('localize_current_overrides.py')
 run('localize_runtime_residuals.py')
+run('localize_berry_final.py')
 run('finalize_locale_details.py')
 run('normalize_localized_headers.py')
 run('normalize_language_switches.py')
@@ -22,7 +23,6 @@ run('fix_locale_runtime_contamination.py')
 run('fix_localized_blog.py')
 run('fix_localized_runtime_visuals.py')
 run('fix_localized_project_asset_paths.py')
-run('retire_berry_route.py')
 run('locale_final_qa.py')
 
 print('Final localisation cleanup passed for EN/CZ.')
