@@ -32,3 +32,7 @@ python scripts/localize_site_v2.py dist
 python scripts/localize_cleanup.py dist
 python scripts/fix_localized_blog.py dist
 python scripts/locale_final_qa.py dist
+
+# Final authority for all mobile behaviour. This runs after localisation and every
+# legacy/post-build fixer so earlier responsive rules cannot re-break the published site.
+python scripts/mobile_final_audit.py dist
