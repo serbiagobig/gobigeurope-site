@@ -46,21 +46,24 @@ python scripts/mobile_final_audit.py dist
 python scripts/berry_final_lock.py dist
 python scripts/localize_berry_final.py dist
 
-# Restore the approved visual berry modules on all three locales after localisation:
-# three technology cards, the four repository berry PNGs inside the gentle-harvesting
-# module, and the white 500L / 500S / 600T model showcase.
+# Restore approved berry visual modules.
 python scripts/fix_berry_locales.py dist
 python scripts/rebuild_berry_models.py dist
+
+# Match the gentle-harvesting module exactly to the approved reference composition.
+python scripts/match_gentle_reference.py dist
 
 # Rebuild EN/CZ one final time from the now-complete RU page so late visual rebuilds
 # cannot reintroduce stale localized structure.
 python scripts/localize_berry_final.py dist
 python scripts/berry_locale_postfix.py dist
+python scripts/match_gentle_reference.py dist
 
 python scripts/berry_final_lock.py dist
 python scripts/mobile_final_audit.py dist
 python scripts/berry_final_lock.py dist
 python scripts/berry_locale_postfix.py dist
+python scripts/match_gentle_reference.py dist
 
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
