@@ -30,3 +30,5 @@ python scripts/final_agro_publish_fixes.py
 # share the same current layout, links and mobile behaviour.
 python scripts/localize_site_v2.py dist
 python scripts/localize_cleanup.py dist
+python scripts/fix_localized_blog.py dist
+python scripts/locale_final_qa.py dist
