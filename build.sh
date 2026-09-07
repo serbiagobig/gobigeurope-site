@@ -9,10 +9,20 @@ if [ -f assets/blog-data.json ]; then
   cp assets/blog-data.json dist/assets/blog-data.json
 fi
 
-# final_site_fixes.py is an older shared fixer that still asserts that this route exists.
-# Give it an empty build-only compatibility stub; retire_berry_route.py removes the stub
-# and every link/reference before the Pages artifact is audited and uploaded.
-: > dist/berry-harvesting.html
+# Some legacy pre-localisation fixers still expect the old berry route to exist.
+# Keep a valid build-only HTML stub so those historical checks can finish. The stub is
+# deleted by retire_berry_route.py before the Pages artifact is audited and uploaded.
+cat > dist/berry-harvesting.html <<'EOF'
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Retired route</title>
+</head>
+<body></body>
+</html>
+EOF
 
 python scripts/final_site_fixes.py
 python scripts/compact_project_cards.py
