@@ -53,12 +53,14 @@ python scripts/fix_berry_locales.py dist
 python scripts/rebuild_berry_models.py dist
 
 # Rebuild EN/CZ one final time from the now-complete RU page so late visual rebuilds
-# cannot reintroduce Cyrillic form labels or stale copy into the localized pages.
+# cannot reintroduce stale localized structure.
 python scripts/localize_berry_final.py dist
+python scripts/berry_locale_postfix.py dist
 
 python scripts/berry_final_lock.py dist
 python scripts/mobile_final_audit.py dist
 python scripts/berry_final_lock.py dist
+python scripts/berry_locale_postfix.py dist
 
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
