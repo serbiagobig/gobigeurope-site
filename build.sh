@@ -27,15 +27,20 @@ python scripts/mobile_menu_overlay.py
 python scripts/fix_partner_ecosystem_mobile.py
 python scripts/final_agro_publish_fixes.py
 
-# Generate EN/CZ only after the final RU structure is complete, so all three languages
-# share the same current layout, links and mobile behaviour.
+# Generate EN/CZ only after the final RU structure is complete.
 python scripts/localize_site_v2.py dist
 python scripts/localize_cleanup.py dist
 python scripts/fix_localized_blog.py dist
 python scripts/locale_final_qa.py dist
 
-# Final authority for all mobile behaviour. This runs after localisation and every
-# legacy/post-build fixer so earlier responsive rules cannot re-break the published site.
+# Final authority for all mobile behaviour.
+python scripts/mobile_final_audit.py dist
+
+# Berry is intentionally locked LAST. Re-apply the approved RU state after every generic
+# post-build/mobile/localisation pass, regenerate EN/CZ from that exact state, then re-run
+# the mobile authority so nothing later can restore rejected legacy berry blocks.
+python scripts/restore_berry_final.py
+python scripts/localize_berry_final.py dist
 python scripts/mobile_final_audit.py dist
 
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
