@@ -16,7 +16,7 @@ TEXT={
 }}
 
 RUNTIME=r'''
-<script id="localized-runtime-visual-fix-v1">
+<script id="localized-runtime-visual-fix-v2">
 (function(){
   const assets={
     'ENTERING THE SERBIAN MARKET':'../assets/projects-serbia.png',
@@ -41,8 +41,13 @@ RUNTIME=r'''
         img.alt=(card.querySelector('.project-copy h3')||{}).textContent||'';
         front.insertBefore(img,front.firstChild);
       }else if(img){
-        const src=(img.getAttribute('src')||'').trim();
+        let src=(img.getAttribute('src')||'').trim();
+        if(src.startsWith('assets/')){
+          src='../'+src;
+          img.setAttribute('src',src);
+        }
         if((!src || src==='#' || src.endsWith('/en/') || src.endsWith('/cz/')) && fallback) img.src=fallback;
+        img.addEventListener('error',function(){if(fallback && img.getAttribute('src')!==fallback)img.src=fallback;},{once:true});
       }
       if(img){
         img.style.position='absolute';img.style.inset='0';img.style.width='100%';img.style.height='100%';img.style.objectFit='cover';img.style.display='block';
@@ -72,7 +77,7 @@ RUNTIME=r'''
 '''
 
 CSS=r'''
-<style id="localized-runtime-visual-fix-v1-css">
+<style id="localized-runtime-visual-fix-v2-css">
 @media(max-width:850px){
   .projects-showcase .project-card.home-project-flip .home-project-front>img{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;object-fit:cover!important;opacity:1!important;visibility:visible!important}
   .projects-showcase .project-card.home-project-flip .home-project-front{background:#182430!important}
@@ -90,11 +95,13 @@ for lang,mapping in TEXT.items():
         s=p.read_text(encoding='utf-8')
         for old,new in mapping.items():
             s=s.replace(old,new)
+        # Fix relative asset paths in localized HTML itself, not only at runtime.
+        s=re.sub(r'(?P<attr>src|poster)="assets/',lambda m:m.group('attr')+'="../assets/',s)
         if p.name in ('index.html','international.html','digital-ai.html','projects.html'):
-            if 'localized-runtime-visual-fix-v1-css' not in s:
+            if 'localized-runtime-visual-fix-v2-css' not in s:
                 s=s.replace('</head>',CSS+'\n</head>',1)
-            if 'localized-runtime-visual-fix-v1' not in s:
+            if 'localized-runtime-visual-fix-v2' not in s:
                 s=s.replace('</body>',RUNTIME+'\n</body>',1)
         p.write_text(s,encoding='utf-8')
 
-print('Fixed EN/CZ homepage overlay text and runtime project-card image/flip behaviour')
+print('Fixed EN/CZ homepage overlay text and localized project-card asset/runtime behaviour')
