@@ -6,10 +6,10 @@ import re
 import sys
 
 ROOT=Path(sys.argv[1] if len(sys.argv)>1 else 'dist').resolve()
-PAGES=['index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html','agro-tag.html','agro-tag-contact.html','readiness.html','berry-harvesting.html']
+PAGES=['index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html','agro-tag.html','agro-tag-contact.html','readiness.html']
 CYR=re.compile(r'[А-Яа-яЁё]')
-# These image aliases are created by later steps in the Pages workflow, after build.sh.
 LATE_GENERATED_ASSETS={'assets/agro-tag-center.png','../assets/agro-tag-center.png','assets/agro-card-05.png','../assets/agro-card-05.png'}
+RETIRED='berry-harvesting.html'
 
 class Parser(HTMLParser):
     def __init__(self):
@@ -27,11 +27,9 @@ class Parser(HTMLParser):
         if not self._skip and data.strip(): self.visible.append(data.strip())
 
 def get_switch_labels(text):
-    # Main switch may contain nested separator spans. Read through the RU anchor.
     m=re.search(r'<span class="lang-switch"[^>]*>(.*?)<a\b[^>]*>\s*RU\s*</a>\s*</span>',text,re.S|re.I)
     if m:
-        block=m.group(0)
-        return [x.upper() for x in re.findall(r'>\s*(EN|CZ|RU)\s*</a>',block,re.I)]
+        return [x.upper() for x in re.findall(r'>\s*(EN|CZ|RU)\s*</a>',m.group(0),re.I)]
     m=re.search(r'<nav class="langs">(.*?)</nav>',text,re.S|re.I)
     if m:
         return [x.upper() for x in re.findall(r'>\s*(EN|CZ|RU)\s*</a>',m.group(0),re.I)]
@@ -44,6 +42,10 @@ for locale in ('ru','en','cz'):
     for page in PAGES:
         required.append((locale,folder/page))
 
+# Removed route must stay removed in every locale.
+for rel in (RETIRED,'en/'+RETIRED,'cz/'+RETIRED):
+    if (ROOT/rel).exists(): errors.append(f'retired route was republished: {rel}')
+
 for locale,path in required:
     if not path.exists():
         errors.append(f'{locale}: missing page {path.relative_to(ROOT)}')
@@ -51,11 +53,13 @@ for locale,path in required:
     text=path.read_text(encoding='utf-8')
     parser=Parser(); parser.feed(text)
 
+    if RETIRED.lower() in text.lower():
+        errors.append(f'{path.relative_to(ROOT)}: retired berry route reference remains')
+
     expected='ru' if locale=='ru' else ('en' if locale=='en' else 'cs')
     if not re.search(rf'<html\b[^>]*\blang=["\']{expected}["\']',text,re.I):
         errors.append(f'{path.relative_to(ROOT)}: incorrect html lang')
 
-    # User-facing text and accessibility labels must contain no Cyrillic on EN/CZ.
     if locale in ('en','cz'):
         leftovers=[x for x in parser.visible+parser.attrs_text if CYR.search(x)]
         if leftovers:
@@ -82,7 +86,6 @@ for locale,path in required:
         except ValueError: continue
         if not target.exists(): errors.append(f'{path.relative_to(ROOT)}: broken local reference {ref}')
 
-    # Main navigation on EN/CZ must remain inside the active locale.
     if locale in ('en','cz') and path.name in ('index.html','international.html','digital-ai.html','education-hr.html','projects.html','blog.html'):
         nav_match=re.search(r'<nav class="nav">(.*?)</nav>',text,re.S|re.I)
         if not nav_match:
@@ -97,7 +100,8 @@ if errors:
     for e in errors: print('ERROR:',e)
     raise SystemExit(f'Multilingual QA failed with {len(errors)} error(s)')
 print(f'PASS: {len(required)} RU/EN/CZ pages validated')
+print('PASS: retired berry harvesting route is absent in RU/EN/CZ and unreferenced')
 print('PASS: EN/CZ visible text and accessibility labels contain no Cyrillic')
 print('PASS: language switches are ordered EN / CZ / RU')
-print('PASS: local links/assets resolve at build stage (workflow-generated image aliases exempted)')
+print('PASS: local links/assets resolve at build stage')
 print('PASS: core mobile responsive layers are present on RU/EN/CZ')
