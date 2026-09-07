@@ -45,4 +45,31 @@
       }
     });
   });
+
+  // AGRO TAG product 05 opens the approved berry-harvesting case page.
+  const path = window.location.pathname.toLowerCase();
+  if (path.endsWith('/agro-tag.html') || path.endsWith('agro-tag.html')) {
+    const cards = Array.from(document.querySelectorAll('.products .product'));
+    const berryCard = cards.find((card) => {
+      const number = card.querySelector('.product-num');
+      return number && number.textContent.trim() === '05';
+    });
+
+    if (berryCard) {
+      berryCard.setAttribute('role', 'link');
+      berryCard.setAttribute('tabindex', '0');
+      berryCard.style.cursor = 'pointer';
+      const openBerry = () => { window.location.href = 'berry-harvesting.html'; };
+      berryCard.addEventListener('click', (event) => {
+        if (event.target.closest('a,button,input,select,textarea')) return;
+        openBerry();
+      });
+      berryCard.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          openBerry();
+        }
+      });
+    }
+  }
 })();
