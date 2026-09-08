@@ -65,5 +65,8 @@ python scripts/fix_home_cta_links.py dist
 python scripts/fix_berry_gentle_anchor.py dist
 python scripts/final_anchor_audit.py dist
 
+# Add the catalog subsection only after every localisation/repair pass so nothing else is changed later.
+python scripts/add_manufacturer_catalogs.py dist
+
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
