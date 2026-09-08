@@ -86,11 +86,10 @@ for lang, page in pages:
         raise SystemExit(f'Missing AGRO TAG page: {page}')
     s = page.read_text(encoding='utf-8')
 
-    # Remove an older generated copy if this script runs more than once.
     s = re.sub(r'<section class="manufacturer-catalogs".*?</section>', '', s, count=1, flags=re.S)
     s = re.sub(r'<style id="manufacturer-catalogs-style-v1">.*?</style>', '', s, count=1, flags=re.S)
 
-    marker = re.search(r'(<section class="products"\b.*?</section>)', s, re.S)
+    marker = re.search(r'(<section class="products"[^>]*>.*?</section>)', s, re.S)
     if not marker:
         raise SystemExit(f'Products section not found in {page}')
 
@@ -98,7 +97,6 @@ for lang, page in pages:
     s = s[:marker.start()] + block + s[marker.end():]
     s = s.replace('</head>', STYLE + '\n</head>', 1)
 
-    # Guardrails: exactly one catalog subsection, five rows, first two open, last three future.
     if s.count('class="manufacturer-catalogs"') != 1:
         raise SystemExit(f'Catalog subsection duplication in {page}')
     if s.count('class="catalog-row"') != 5:
