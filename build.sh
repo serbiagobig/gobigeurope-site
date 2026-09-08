@@ -10,6 +10,10 @@ cp assets/agro-tag-contact.html dist/agro-tag-contact.html
 if [ -f assets/blog-data.json ]; then
   cp assets/blog-data.json dist/assets/blog-data.json
 fi
+if [ -d catalogs ]; then
+  mkdir -p dist/catalogs
+  cp -R catalogs/. dist/catalogs/
+fi
 
 python scripts/final_site_fixes.py
 python scripts/compact_project_cards.py
