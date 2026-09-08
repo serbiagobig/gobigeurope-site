@@ -61,5 +61,9 @@ python scripts/final_language_switch_fix.py dist
 # on the International page in the matching language.
 python scripts/fix_home_cta_links.py dist
 
+# Final repair for berry subnavigation, followed by a generic fragment-link audit.
+python scripts/fix_berry_gentle_anchor.py dist
+python scripts/final_anchor_audit.py dist
+
 # Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
 python scripts/final_site_integrity_audit.py dist
