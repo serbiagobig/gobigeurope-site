@@ -35,6 +35,12 @@ BERRY_HREF = {
     'cz': 'berry-harvesting.html',
 }
 
+CATALOG2_HREF = {
+    'ru': 'catalogs/manufacturer-2.pdf.pdf',
+    'en': '../catalogs/manufacturer-2.pdf.pdf',
+    'cz': '../catalogs/manufacturer-2.pdf.pdf',
+}
+
 STYLE = r'''
 <style id="manufacturer-catalogs-style-v1">
 .manufacturer-catalogs{padding:58px 0 66px;background:#fff;border-top:1px solid rgba(72,105,133,.10)}
@@ -67,6 +73,8 @@ def section(lang):
         state_text = t['open'] if i <= 2 else t['soon']
         if i == 1:
             state = f'<a class="catalog-state active" href="{BERRY_HREF[lang]}">{state_text}</a>'
+        elif i == 2:
+            state = f'<a class="catalog-state active" href="{CATALOG2_HREF[lang]}" target="_blank" rel="noopener">{state_text}</a>'
         else:
             state = f'<span class="catalog-state {state_class}">{state_text}</span>'
         rows.append(
@@ -117,8 +125,10 @@ for lang, page in pages:
         raise SystemExit(f'Catalog readiness state invalid in {page}')
     if f'href="{BERRY_HREF[lang]}"' not in s:
         raise SystemExit(f'Manufacturer 1 berry link missing in {page}')
+    if f'href="{CATALOG2_HREF[lang]}"' not in s:
+        raise SystemExit(f'Manufacturer 2 PDF link missing in {page}')
 
     page.write_text(s, encoding='utf-8')
     print(f'Added manufacturer catalog subsection: {page}')
 
-print('PASS: manufacturer 1 links to berry harvesting page; other product-card settings unchanged')
+print('PASS: manufacturer 1 links to berry harvesting page; manufacturer 2 opens PDF catalog')
