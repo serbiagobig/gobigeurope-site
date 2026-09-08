@@ -29,6 +29,12 @@ COPY = {
     },
 }
 
+BERRY_HREF = {
+    'ru': 'berry-harvesting.html',
+    'en': 'berry-harvesting.html',
+    'cz': 'berry-harvesting.html',
+}
+
 STYLE = r'''
 <style id="manufacturer-catalogs-style-v1">
 .manufacturer-catalogs{padding:58px 0 66px;background:#fff;border-top:1px solid rgba(72,105,133,.10)}
@@ -40,6 +46,8 @@ STYLE = r'''
 .manufacturer-catalogs .catalog-no{color:var(--blue);font-size:15px;font-weight:800;letter-spacing:.12em}
 .manufacturer-catalogs .catalog-name{color:var(--deep);font-size:16px;font-weight:750}
 .manufacturer-catalogs .catalog-state{justify-self:end;font-size:13px;font-weight:800;white-space:nowrap}
+.manufacturer-catalogs a.catalog-state.active{color:var(--green);text-decoration:none}
+.manufacturer-catalogs a.catalog-state.active:hover{text-decoration:underline;text-underline-offset:4px}
 .manufacturer-catalogs .catalog-state.active{color:var(--green)}
 .manufacturer-catalogs .catalog-state.soon{color:#9aa5af;font-weight:700}
 @media(max-width:700px){
@@ -57,11 +65,15 @@ def section(lang):
     for i in range(1, 6):
         state_class = 'active' if i <= 2 else 'soon'
         state_text = t['open'] if i <= 2 else t['soon']
+        if i == 1:
+            state = f'<a class="catalog-state active" href="{BERRY_HREF[lang]}">{state_text}</a>'
+        else:
+            state = f'<span class="catalog-state {state_class}">{state_text}</span>'
         rows.append(
             f'<div class="catalog-row" data-manufacturer="{i}" data-catalog-ready="{"true" if i <= 2 else "false"}">'
             f'<span class="catalog-no">{i:02d}</span>'
             f'<span class="catalog-name">{t["manufacturer"]} {i}</span>'
-            f'<span class="catalog-state {state_class}">{state_text}</span>'
+            f'{state}'
             '</div>'
         )
     return (
@@ -103,8 +115,10 @@ for lang, page in pages:
         raise SystemExit(f'Catalog row count is not five in {page}')
     if s.count('data-catalog-ready="true"') != 2 or s.count('data-catalog-ready="false"') != 3:
         raise SystemExit(f'Catalog readiness state invalid in {page}')
+    if f'href="{BERRY_HREF[lang]}"' not in s:
+        raise SystemExit(f'Manufacturer 1 berry link missing in {page}')
 
     page.write_text(s, encoding='utf-8')
     print(f'Added manufacturer catalog subsection: {page}')
 
-print('PASS: manufacturer catalog subsection added without changing product cards')
+print('PASS: manufacturer 1 links to berry harvesting page; other product-card settings unchanged')
