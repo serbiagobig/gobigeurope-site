@@ -57,7 +57,10 @@ for p in pages:
         if ref.startswith(('#','mailto:','tel:','javascript:','data:','http://','https://','//')): continue
         local=ref.split('#',1)[0].split('?',1)[0]
         if not local: continue
-        target=(p.parent/unquote(local)).resolve()
+        if local.startswith('/'):
+            target=(ROOT/unquote(local.lstrip('/'))).resolve()
+        else:
+            target=(p.parent/unquote(local)).resolve()
         try: target.relative_to(ROOT)
         except ValueError:
             errors.append(f'{rel}: local reference escapes published root {ref}')
@@ -109,7 +112,6 @@ for rel in ('agro-tag.html','en/agro-tag.html','cz/agro-tag.html','ru/agro-tag.h
     if nav_match and 'berry-harvesting.html' in nav_match.group(1):
         errors.append(f'{rel}: berry page was incorrectly added to main navigation')
 
-# Canonical language-layout assertions for core pages.
 for name in CORE:
     root=ROOT/name
     ru=ROOT/'ru'/name
