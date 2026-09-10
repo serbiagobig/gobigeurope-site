@@ -57,20 +57,22 @@ python scripts/berry_locale_postfix.py dist
 python scripts/match_gentle_reference.py dist
 python scripts/berry_locale_postfix.py dist
 
-# Final authority for language switches: remove any late duplicate CZ/RU fragments
-# introduced by localisation or other post-build passes and validate exact EN/CZ/RU order.
+# Final authority for language switches in the generated legacy RU/EN/CZ layout.
 python scripts/final_language_switch_fix.py dist
 
-# Final authority for the homepage primary CTA: it opens the application form
-# on the International page in the matching language.
+# Final authority for key CTA routes before the language-root promotion.
 python scripts/fix_home_cta_links.py dist
 
-# Final repair for berry subnavigation, followed by a generic fragment-link audit.
+# Final repair for berry subnavigation before the language-root promotion.
 python scripts/fix_berry_gentle_anchor.py dist
-python scripts/final_anchor_audit.py dist
 
-# Add the catalog subsection only after every localisation/repair pass so nothing else is changed later.
+# Add the manufacturer catalog subsection only after every localisation/repair pass.
 python scripts/add_manufacturer_catalogs.py dist
 
-# Final integrity audit over every published RU/EN/CZ HTML page and local asset reference.
+# Publish English as the canonical root, preserve Russian under /ru/,
+# keep Czech under /cz/, and retain /en/ as a backward-compatible alias.
+python scripts/publish_english_root.py dist
+
+# These audits run AFTER the route promotion and validate the actual publish tree.
+python scripts/final_anchor_audit.py dist
 python scripts/final_site_integrity_audit.py dist
