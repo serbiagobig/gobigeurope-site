@@ -14,7 +14,12 @@ class Parser(HTMLParser):
         if d.get('id'): self.ids.add(d['id'])
         if tag == 'a' and d.get('href'): self.hrefs.append(d['href'])
 
-pages = sorted(ROOT.glob('*.html')) + sorted(ROOT.glob('en/*.html')) + sorted(ROOT.glob('cz/*.html'))
+pages = (
+    sorted(ROOT.glob('*.html'))
+    + sorted(ROOT.glob('en/*.html'))
+    + sorted(ROOT.glob('cz/*.html'))
+    + sorted(ROOT.glob('ru/*.html'))
+)
 parsed = {}
 for page in pages:
     p=Parser(); p.feed(page.read_text(encoding='utf-8')); parsed[page.resolve()] = p
@@ -32,6 +37,7 @@ for page, parser in parsed.items():
         try:
             target.relative_to(ROOT)
         except ValueError:
+            errors.append(f'{page.relative_to(ROOT)}: fragment link escapes published root: {href}')
             continue
         if target.suffix.lower() != '.html' or target not in parsed:
             continue
