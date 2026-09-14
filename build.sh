@@ -14,6 +14,11 @@ if [ -d catalogs ]; then
   mkdir -p dist/catalogs
   cp -R catalogs/. dist/catalogs/
 fi
+# Manufacturer 3 was uploaded to the repository root; publish it with the other catalog files.
+if [ -f manufacturer-3.docx ]; then
+  mkdir -p dist/catalogs
+  cp manufacturer-3.docx dist/catalogs/manufacturer-3.docx
+fi
 
 python scripts/final_site_fixes.py
 python scripts/compact_project_cards.py
