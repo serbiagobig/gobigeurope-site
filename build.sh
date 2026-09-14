@@ -88,6 +88,10 @@ python scripts/publish_english_root.py dist
 # institution lists and ensures /ru/international.html is restored as well.
 python scripts/restore_partner_ecosystem.py
 
+# Install the GO BIG favicon after all route/localisation transformations so it
+# survives every generated language version and is copied to the publish root.
+python scripts/install_favicon.py
+
 # These audits run AFTER the route promotion and validate the actual publish tree.
 python scripts/final_anchor_audit.py dist
 python scripts/final_site_integrity_audit.py dist
