@@ -83,6 +83,11 @@ python scripts/add_manufacturer_catalogs.py dist
 # keep Czech under /cz/, and retain /en/ as a backward-compatible alias.
 python scripts/publish_english_root.py dist
 
+# Final authority for the Partner Ecosystem AFTER locale promotion.
+# This prevents later localisation/root-promotion passes from stripping the approved
+# institution lists and ensures /ru/international.html is restored as well.
+python scripts/restore_partner_ecosystem.py
+
 # These audits run AFTER the route promotion and validate the actual publish tree.
 python scripts/final_anchor_audit.py dist
 python scripts/final_site_integrity_audit.py dist
