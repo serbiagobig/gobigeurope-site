@@ -47,6 +47,12 @@ CATALOG3_HREF = {
     'cz': '../catalogs/manufacturer-3.docx',
 }
 
+CATALOG4_HREF = {
+    'ru': 'catalogs/manufacturer-4.docx',
+    'en': '../catalogs/manufacturer-4.docx',
+    'cz': '../catalogs/manufacturer-4.docx',
+}
+
 STYLE = r'''
 <style id="manufacturer-catalogs-style-v1">
 .manufacturer-catalogs{padding:58px 0 66px;background:#fff;border-top:1px solid rgba(72,105,133,.10)}
@@ -75,18 +81,20 @@ def section(lang):
     t = COPY[lang]
     rows = []
     for i in range(1, 6):
-        state_class = 'active' if i <= 3 else 'soon'
-        state_text = t['open'] if i <= 3 else t['soon']
+        state_class = 'active' if i <= 4 else 'soon'
+        state_text = t['open'] if i <= 4 else t['soon']
         if i == 1:
             state = f'<a class="catalog-state active" href="{BERRY_HREF[lang]}">{state_text}</a>'
         elif i == 2:
             state = f'<a class="catalog-state active" href="{CATALOG2_HREF[lang]}" target="_blank" rel="noopener">{state_text}</a>'
         elif i == 3:
             state = f'<a class="catalog-state active" href="{CATALOG3_HREF[lang]}" target="_blank" rel="noopener">{state_text}</a>'
+        elif i == 4:
+            state = f'<a class="catalog-state active" href="{CATALOG4_HREF[lang]}" target="_blank" rel="noopener">{state_text}</a>'
         else:
             state = f'<span class="catalog-state {state_class}">{state_text}</span>'
         rows.append(
-            f'<div class="catalog-row" data-manufacturer="{i}" data-catalog-ready="{"true" if i <= 3 else "false"}">'
+            f'<div class="catalog-row" data-manufacturer="{i}" data-catalog-ready="{"true" if i <= 4 else "false"}">'
             f'<span class="catalog-no">{i:02d}</span>'
             f'<span class="catalog-name">{t["manufacturer"]} {i}</span>'
             f'{state}'
@@ -129,7 +137,7 @@ for lang, page in pages:
         raise SystemExit(f'Catalog subsection duplication in {page}')
     if s.count('class="catalog-row"') != 5:
         raise SystemExit(f'Catalog row count is not five in {page}')
-    if s.count('data-catalog-ready="true"') != 3 or s.count('data-catalog-ready="false"') != 2:
+    if s.count('data-catalog-ready="true"') != 4 or s.count('data-catalog-ready="false"') != 1:
         raise SystemExit(f'Catalog readiness state invalid in {page}')
     if f'href="{BERRY_HREF[lang]}"' not in s:
         raise SystemExit(f'Manufacturer 1 berry link missing in {page}')
@@ -137,8 +145,10 @@ for lang, page in pages:
         raise SystemExit(f'Manufacturer 2 catalog link missing in {page}')
     if f'href="{CATALOG3_HREF[lang]}"' not in s:
         raise SystemExit(f'Manufacturer 3 catalog link missing in {page}')
+    if f'href="{CATALOG4_HREF[lang]}"' not in s:
+        raise SystemExit(f'Manufacturer 4 catalog link missing in {page}')
 
     page.write_text(s, encoding='utf-8')
     print(f'Added manufacturer catalog subsection: {page}')
 
-print('PASS: manufacturer 1 links to berry harvesting page; manufacturers 2 and 3 open catalogs')
+print('PASS: manufacturer 1 links to berry harvesting page; manufacturers 2, 3 and 4 open catalogs')
