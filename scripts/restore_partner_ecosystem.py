@@ -18,9 +18,11 @@ for asset in required_assets:
     if not asset.exists() or asset.stat().st_size < 1000:
         raise SystemExit(f'Missing ecosystem data layer: {asset}')
 
-# RU is always present. EN/CZ are patched too whenever the full localized routes exist.
+# This script is intentionally safe both before and after language-root promotion.
+# Before promotion root is RU; after promotion root is EN and RU lives under /ru/.
 targets = [
     (ROOT / 'international.html', '', 'assets'),
+    (ROOT / 'ru' / 'international.html', '../', '../assets'),
     (ROOT / 'en' / 'international.html', '../', '../assets'),
     (ROOT / 'cz' / 'international.html', '../', '../assets'),
 ]
@@ -33,9 +35,9 @@ for page, base_prefix, asset_prefix in targets:
         raise SystemExit(f'Partner ecosystem section missing in {page}')
 
     tags = [
-        f'<link id="partners-ecosystem-layout" rel="stylesheet" href="{base_prefix}partners-ecosystem.css?v=20260906-restore"/>',
-        f'<link id="partners-ecosystem-locales" rel="stylesheet" href="{asset_prefix}/partners-ecosystem-locales.css?v=20260906-restore"/>',
-        f'<link id="technology-ecosystem-locales" rel="stylesheet" href="{asset_prefix}/technology-ecosystem-locales.css?v=20260906-restore"/>',
+        f'<link id="partners-ecosystem-layout" rel="stylesheet" href="{base_prefix}partners-ecosystem.css?v=20260914-final"/>',
+        f'<link id="partners-ecosystem-locales" rel="stylesheet" href="{asset_prefix}/partners-ecosystem-locales.css?v=20260914-final"/>',
+        f'<link id="technology-ecosystem-locales" rel="stylesheet" href="{asset_prefix}/technology-ecosystem-locales.css?v=20260914-final"/>',
     ]
     for tag in tags:
         tag_id = tag.split('id="',1)[1].split('"',1)[0]
