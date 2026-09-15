@@ -83,6 +83,10 @@ python scripts/add_manufacturer_catalogs.py dist
 # keep Czech under /cz/, and retain /en/ as a backward-compatible alias.
 python scripts/publish_english_root.py dist
 
+# Semantic language-route guardrail AFTER promotion. This also covers AGRO TAG
+# and berry-harvesting, whose custom headers are not handled by the legacy core-header pass.
+python scripts/final_language_routes_after_promotion.py dist
+
 # Final authority for the Partner Ecosystem AFTER locale promotion.
 # This prevents later localisation/root-promotion passes from stripping the approved
 # institution lists and ensures /ru/international.html is restored as well.
