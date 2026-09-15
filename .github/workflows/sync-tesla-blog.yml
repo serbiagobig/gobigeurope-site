@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   sync:
@@ -28,9 +29,11 @@ jobs:
         run: python scripts/sync_tesla_blog.py assets/blog-data.json
 
       - name: Commit updated feed
+        id: commit_feed
         run: |
           if git diff --quiet -- assets/blog-data.json; then
             echo "No blog changes"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -38,3 +41,10 @@ jobs:
           git add assets/blog-data.json
           git commit -m "Update TESLA blog feed"
           git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      - name: Publish updated blog to GitHub Pages
+        if: steps.commit_feed.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages-agro-image.yml --ref main
