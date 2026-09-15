@@ -40,17 +40,20 @@ def patch_page(path: Path, locale: str) -> bool:
     routes = expected(locale, path.name)
     changed = False
 
-    # Standard GO BIG header switch. It contains nested separator spans, so patch
-    # the labelled anchors in the tail up to the closing nav instead of replacing
-    # the whole span with a fragile regular expression.
+    # Standard GO BIG switch. Most pages place it inside <nav>; a few approved
+    # utility pages place the same switch directly in the header. Use </nav>
+    # when present, otherwise the enclosing </header> as the safe region end.
     marker = re.search(r'<span\b[^>]*class=["\'][^"\']*\blang-switch\b[^"\']*["\'][^>]*>', text, re.I)
     if marker:
         nav_end = text.find('</nav>', marker.end())
-        if nav_end < 0:
-            raise SystemExit(f'{path}: lang-switch has no closing nav')
-        region = text[marker.start():nav_end]
+        header_end = text.find('</header>', marker.end())
+        ends = [x for x in (nav_end, header_end) if x >= 0]
+        if not ends:
+            raise SystemExit(f'{path}: lang-switch has no closing nav/header')
+        region_end = min(ends)
+        region = text[marker.start():region_end]
         patched = patch_labels(region, routes, str(path))
-        text = text[:marker.start()] + patched + text[nav_end:]
+        text = text[:marker.start()] + patched + text[region_end:]
         changed = True
 
     # Berry page uses its own compact <nav class="langs"> switch.
