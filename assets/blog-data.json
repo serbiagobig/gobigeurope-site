@@ -1,9 +1,17 @@
 {
   "source": "TESLA Alliance",
   "source_url": "https://www.atesla.rs/blog",
-  "updated_at": "2026-09-21T12:30:16.779609+00:00",
+  "updated_at": "2026-09-21T18:29:57.173592+00:00",
   "sync_method": "rss",
   "items": [
+    {
+      "title": "TESLA Alliance and TUMO Begin Cooperation on Technology Education in Serbia",
+      "url": "https://www.atesla.rs/post/tesla-alliance-and-tumo-begin-cooperation-on-technology-education-in-serbia",
+      "date": "Sep 21, 2026",
+      "summary": "TESLA Alliance has become TUMO’s strategic partner in Serbia. The Memorandum of Understanding signed by the parties provides a framework for exploring the establishment of Serbia’s first TUMO Center for Creative Technologies and the further development of the ",
+      "image": "https://static.wixstatic.com/media/9534b9_46482008076b4e01b10275111c12e9eb~mv2.png/v1/fit/w_1000,h_919,al_c,q_80/file.png",
+      "source": "TESLA Alliance"
+    },
     {
       "title": "TESLA Alliance Partners with WE Bridge to Support Startup Development and International Scaling",
       "url": "https://www.atesla.rs/post/tesla-alliance-partners-with-we-bridge-to-support-startup-development-and-international-scaling",
